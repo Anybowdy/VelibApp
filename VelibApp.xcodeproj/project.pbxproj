@@ -1,0 +1,405 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 50;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		7C33671323552B5B004205E7 /* Media.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 7C33671223552B5B004205E7 /* Media.xcassets */; };
+		7CB2403322FAD16000AF63C5 /* StationListScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CB2403222FAD16000AF63C5 /* StationListScreen.swift */; };
+		7CB2403522FC4A6900AF63C5 /* MapVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CB2403422FC4A6900AF63C5 /* MapVC.swift */; };
+		7CB99AAA23A526AB0057EF56 /* StationAnnotation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CB99AA923A526AB0057EF56 /* StationAnnotation.swift */; };
+		7CDAD17522F995C00088FA18 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CDAD17422F995C00088FA18 /* AppDelegate.swift */; };
+		7CDAD17A22F995C00088FA18 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 7CDAD17822F995C00088FA18 /* Main.storyboard */; };
+		7CDAD17F22F995C30088FA18 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 7CDAD17D22F995C30088FA18 /* LaunchScreen.storyboard */; };
+		7CDAD18722F9B57D0088FA18 /* Station.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CDAD18622F9B57D0088FA18 /* Station.swift */; };
+		7CDAD18922FA1F2B0088FA18 /* StationCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CDAD18822FA1F2B0088FA18 /* StationCell.swift */; };
+		7CE20AAD236259BC002B3E01 /* Data.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CE20AAC236259BC002B3E01 /* Data.swift */; };
+		7CF7B7C02302C10E0078F73A /* Location.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CF7B7BF2302C10E0078F73A /* Location.swift */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		7C33671223552B5B004205E7 /* Media.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Media.xcassets; path = VelibApp/Media.xcassets; sourceTree = "<group>"; };
+		7CB2403222FAD16000AF63C5 /* StationListScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StationListScreen.swift; sourceTree = "<group>"; };
+		7CB2403422FC4A6900AF63C5 /* MapVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapVC.swift; sourceTree = "<group>"; };
+		7CB99AA923A526AB0057EF56 /* StationAnnotation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StationAnnotation.swift; sourceTree = "<group>"; };
+		7CDAD17122F995C00088FA18 /* VelibApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = VelibApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		7CDAD17422F995C00088FA18 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		7CDAD17922F995C00088FA18 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		7CDAD17E22F995C30088FA18 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
+		7CDAD18022F995C30088FA18 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		7CDAD18622F9B57D0088FA18 /* Station.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Station.swift; sourceTree = "<group>"; };
+		7CDAD18822FA1F2B0088FA18 /* StationCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StationCell.swift; sourceTree = "<group>"; };
+		7CE20AAC236259BC002B3E01 /* Data.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Data.swift; sourceTree = "<group>"; };
+		7CF7B7BF2302C10E0078F73A /* Location.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Location.swift; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		7CDAD16E22F995C00088FA18 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		7C3D699222FDEC5100F9F010 /* Object */ = {
+			isa = PBXGroup;
+			children = (
+				7CDAD18622F9B57D0088FA18 /* Station.swift */,
+				7CF7B7BF2302C10E0078F73A /* Location.swift */,
+			);
+			path = Object;
+			sourceTree = "<group>";
+		};
+		7C3D699322FDEC7700F9F010 /* MapController */ = {
+			isa = PBXGroup;
+			children = (
+				7CB2403422FC4A6900AF63C5 /* MapVC.swift */,
+				7CB99AA923A526AB0057EF56 /* StationAnnotation.swift */,
+			);
+			path = MapController;
+			sourceTree = "<group>";
+		};
+		7C3D699422FDEC9A00F9F010 /* StationController */ = {
+			isa = PBXGroup;
+			children = (
+				7CB2403222FAD16000AF63C5 /* StationListScreen.swift */,
+				7CDAD18822FA1F2B0088FA18 /* StationCell.swift */,
+			);
+			path = StationController;
+			sourceTree = "<group>";
+		};
+		7CB99AA823A51BA20057EF56 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				7CDAD17822F995C00088FA18 /* Main.storyboard */,
+				7CDAD17D22F995C30088FA18 /* LaunchScreen.storyboard */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		7CDAD16822F995C00088FA18 = {
+			isa = PBXGroup;
+			children = (
+				7C33671223552B5B004205E7 /* Media.xcassets */,
+				7CDAD17322F995C00088FA18 /* VelibApp */,
+				7CDAD17222F995C00088FA18 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		7CDAD17222F995C00088FA18 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				7CDAD17122F995C00088FA18 /* VelibApp.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		7CDAD17322F995C00088FA18 /* VelibApp */ = {
+			isa = PBXGroup;
+			children = (
+				7CB99AA823A51BA20057EF56 /* Views */,
+				7CE20AAB236259A7002B3E01 /* Data */,
+				7C3D699422FDEC9A00F9F010 /* StationController */,
+				7C3D699322FDEC7700F9F010 /* MapController */,
+				7C3D699222FDEC5100F9F010 /* Object */,
+				7CDAD18022F995C30088FA18 /* Info.plist */,
+				7CDAD17422F995C00088FA18 /* AppDelegate.swift */,
+			);
+			path = VelibApp;
+			sourceTree = "<group>";
+		};
+		7CE20AAB236259A7002B3E01 /* Data */ = {
+			isa = PBXGroup;
+			children = (
+				7CE20AAC236259BC002B3E01 /* Data.swift */,
+			);
+			path = Data;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		7CDAD17022F995C00088FA18 /* VelibApp */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 7CDAD18322F995C30088FA18 /* Build configuration list for PBXNativeTarget "VelibApp" */;
+			buildPhases = (
+				7CDAD16D22F995C00088FA18 /* Sources */,
+				7CDAD16E22F995C00088FA18 /* Frameworks */,
+				7CDAD16F22F995C00088FA18 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = VelibApp;
+			productName = VelibApp;
+			productReference = 7CDAD17122F995C00088FA18 /* VelibApp.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		7CDAD16922F995C00088FA18 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastSwiftUpdateCheck = 1030;
+				LastUpgradeCheck = 1030;
+				ORGANIZATIONNAME = "Joseph Huang";
+				TargetAttributes = {
+					7CDAD17022F995C00088FA18 = {
+						CreatedOnToolsVersion = 10.3;
+					};
+				};
+			};
+			buildConfigurationList = 7CDAD16C22F995C00088FA18 /* Build configuration list for PBXProject "VelibApp" */;
+			compatibilityVersion = "Xcode 9.3";
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = 7CDAD16822F995C00088FA18;
+			productRefGroup = 7CDAD17222F995C00088FA18 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				7CDAD17022F995C00088FA18 /* VelibApp */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		7CDAD16F22F995C00088FA18 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				7CDAD17F22F995C30088FA18 /* LaunchScreen.storyboard in Resources */,
+				7C33671323552B5B004205E7 /* Media.xcassets in Resources */,
+				7CDAD17A22F995C00088FA18 /* Main.storyboard in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		7CDAD16D22F995C00088FA18 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				7CB2403522FC4A6900AF63C5 /* MapVC.swift in Sources */,
+				7CB2403322FAD16000AF63C5 /* StationListScreen.swift in Sources */,
+				7CDAD17522F995C00088FA18 /* AppDelegate.swift in Sources */,
+				7CDAD18922FA1F2B0088FA18 /* StationCell.swift in Sources */,
+				7CDAD18722F9B57D0088FA18 /* Station.swift in Sources */,
+				7CE20AAD236259BC002B3E01 /* Data.swift in Sources */,
+				7CF7B7C02302C10E0078F73A /* Location.swift in Sources */,
+				7CB99AAA23A526AB0057EF56 /* StationAnnotation.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXVariantGroup section */
+		7CDAD17822F995C00088FA18 /* Main.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				7CDAD17922F995C00088FA18 /* Base */,
+			);
+			name = Main.storyboard;
+			sourceTree = "<group>";
+		};
+		7CDAD17D22F995C30088FA18 /* LaunchScreen.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				7CDAD17E22F995C30088FA18 /* Base */,
+			);
+			name = LaunchScreen.storyboard;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		7CDAD18122F995C30088FA18 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.4;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+			};
+			name = Debug;
+		};
+		7CDAD18222F995C30088FA18 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.4;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		7CDAD18422F995C30088FA18 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = FQ9SXB3J2T;
+				INFOPLIST_FILE = VelibApp/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.jojo.VelibApp;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		7CDAD18522F995C30088FA18 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = FQ9SXB3J2T;
+				INFOPLIST_FILE = VelibApp/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.jojo.VelibApp;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		7CDAD16C22F995C00088FA18 /* Build configuration list for PBXProject "VelibApp" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				7CDAD18122F995C30088FA18 /* Debug */,
+				7CDAD18222F995C30088FA18 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		7CDAD18322F995C30088FA18 /* Build configuration list for PBXNativeTarget "VelibApp" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				7CDAD18422F995C30088FA18 /* Debug */,
+				7CDAD18522F995C30088FA18 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 7CDAD16922F995C00088FA18 /* Project object */;
+}
