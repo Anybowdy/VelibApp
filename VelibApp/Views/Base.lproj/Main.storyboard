@@ -108,11 +108,11 @@
             </objects>
             <point key="canvasLocation" x="4598.5507246376819" y="67.633928571428569"/>
         </scene>
-        <!--Test-->
+        <!--Map-->
         <scene sceneID="yU5-MT-Mos">
             <objects>
                 <navigationController id="fWw-OB-1ya" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="Test" image="map" id="OAm-Je-Hzp"/>
+                    <tabBarItem key="tabBarItem" title="Map" image="map" id="OAm-Je-Hzp"/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="7TJ-E6-HPR">
                         <rect key="frame" x="0.0" y="44" width="414" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>

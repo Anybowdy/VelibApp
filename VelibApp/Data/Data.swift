@@ -6,10 +6,8 @@ class Data {
     static var stationsList = [Station]()
     
     func fetchStationData(completionHandler : ((_ isSucess: Bool) -> Void)? ) {
-        // Variables for location setup
         let locationManager = CLLocationManager()
         let location = locationManager.location
-        // Get JSON file URL
         let jsonStringUrl = URL(string: "https://opendata.paris.fr/api/records/1.0/search/?dataset=velib-disponibilite-en-temps-reel&rows=2000")
         URLSession.shared.dataTask(with: jsonStringUrl!) { (data, response, error) in
             guard let data = data else { return }
@@ -28,12 +26,13 @@ class Data {
                     }
                 }
                 DispatchQueue.main.async {
-                    self.bubbleSort(arr: &Data.stationsList)
+                    Data().bubbleSort(arr: &Data.stationsList)
                 }
             }
             catch {
                 return
             }
+            
         }.resume()
     }
     

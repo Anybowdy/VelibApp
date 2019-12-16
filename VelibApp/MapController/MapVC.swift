@@ -13,14 +13,17 @@ class MapVC: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+        mapView.delegate = self
+
         Data().fetchStationData { (finished) in
             if finished {
                 self.setUpAnnotation()
+                self.setUpAnnotation()
             }
         }
+        
+        setUpAnnotation()
         detectLocation()
-        mapView.delegate = self
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -69,7 +72,12 @@ extension MapVC: MKMapViewDelegate {
                 print(station.nbFreeDocks)
             }
         }*/
-        let zoom = MKCoordinateSpan(latitudeDelta: 0.04, longitudeDelta: 0.04)
+        let currentSpanLat = self.mapView.region.span.latitudeDelta
+        let currentSpanLong = self.mapView.region.span.longitudeDelta
+        var zoom = MKCoordinateSpan(latitudeDelta: currentSpanLat, longitudeDelta: currentSpanLong)
+        if (currentSpanLat >= 0.03 || currentSpanLong >= 0.03) {
+            zoom = MKCoordinateSpan(latitudeDelta: 0.03, longitudeDelta: 0.03)
+        }
         let region = MKCoordinateRegion(center: CLLocationCoordinate2D(latitude: lat!, longitude: long!), span: zoom)
         mapView.setRegion(region, animated: true)
     }
