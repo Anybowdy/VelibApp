@@ -14,14 +14,6 @@ class MapVC: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         mapView.delegate = self
-
-        Data().fetchStationData { (finished) in
-            if finished {
-                self.setUpAnnotation()
-                self.setUpAnnotation()
-            }
-        }
-        
         setUpAnnotation()
         detectLocation()
     }
@@ -40,7 +32,7 @@ class MapVC: UIViewController {
         mapView.setRegion(region, animated: true)
     }
    
-    private func setUpAnnotation() {
+    func setUpAnnotation() {
         print(Data.stationsList.count)
         for station in Data.stationsList {
             let location = station.location

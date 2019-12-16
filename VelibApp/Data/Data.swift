@@ -5,7 +5,7 @@ class Data {
 
     static var stationsList = [Station]()
     
-    func fetchStationData(completionHandler : ((_ isSucess: Bool) -> Void)? ) {
+    func fetchStationData() {
         let locationManager = CLLocationManager()
         let location = locationManager.location
         let jsonStringUrl = URL(string: "https://opendata.paris.fr/api/records/1.0/search/?dataset=velib-disponibilite-en-temps-reel&rows=2000")
@@ -32,7 +32,6 @@ class Data {
             catch {
                 return
             }
-            
         }.resume()
     }
     
