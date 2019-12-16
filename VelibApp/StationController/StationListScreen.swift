@@ -36,8 +36,6 @@ class StationListScreen: UIViewController {
     
     private func setUpNavBar() {
         self.navigationController?.navigationBar.prefersLargeTitles = true
-        self.navigationController?.navigationBar.largeTitleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor(hue: 0.5694, saturation: 1, brightness: 0.92, alpha: 1.0)]
-        self.navigationController?.navigationBar.titleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor(hue: 0.5694, saturation: 1, brightness: 0.92, alpha: 1.0)]
     }
     
 }

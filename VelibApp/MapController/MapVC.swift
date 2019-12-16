@@ -7,33 +7,33 @@ class MapVC: UIViewController {
     var indicatorView = UIActivityIndicatorView()
     @IBOutlet weak var mapView: MKMapView!
     
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
         mapView.delegate = self
-        setUpAnnotation()
-        detectLocation()
+        checkLocationAuthStatus()
+        detectLocation(zoomDelta: 0.025)
+        
+        Data().fetchStationData()
+        Data.dispatchGroup.notify(queue: .main) {
+            self.setUpAnnotation()
+        }
     }
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         checkLocationAuthStatus()
-        setUpAnnotation()
     }
     
-    private func detectLocation() {
+    private func detectLocation(zoomDelta: CLLocationDegrees) {
         let location = locationManager.location
         let myLocation = CLLocationCoordinate2D(latitude: (location?.coordinate.latitude)!, longitude: (location?.coordinate.longitude)!)
-        let zoom = MKCoordinateSpan(latitudeDelta: 0.025, longitudeDelta: 0.025)
+        let zoom = MKCoordinateSpan(latitudeDelta: zoomDelta, longitudeDelta: zoomDelta)
         let region = MKCoordinateRegion(center: myLocation, span: zoom)
         mapView.setRegion(region, animated: true)
     }
    
     func setUpAnnotation() {
-        print(Data.stationsList.count)
         for station in Data.stationsList {
             let location = station.location
             let annotation = StationAnnotation(title: station.stationName, locationName: station.stationName, coordinate: CLLocationCoordinate2D(latitude: location.latitude, longitude: location.longitude))
@@ -55,22 +55,15 @@ class MapVC: UIViewController {
 extension MapVC: MKMapViewDelegate {
     
     func mapView(_ mapView: MKMapView, didSelect view: MKAnnotationView) {
-        let lat = view.annotation?.coordinate.latitude
-        let long = view.annotation?.coordinate.longitude
-        /*for station in Data.stationsList {
-            if station.location.latitude == lat && station.location.longitude == long {
-                print(station.stationName)
-                print(station.nbBikes)
-                print(station.nbFreeDocks)
-            }
-        }*/
+        let lat = view.annotation!.coordinate.latitude
+        let long = view.annotation!.coordinate.longitude
         let currentSpanLat = self.mapView.region.span.latitudeDelta
         let currentSpanLong = self.mapView.region.span.longitudeDelta
         var zoom = MKCoordinateSpan(latitudeDelta: currentSpanLat, longitudeDelta: currentSpanLong)
-        if (currentSpanLat >= 0.03 || currentSpanLong >= 0.03) {
+        if (currentSpanLat > 0.03 || currentSpanLong > 0.03) {
             zoom = MKCoordinateSpan(latitudeDelta: 0.03, longitudeDelta: 0.03)
         }
-        let region = MKCoordinateRegion(center: CLLocationCoordinate2D(latitude: lat!, longitude: long!), span: zoom)
+        let region = MKCoordinateRegion(center: CLLocationCoordinate2D(latitude: lat, longitude: long), span: zoom)
         mapView.setRegion(region, animated: true)
     }
     
@@ -86,7 +79,7 @@ extension MapVC: MKMapViewDelegate {
         
         let annotationView = { () -> MKAnnotationView in
             let annotationView = MKAnnotationView(annotation: annotation, reuseIdentifier: "AnnotationView")
-            annotationView.image = UIImage(named: "placeholder")
+            annotationView.image = UIImage(named: "circle")
             annotationView.rightCalloutAccessoryView = goButton
             annotationView.canShowCallout = true
             return annotationView

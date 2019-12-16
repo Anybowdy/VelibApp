@@ -4,18 +4,21 @@ import MapKit
 class Data {
 
     static var stationsList = [Station]()
+    static let dispatchGroup = DispatchGroup()
     
     func fetchStationData() {
+        Data.dispatchGroup.enter()
+        
         let locationManager = CLLocationManager()
         let location = locationManager.location
-        let jsonStringUrl = URL(string: "https://opendata.paris.fr/api/records/1.0/search/?dataset=velib-disponibilite-en-temps-reel&rows=2000")
-        URLSession.shared.dataTask(with: jsonStringUrl!) { (data, response, error) in
+        guard let jsonStringUrl = URL(string: "https://opendata.paris.fr/api/records/1.0/search/?dataset=velib-disponibilite-en-temps-reel&rows=2000") else { return }
+        URLSession.shared.dataTask(with: jsonStringUrl) { (data, response, error) in
             guard let data = data else { return }
             do {
-                guard let jsonObject = try JSONSerialization.jsonObject(with: data, options: .mutableContainers) as? [String: Any] else { return }
-                guard let recordsObjects = jsonObject["records"] as? [[String: AnyObject]] else { return }
+                guard let jsonObject = try JSONSerialization.jsonObject(with: data, options: .allowFragments) as? [String: Any] else { return }
+                guard let recordsObjects = jsonObject["records"] as? [[String: Any]] else { return }
                 for recordObject in recordsObjects {
-                    if let fields = recordObject["fields"] as? [String: AnyObject],
+                    if let fields = recordObject["fields"] as? [String: Any],
                         let nbFreeEDock = fields["nbfreeedock"] as? Int,
                         let nbBikes = fields["nbbike"] as? Int,
                         let nbEBikes = fields["nbebike"] as? Int,
@@ -23,19 +26,20 @@ class Data {
                         let geo = fields["geo"] as? [CLLocationDegrees]
                     {
                         Data.stationsList.append(Station(stationName: stationName,nbBikes: nbBikes, nbEBikes: nbEBikes, nbFreeDocks: nbFreeEDock, location: CLLocationCoordinate2D(latitude: geo[0], longitude: geo[1]), distance: (Float(location!.distance(from: CLLocation(latitude: geo[0], longitude: geo[1]))) / 100).rounded() / 10))
+                        
                     }
                 }
-                DispatchQueue.main.async {
-                    Data().bubbleSort(arr: &Data.stationsList)
-                }
+                Data.dispatchGroup.leave()
             }
-            catch {
-                return
+            catch let jsonError{
+                print("Error: \(jsonError)")
             }
+            self.sortStationsWithDistance(arr: &Data.stationsList)
+            print("All stations are loaded")
         }.resume()
     }
     
-    func bubbleSort(arr: inout [Station]) {
+    func sortStationsWithDistance(arr: inout [Station]) {
         for _ in 0...arr.count - 1 {
             for j in 1...arr.count - 1{
                 if (arr[j].distance < arr[j - 1].distance) {
