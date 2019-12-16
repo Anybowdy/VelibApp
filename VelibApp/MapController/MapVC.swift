@@ -32,7 +32,7 @@ class MapVC: UIViewController {
     private func detectLocation() {
         let location = locationManager.location
         let myLocation = CLLocationCoordinate2D(latitude: (location?.coordinate.latitude)!, longitude: (location?.coordinate.longitude)!)
-        let zoom = MKCoordinateSpan(latitudeDelta: 0.05, longitudeDelta: 0.05)
+        let zoom = MKCoordinateSpan(latitudeDelta: 0.025, longitudeDelta: 0.025)
         let region = MKCoordinateRegion(center: myLocation, span: zoom)
         mapView.setRegion(region, animated: true)
     }
@@ -62,28 +62,36 @@ extension MapVC: MKMapViewDelegate {
     func mapView(_ mapView: MKMapView, didSelect view: MKAnnotationView) {
         let lat = view.annotation?.coordinate.latitude
         let long = view.annotation?.coordinate.longitude
-        for station in Data.stationsList {
+        /*for station in Data.stationsList {
             if station.location.latitude == lat && station.location.longitude == long {
                 print(station.stationName)
                 print(station.nbBikes)
                 print(station.nbFreeDocks)
             }
-        }
+        }*/
+        let zoom = MKCoordinateSpan(latitudeDelta: 0.04, longitudeDelta: 0.04)
+        let region = MKCoordinateRegion(center: CLLocationCoordinate2D(latitude: lat!, longitude: long!), span: zoom)
+        mapView.setRegion(region, animated: true)
     }
     
     func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
         if annotation is MKUserLocation {
             return nil
         }
-        let annotationView = MKAnnotationView(annotation: annotation, reuseIdentifier: "AnnotationView")
+        let goButton = { () -> UIButton in
+            let button = UIButton(frame: CGRect(origin: CGPoint.zero, size: CGSize(width: 35, height: 35)))
+            button.setBackgroundImage(UIImage(named: "google"), for: UIControl.State.normal)
+            return button
+        }()
         
-        annotationView.image = UIImage(named: "placeholder")
+        let annotationView = { () -> MKAnnotationView in
+            let annotationView = MKAnnotationView(annotation: annotation, reuseIdentifier: "AnnotationView")
+            annotationView.image = UIImage(named: "placeholder")
+            annotationView.rightCalloutAccessoryView = goButton
+            annotationView.canShowCallout = true
+            return annotationView
+        }()
         
-        let goButton = UIButton(frame: CGRect(origin: CGPoint.zero, size: CGSize(width: 35, height: 35)))
-        goButton.setBackgroundImage(UIImage(named: "google"), for: UIControl.State.normal)
-        annotationView.rightCalloutAccessoryView = goButton
-        
-        annotationView.canShowCallout = true
         return annotationView
     }
     

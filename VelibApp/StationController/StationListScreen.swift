@@ -35,7 +35,9 @@ class StationListScreen: UIViewController {
     }
     
     private func setUpNavBar() {
-        navigationController?.navigationBar.prefersLargeTitles = true
+        self.navigationController?.navigationBar.prefersLargeTitles = true
+        self.navigationController?.navigationBar.largeTitleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor(hue: 0.5694, saturation: 1, brightness: 0.92, alpha: 1.0)]
+        self.navigationController?.navigationBar.titleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor(hue: 0.5694, saturation: 1, brightness: 0.92, alpha: 1.0)]
     }
     
 }
@@ -44,7 +46,7 @@ class StationListScreen: UIViewController {
 extension StationListScreen: UITableViewDataSource, UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-            return 20
+            return 50
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
