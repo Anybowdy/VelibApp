@@ -5,14 +5,16 @@ class MapVC: UIViewController {
     
     let locationManager = CLLocationManager()
     var indicatorView = UIActivityIndicatorView()
-    @IBOutlet weak var mapView: MKMapView!
     
+    @IBOutlet weak var mapView: MKMapView!
+    @IBOutlet weak var myPositionButton: UIButton!
     
     override func viewDidLoad() {
         super.viewDidLoad()
         mapView.delegate = self
+        setUpPositionButton()
         checkLocationAuthStatus()
-        detectLocation(zoomDelta: 0.025)
+        detectLocation(zoomDelta: 0.020)
         
         Data().fetchStationData()
         Data.dispatchGroup.notify(queue: .main) {
@@ -25,7 +27,7 @@ class MapVC: UIViewController {
         checkLocationAuthStatus()
     }
     
-    private func detectLocation(zoomDelta: CLLocationDegrees) {
+    func detectLocation(zoomDelta: CLLocationDegrees) {
         let location = locationManager.location
         let myLocation = CLLocationCoordinate2D(latitude: (location?.coordinate.latitude)!, longitude: (location?.coordinate.longitude)!)
         let zoom = MKCoordinateSpan(latitudeDelta: zoomDelta, longitudeDelta: zoomDelta)
@@ -49,6 +51,20 @@ class MapVC: UIViewController {
             locationManager.requestWhenInUseAuthorization()
         }
     }
+    
+    func setUpPositionButton() {
+        myPositionButton.layer.cornerRadius = 0.5 * myPositionButton.bounds.size.width
+        myPositionButton.layer.borderWidth = 1.5
+        myPositionButton.layer.borderColor = UIColor.black.cgColor
+        myPositionButton.layer.masksToBounds = false
+        myPositionButton.backgroundColor = .white
+        myPositionButton.setImage(UIImage(named: "Marker"), for: .normal)
+        myPositionButton.addTarget(self, action: #selector(myPositionButtonTapped), for: .touchUpInside)
+    }
+    
+    @objc func myPositionButtonTapped(_: Any) {
+        detectLocation(zoomDelta: 0.020)
+    }
 }
 
 
@@ -67,6 +83,10 @@ extension MapVC: MKMapViewDelegate {
         mapView.setRegion(region, animated: true)
     }
     
+    func mapView(_ mapView: MKMapView, regionDidChangeAnimated animated: Bool) {
+        print("Region changed")
+    }
+        
     func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
         if annotation is MKUserLocation {
             return nil
@@ -79,7 +99,7 @@ extension MapVC: MKMapViewDelegate {
         
         let annotationView = { () -> MKAnnotationView in
             let annotationView = MKAnnotationView(annotation: annotation, reuseIdentifier: "AnnotationView")
-            annotationView.image = UIImage(named: "circle")
+            annotationView.image = UIImage(named: "gradcircle")
             annotationView.rightCalloutAccessoryView = goButton
             annotationView.canShowCallout = true
             return annotationView
@@ -87,6 +107,7 @@ extension MapVC: MKMapViewDelegate {
         
         return annotationView
     }
+    
     
     func mapView(_ mapView: MKMapView, annotationView view: MKAnnotationView,
         calloutAccessoryControlTapped control: UIControl) {
