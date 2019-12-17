@@ -6,11 +6,12 @@ class StationListScreen: UIViewController {
     private let locationManager = CLLocationManager()
     private let refreshControl = UIRefreshControl()
     @IBOutlet weak var tableView: UITableView!
-
+    @IBOutlet var stationsListView: UIView!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         self.tableView.reloadData()
-
+            /*stationsListView.frame = CGRect(x: <#T##CGFloat#>, y: <#T##CGFloat#>, width: <#T##CGFloat#>, height: <#T##CGFloat#>)*/
         setUpNavBar()
         setUpRefreshControl()
 
@@ -25,8 +26,10 @@ class StationListScreen: UIViewController {
     
     @objc private func refreshData() {
         self.refreshControl.beginRefreshing()
-        //Data().fetchStationData()
-        self.refreshControl.endRefreshing()
+        Data().fetchStationData()
+        Data.dispatchGroup.notify(queue: .main) {
+            self.refreshControl.endRefreshing()
+        }
     }
     
     private func setUpRefreshControl() {

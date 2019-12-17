@@ -5,14 +5,22 @@ class MapVC: UIViewController {
     
     let locationManager = CLLocationManager()
     var indicatorView = UIActivityIndicatorView()
+    var selectedAnnotation: StationAnnotation?
     
     @IBOutlet weak var mapView: MKMapView!
     @IBOutlet weak var myPositionButton: UIButton!
+    @IBOutlet weak var closestStationButton: UIButton!
+    @IBOutlet weak var listButton: UIButton!
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
         mapView.delegate = self
+        
         setUpPositionButton()
+        setUpClosestStationButton()
+        setUpListButton()
+        
         checkLocationAuthStatus()
         detectLocation(zoomDelta: 0.020)
         
@@ -28,10 +36,10 @@ class MapVC: UIViewController {
     }
     
     func detectLocation(zoomDelta: CLLocationDegrees) {
-        let location = locationManager.location
-        let myLocation = CLLocationCoordinate2D(latitude: (location?.coordinate.latitude)!, longitude: (location?.coordinate.longitude)!)
+        let location = locationManager.location!
+        let userLocation = location.coordinate
         let zoom = MKCoordinateSpan(latitudeDelta: zoomDelta, longitudeDelta: zoomDelta)
-        let region = MKCoordinateRegion(center: myLocation, span: zoom)
+        let region = MKCoordinateRegion(center: userLocation, span: zoom)
         mapView.setRegion(region, animated: true)
     }
    
@@ -54,30 +62,69 @@ class MapVC: UIViewController {
     
     func setUpPositionButton() {
         myPositionButton.layer.cornerRadius = 0.5 * myPositionButton.bounds.size.width
-        myPositionButton.layer.borderWidth = 1.5
-        myPositionButton.layer.borderColor = UIColor.black.cgColor
+        myPositionButton.layer.shadowOffset = CGSize(width: 0.0, height: 6.0)
+        myPositionButton.layer.shadowColor = UIColor.black.cgColor
+        myPositionButton.layer.shadowRadius = 8
+        myPositionButton.layer.shadowOpacity = 0.5
         myPositionButton.layer.masksToBounds = false
         myPositionButton.backgroundColor = .white
-        myPositionButton.setImage(UIImage(named: "Marker"), for: .normal)
+        myPositionButton.setImage(UIImage(named: "target"), for: .normal)
         myPositionButton.addTarget(self, action: #selector(myPositionButtonTapped), for: .touchUpInside)
     }
     
-    @objc func myPositionButtonTapped(_: Any) {
+    func setUpListButton() {
+        listButton.layer.cornerRadius = 0.5 * myPositionButton.bounds.size.width
+        listButton.layer.shadowOffset = CGSize(width: 0.0, height: 6.0)
+        listButton.layer.shadowColor = UIColor.black.cgColor
+        listButton.layer.shadowRadius = 8
+        listButton.layer.shadowOpacity = 0.5
+        listButton.layer.masksToBounds = false
+        listButton.backgroundColor = .white
+    }
+    
+    func setUpClosestStationButton() {
+        closestStationButton.setTitle("Station la + proche", for: .normal)
+        closestStationButton.setTitleColor(.white, for: .normal)
+        closestStationButton.layer.cornerRadius = 0.5 * myPositionButton.bounds.size.width
+        closestStationButton.layer.shadowOffset = CGSize(width: 0.0, height: 6.0)
+        closestStationButton.layer.shadowColor = UIColor.black.cgColor
+        closestStationButton.layer.shadowRadius = 8
+        closestStationButton.layer.shadowOpacity = 0.5
+        closestStationButton.layer.masksToBounds = false
+        closestStationButton.backgroundColor = UIColor(red: 0.3804, green: 0.7137, blue: 0.9098, alpha: 1.0)
+        closestStationButton.addTarget(self, action: #selector(closestStationButtonTapped), for: .touchUpInside)
+    }
+    
+    @objc func myPositionButtonTapped(_: UIButton) {
         detectLocation(zoomDelta: 0.020)
     }
-}
+    
+    @objc func closestStationButtonTapped(_: UIButton) {
+        print("Closest Station button tapped")
+        let closestStationInList: Station = Data.stationsList[0]
+        for annotation in mapView.annotations {
+            if annotation.title! == closestStationInList.stationName {
+                mapView.selectAnnotation(annotation, animated: true)
+                print("In loop")
+                break
+            }
+        }
+    }
 
+}
 
 extension MapVC: MKMapViewDelegate {
     
     func mapView(_ mapView: MKMapView, didSelect view: MKAnnotationView) {
+        self.selectedAnnotation = view.annotation as? StationAnnotation
+        
         let lat = view.annotation!.coordinate.latitude
         let long = view.annotation!.coordinate.longitude
         let currentSpanLat = self.mapView.region.span.latitudeDelta
         let currentSpanLong = self.mapView.region.span.longitudeDelta
         var zoom = MKCoordinateSpan(latitudeDelta: currentSpanLat, longitudeDelta: currentSpanLong)
-        if (currentSpanLat > 0.03 || currentSpanLong > 0.03) {
-            zoom = MKCoordinateSpan(latitudeDelta: 0.03, longitudeDelta: 0.03)
+        if (currentSpanLat > 0.04 || currentSpanLong > 0.04) {
+            zoom = MKCoordinateSpan(latitudeDelta: 0.04, longitudeDelta: 0.04)
         }
         let region = MKCoordinateRegion(center: CLLocationCoordinate2D(latitude: lat, longitude: long), span: zoom)
         mapView.setRegion(region, animated: true)
@@ -99,7 +146,7 @@ extension MapVC: MKMapViewDelegate {
         
         let annotationView = { () -> MKAnnotationView in
             let annotationView = MKAnnotationView(annotation: annotation, reuseIdentifier: "AnnotationView")
-            annotationView.image = UIImage(named: "gradcircle")
+            annotationView.image = UIImage(named: "bubble")
             annotationView.rightCalloutAccessoryView = goButton
             annotationView.canShowCallout = true
             return annotationView
