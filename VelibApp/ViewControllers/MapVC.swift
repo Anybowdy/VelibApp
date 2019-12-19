@@ -12,7 +12,6 @@ class MapVC: UIViewController {
     @IBOutlet weak var closestStationButton: UIButton!
     @IBOutlet weak var listButton: UIButton!
     
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         mapView.delegate = self
@@ -24,8 +23,8 @@ class MapVC: UIViewController {
         checkLocationAuthStatus()
         detectLocation(zoomDelta: 0.020)
         
-        Data().fetchStationData()
-        Data.dispatchGroup.notify(queue: .main) {
+        Station.fetchStationsData()
+        Station.dispatchGroup.notify(queue: .main) {
             self.setUpAnnotation()
         }
     }
@@ -44,7 +43,7 @@ class MapVC: UIViewController {
     }
    
     func setUpAnnotation() {
-        for station in Data.stationsList {
+        for station in Station.stationsList {
             let location = station.location
             let annotation = StationAnnotation(title: station.stationName, locationName: station.stationName, coordinate: CLLocationCoordinate2D(latitude: location.latitude, longitude: location.longitude))
             mapView.addAnnotation(annotation)
@@ -101,7 +100,7 @@ class MapVC: UIViewController {
     
     @objc func closestStationButtonTapped(_: UIButton) {
         print("Closest Station button tapped")
-        let closestStationInList: Station = Data.stationsList[0]
+        let closestStationInList: Station = Station.stationsList[0]
         for annotation in mapView.annotations {
             if annotation.title! == closestStationInList.stationName {
                 mapView.selectAnnotation(annotation, animated: true)
@@ -110,7 +109,6 @@ class MapVC: UIViewController {
             }
         }
     }
-
 }
 
 extension MapVC: MKMapViewDelegate {

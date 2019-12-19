@@ -11,12 +11,11 @@
 		7CB2403322FAD16000AF63C5 /* StationListScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CB2403222FAD16000AF63C5 /* StationListScreen.swift */; };
 		7CB2403522FC4A6900AF63C5 /* MapVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CB2403422FC4A6900AF63C5 /* MapVC.swift */; };
 		7CB99AAA23A526AB0057EF56 /* StationAnnotation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CB99AA923A526AB0057EF56 /* StationAnnotation.swift */; };
+		7CC92FF823ABDAFF00C89524 /* Station.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CC92FF723ABDAFF00C89524 /* Station.swift */; };
 		7CDAD17522F995C00088FA18 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CDAD17422F995C00088FA18 /* AppDelegate.swift */; };
 		7CDAD17A22F995C00088FA18 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 7CDAD17822F995C00088FA18 /* Main.storyboard */; };
 		7CDAD17F22F995C30088FA18 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 7CDAD17D22F995C30088FA18 /* LaunchScreen.storyboard */; };
-		7CDAD18722F9B57D0088FA18 /* Station.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CDAD18622F9B57D0088FA18 /* Station.swift */; };
 		7CDAD18922FA1F2B0088FA18 /* StationCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CDAD18822FA1F2B0088FA18 /* StationCell.swift */; };
-		7CE20AAD236259BC002B3E01 /* Data.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CE20AAC236259BC002B3E01 /* Data.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -24,14 +23,13 @@
 		7CB2403222FAD16000AF63C5 /* StationListScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StationListScreen.swift; sourceTree = "<group>"; };
 		7CB2403422FC4A6900AF63C5 /* MapVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapVC.swift; sourceTree = "<group>"; };
 		7CB99AA923A526AB0057EF56 /* StationAnnotation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StationAnnotation.swift; sourceTree = "<group>"; };
+		7CC92FF723ABDAFF00C89524 /* Station.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Station.swift; sourceTree = "<group>"; };
 		7CDAD17122F995C00088FA18 /* VelibApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = VelibApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		7CDAD17422F995C00088FA18 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		7CDAD17922F995C00088FA18 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		7CDAD17E22F995C30088FA18 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		7CDAD18022F995C30088FA18 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		7CDAD18622F9B57D0088FA18 /* Station.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Station.swift; sourceTree = "<group>"; };
 		7CDAD18822FA1F2B0088FA18 /* StationCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StationCell.swift; sourceTree = "<group>"; };
-		7CE20AAC236259BC002B3E01 /* Data.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Data.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -45,32 +43,6 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		7C3D699222FDEC5100F9F010 /* Object */ = {
-			isa = PBXGroup;
-			children = (
-				7CDAD18622F9B57D0088FA18 /* Station.swift */,
-			);
-			path = Object;
-			sourceTree = "<group>";
-		};
-		7C3D699322FDEC7700F9F010 /* MapController */ = {
-			isa = PBXGroup;
-			children = (
-				7CB2403422FC4A6900AF63C5 /* MapVC.swift */,
-				7CB99AA923A526AB0057EF56 /* StationAnnotation.swift */,
-			);
-			path = MapController;
-			sourceTree = "<group>";
-		};
-		7C3D699422FDEC9A00F9F010 /* StationController */ = {
-			isa = PBXGroup;
-			children = (
-				7CB2403222FAD16000AF63C5 /* StationListScreen.swift */,
-				7CDAD18822FA1F2B0088FA18 /* StationCell.swift */,
-			);
-			path = StationController;
-			sourceTree = "<group>";
-		};
 		7CB99AA823A51BA20057EF56 /* Views */ = {
 			isa = PBXGroup;
 			children = (
@@ -78,6 +50,25 @@
 				7CDAD17D22F995C30088FA18 /* LaunchScreen.storyboard */,
 			);
 			path = Views;
+			sourceTree = "<group>";
+		};
+		7CC92FF023ABCF3400C89524 /* ViewControllers */ = {
+			isa = PBXGroup;
+			children = (
+				7CB2403422FC4A6900AF63C5 /* MapVC.swift */,
+				7CB2403222FAD16000AF63C5 /* StationListScreen.swift */,
+			);
+			path = ViewControllers;
+			sourceTree = "<group>";
+		};
+		7CC92FF123ABCFF300C89524 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				7CB99AA923A526AB0057EF56 /* StationAnnotation.swift */,
+				7CDAD18822FA1F2B0088FA18 /* StationCell.swift */,
+				7CC92FF723ABDAFF00C89524 /* Station.swift */,
+			);
+			path = Models;
 			sourceTree = "<group>";
 		};
 		7CDAD16822F995C00088FA18 = {
@@ -100,23 +91,13 @@
 		7CDAD17322F995C00088FA18 /* VelibApp */ = {
 			isa = PBXGroup;
 			children = (
+				7CC92FF123ABCFF300C89524 /* Models */,
+				7CC92FF023ABCF3400C89524 /* ViewControllers */,
 				7CB99AA823A51BA20057EF56 /* Views */,
-				7CE20AAB236259A7002B3E01 /* Data */,
-				7C3D699422FDEC9A00F9F010 /* StationController */,
-				7C3D699322FDEC7700F9F010 /* MapController */,
-				7C3D699222FDEC5100F9F010 /* Object */,
 				7CDAD18022F995C30088FA18 /* Info.plist */,
 				7CDAD17422F995C00088FA18 /* AppDelegate.swift */,
 			);
 			path = VelibApp;
-			sourceTree = "<group>";
-		};
-		7CE20AAB236259A7002B3E01 /* Data */ = {
-			isa = PBXGroup;
-			children = (
-				7CE20AAC236259BC002B3E01 /* Data.swift */,
-			);
-			path = Data;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -192,10 +173,9 @@
 			files = (
 				7CB2403522FC4A6900AF63C5 /* MapVC.swift in Sources */,
 				7CB2403322FAD16000AF63C5 /* StationListScreen.swift in Sources */,
+				7CC92FF823ABDAFF00C89524 /* Station.swift in Sources */,
 				7CDAD17522F995C00088FA18 /* AppDelegate.swift in Sources */,
 				7CDAD18922FA1F2B0088FA18 /* StationCell.swift in Sources */,
-				7CDAD18722F9B57D0088FA18 /* Station.swift in Sources */,
-				7CE20AAD236259BC002B3E01 /* Data.swift in Sources */,
 				7CB99AAA23A526AB0057EF56 /* StationAnnotation.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

@@ -1,7 +1,7 @@
 import UIKit
 import MapKit
 
-class StationListScreen: UIViewController {
+class StationListVC: UIViewController {
     
     private let locationManager = CLLocationManager()
     private let refreshControl = UIRefreshControl()
@@ -11,7 +11,7 @@ class StationListScreen: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         self.tableView.reloadData()
-            /*stationsListView.frame = CGRect(x: <#T##CGFloat#>, y: <#T##CGFloat#>, width: <#T##CGFloat#>, height: <#T##CGFloat#>)*/
+        stationsListView.backgroundColor = UIColor.white.withAlphaComponent(0)
         setUpNavBar()
         setUpRefreshControl()
 
@@ -26,8 +26,8 @@ class StationListScreen: UIViewController {
     
     @objc private func refreshData() {
         self.refreshControl.beginRefreshing()
-        Data().fetchStationData()
-        Data.dispatchGroup.notify(queue: .main) {
+        //Data().fetchStationData()
+        Station.dispatchGroup.notify(queue: .main) {
             self.refreshControl.endRefreshing()
         }
     }
@@ -44,7 +44,7 @@ class StationListScreen: UIViewController {
 }
 
 // MARK: TableView
-extension StationListScreen: UITableViewDataSource, UITableViewDelegate {
+extension StationListVC: UITableViewDataSource, UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
             return 50
@@ -52,7 +52,7 @@ extension StationListScreen: UITableViewDataSource, UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "StationCell", for: indexPath) as! StationCell
-            cell.setUpStation(station: Data.stationsList[indexPath.row])
+            cell.setUpStation(station: Station.stationsList[indexPath.row])
         return cell
     }
 }

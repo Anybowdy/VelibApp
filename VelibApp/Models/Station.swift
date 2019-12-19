@@ -1,13 +1,21 @@
+import Foundation
 import UIKit
 import MapKit
 
-class Data {
-
+struct Station {
+    let stationName: String
+    let nbBikes: Int
+    let nbEBikes: Int
+    let nbFreeDocks: Int
+    let location: CLLocationCoordinate2D
+    let distance: Float
+    
     static var stationsList = [Station]()
     static let dispatchGroup = DispatchGroup()
     
-    func fetchStationData() {
-        Data.dispatchGroup.enter()
+    static func fetchStationsData() {
+        Station.dispatchGroup.enter()
+        var stationsList = [Station]()
         
         let locationManager = CLLocationManager()
         let location = locationManager.location
@@ -25,21 +33,22 @@ class Data {
                         let stationName = fields["station_name"] as? String,
                         let geo = fields["geo"] as? [CLLocationDegrees]
                     {
-                        Data.stationsList.append(Station(stationName: stationName,nbBikes: nbBikes, nbEBikes: nbEBikes, nbFreeDocks: nbFreeEDock, location: CLLocationCoordinate2D(latitude: geo[0], longitude: geo[1]), distance: (Float(location!.distance(from: CLLocation(latitude: geo[0], longitude: geo[1]))) / 100).rounded() / 10))
+                        stationsList.append(Station(stationName: stationName,nbBikes: nbBikes, nbEBikes: nbEBikes, nbFreeDocks: nbFreeEDock, location: CLLocationCoordinate2D(latitude: geo[0], longitude: geo[1]), distance: (Float(location!.distance(from: CLLocation(latitude: geo[0], longitude: geo[1]))) / 100).rounded() / 10))
                         
                     }
                 }
-                Data.dispatchGroup.leave()
+                sortStationsWithDistances(arr: &stationsList)
+                Station.stationsList = stationsList
+                Station.dispatchGroup.leave()
             }
             catch let jsonError{
                 print("Error: \(jsonError)")
             }
-            self.sortStationsWithDistance(arr: &Data.stationsList)
             print("All stations are loaded")
         }.resume()
     }
     
-    func sortStationsWithDistance(arr: inout [Station]) {
+    static func sortStationsWithDistances(arr: inout [Station]) {
         for _ in 0...arr.count - 1 {
             for j in 1...arr.count - 1{
                 if (arr[j].distance < arr[j - 1].distance) {
