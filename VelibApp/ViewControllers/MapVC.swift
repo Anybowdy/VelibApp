@@ -4,6 +4,7 @@ import MapKit
 class MapVC: UIViewController {
     
     let locationManager = CLLocationManager()
+    let informationView = InformationView()
     var indicatorView = UIActivityIndicatorView()
     var selectedAnnotation: StationAnnotation?
     
@@ -19,8 +20,7 @@ class MapVC: UIViewController {
         setUpPositionButton()
         setUpClosestStationButton()
         setUpListButton()
-        
-        checkLocationAuthStatus()
+
         detectLocation(zoomDelta: 0.020)
         
         Station.fetchStationsData()
@@ -32,6 +32,17 @@ class MapVC: UIViewController {
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         checkLocationAuthStatus()
+        checkInfoView()
+    }
+    
+    func checkInfoView() {
+        self.view.addSubview(informationView.view)
+        let height = view.frame.height
+        let width = view.frame.width
+        
+        informationView.view.frame = CGRect(x: 0, y: self.view.frame.maxY, width: width, height: height / 4)
+        print("view set")
+        informationView.showViewWithAnimation()
     }
     
     func detectLocation(zoomDelta: CLLocationDegrees) {
@@ -114,6 +125,7 @@ class MapVC: UIViewController {
 extension MapVC: MKMapViewDelegate {
     
     func mapView(_ mapView: MKMapView, didSelect view: MKAnnotationView) {
+        informationView.hideViewWithAnimation()
         self.selectedAnnotation = view.annotation as? StationAnnotation
         
         let lat = view.annotation!.coordinate.latitude
@@ -126,10 +138,12 @@ extension MapVC: MKMapViewDelegate {
         }
         let region = MKCoordinateRegion(center: CLLocationCoordinate2D(latitude: lat, longitude: long), span: zoom)
         mapView.setRegion(region, animated: true)
+        //informationView.showViewWithAnimation()
     }
     
     func mapView(_ mapView: MKMapView, regionDidChangeAnimated animated: Bool) {
         print("Region changed")
+        //informationView.view.removeFromSuperview()
     }
         
     func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
@@ -153,7 +167,7 @@ extension MapVC: MKMapViewDelegate {
         return annotationView
     }
     
-    
+    // Redirect to Plans
     func mapView(_ mapView: MKMapView, annotationView view: MKAnnotationView,
         calloutAccessoryControlTapped control: UIControl) {
       let location = view.annotation as! StationAnnotation

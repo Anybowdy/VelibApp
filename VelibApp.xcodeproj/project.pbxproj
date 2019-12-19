@@ -8,7 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		7C33671323552B5B004205E7 /* Media.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 7C33671223552B5B004205E7 /* Media.xcassets */; };
-		7CB2403322FAD16000AF63C5 /* StationListScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CB2403222FAD16000AF63C5 /* StationListScreen.swift */; };
+		7C4CF46323AC052800F956CB /* InformationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C4CF46223AC052800F956CB /* InformationView.swift */; };
+		7CB2403322FAD16000AF63C5 /* StationListVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CB2403222FAD16000AF63C5 /* StationListVC.swift */; };
 		7CB2403522FC4A6900AF63C5 /* MapVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CB2403422FC4A6900AF63C5 /* MapVC.swift */; };
 		7CB99AAA23A526AB0057EF56 /* StationAnnotation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CB99AA923A526AB0057EF56 /* StationAnnotation.swift */; };
 		7CC92FF823ABDAFF00C89524 /* Station.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CC92FF723ABDAFF00C89524 /* Station.swift */; };
@@ -19,8 +20,9 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		7C33671223552B5B004205E7 /* Media.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Media.xcassets; path = VelibApp/Media.xcassets; sourceTree = "<group>"; };
-		7CB2403222FAD16000AF63C5 /* StationListScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StationListScreen.swift; sourceTree = "<group>"; };
+		7C33671223552B5B004205E7 /* Media.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Media.xcassets; sourceTree = "<group>"; };
+		7C4CF46223AC052800F956CB /* InformationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InformationView.swift; sourceTree = "<group>"; };
+		7CB2403222FAD16000AF63C5 /* StationListVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StationListVC.swift; sourceTree = "<group>"; };
 		7CB2403422FC4A6900AF63C5 /* MapVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapVC.swift; sourceTree = "<group>"; };
 		7CB99AA923A526AB0057EF56 /* StationAnnotation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StationAnnotation.swift; sourceTree = "<group>"; };
 		7CC92FF723ABDAFF00C89524 /* Station.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Station.swift; sourceTree = "<group>"; };
@@ -48,6 +50,7 @@
 			children = (
 				7CDAD17822F995C00088FA18 /* Main.storyboard */,
 				7CDAD17D22F995C30088FA18 /* LaunchScreen.storyboard */,
+				7C4CF46223AC052800F956CB /* InformationView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -56,7 +59,7 @@
 			isa = PBXGroup;
 			children = (
 				7CB2403422FC4A6900AF63C5 /* MapVC.swift */,
-				7CB2403222FAD16000AF63C5 /* StationListScreen.swift */,
+				7CB2403222FAD16000AF63C5 /* StationListVC.swift */,
 			);
 			path = ViewControllers;
 			sourceTree = "<group>";
@@ -74,7 +77,6 @@
 		7CDAD16822F995C00088FA18 = {
 			isa = PBXGroup;
 			children = (
-				7C33671223552B5B004205E7 /* Media.xcassets */,
 				7CDAD17322F995C00088FA18 /* VelibApp */,
 				7CDAD17222F995C00088FA18 /* Products */,
 			);
@@ -91,11 +93,12 @@
 		7CDAD17322F995C00088FA18 /* VelibApp */ = {
 			isa = PBXGroup;
 			children = (
+				7CDAD17422F995C00088FA18 /* AppDelegate.swift */,
 				7CC92FF123ABCFF300C89524 /* Models */,
 				7CC92FF023ABCF3400C89524 /* ViewControllers */,
 				7CB99AA823A51BA20057EF56 /* Views */,
 				7CDAD18022F995C30088FA18 /* Info.plist */,
-				7CDAD17422F995C00088FA18 /* AppDelegate.swift */,
+				7C33671223552B5B004205E7 /* Media.xcassets */,
 			);
 			path = VelibApp;
 			sourceTree = "<group>";
@@ -171,8 +174,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				7C4CF46323AC052800F956CB /* InformationView.swift in Sources */,
 				7CB2403522FC4A6900AF63C5 /* MapVC.swift in Sources */,
-				7CB2403322FAD16000AF63C5 /* StationListScreen.swift in Sources */,
+				7CB2403322FAD16000AF63C5 /* StationListVC.swift in Sources */,
 				7CC92FF823ABDAFF00C89524 /* Station.swift in Sources */,
 				7CDAD17522F995C00088FA18 /* AppDelegate.swift in Sources */,
 				7CDAD18922FA1F2B0088FA18 /* StationCell.swift in Sources */,
