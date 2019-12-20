@@ -4,7 +4,7 @@ import MapKit
 class MapVC: UIViewController {
     
     let locationManager = CLLocationManager()
-    let informationView = InformationView()
+    var informationView = InformationView(stationName: "Hello", nbEBikes: 30, nbBikes: 30, nbFreeDocks: 20, distance: 25.0)
     var indicatorView = UIActivityIndicatorView()
     var selectedAnnotation: StationAnnotation?
     
@@ -37,12 +37,7 @@ class MapVC: UIViewController {
     
     func checkInfoView() {
         self.view.addSubview(informationView.view)
-        let height = view.frame.height
-        let width = view.frame.width
-        
-        informationView.view.frame = CGRect(x: 0, y: self.view.frame.maxY, width: width, height: height / 4)
         print("view set")
-        informationView.showViewWithAnimation()
     }
     
     func detectLocation(zoomDelta: CLLocationDegrees) {
@@ -125,11 +120,15 @@ class MapVC: UIViewController {
 extension MapVC: MKMapViewDelegate {
     
     func mapView(_ mapView: MKMapView, didSelect view: MKAnnotationView) {
-        informationView.hideViewWithAnimation()
-        self.selectedAnnotation = view.annotation as? StationAnnotation
+        informationView.view.removeFromSuperview()
+        guard let annotation = view.annotation as? StationAnnotation else { return }
+        informationView = InformationView(stationName: annotation.locationName!, nbEBikes: 3, nbBikes: 3, nbFreeDocks: 3, distance: 3.0)
+        self.view.addSubview(informationView.view)
         
-        let lat = view.annotation!.coordinate.latitude
-        let long = view.annotation!.coordinate.longitude
+        self.selectedAnnotation = annotation
+        
+        let lat = annotation.coordinate.latitude
+        let long = annotation.coordinate.longitude
         let currentSpanLat = self.mapView.region.span.latitudeDelta
         let currentSpanLong = self.mapView.region.span.longitudeDelta
         var zoom = MKCoordinateSpan(latitudeDelta: currentSpanLat, longitudeDelta: currentSpanLong)
@@ -138,7 +137,6 @@ extension MapVC: MKMapViewDelegate {
         }
         let region = MKCoordinateRegion(center: CLLocationCoordinate2D(latitude: lat, longitude: long), span: zoom)
         mapView.setRegion(region, animated: true)
-        //informationView.showViewWithAnimation()
     }
     
     func mapView(_ mapView: MKMapView, regionDidChangeAnimated animated: Bool) {
