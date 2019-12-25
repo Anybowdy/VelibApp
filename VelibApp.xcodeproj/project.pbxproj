@@ -12,7 +12,8 @@
 		7CB2403522FC4A6900AF63C5 /* MapVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CB2403422FC4A6900AF63C5 /* MapVC.swift */; };
 		7CB99AAA23A526AB0057EF56 /* StationAnnotation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CB99AA923A526AB0057EF56 /* StationAnnotation.swift */; };
 		7CC92FF823ABDAFF00C89524 /* Station.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CC92FF723ABDAFF00C89524 /* Station.swift */; };
-		7CCBBC3723B3EECA0049B5A1 /* ClosestStationButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CCBBC3623B3EECA0049B5A1 /* ClosestStationButton.swift */; };
+		7CCBBC3723B3EECA0049B5A1 /* PositionButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CCBBC3623B3EECA0049B5A1 /* PositionButton.swift */; };
+		7CCBBC3923B3F1740049B5A1 /* ClosestStationButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CCBBC3823B3F1740049B5A1 /* ClosestStationButton.swift */; };
 		7CDAD17522F995C00088FA18 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CDAD17422F995C00088FA18 /* AppDelegate.swift */; };
 		7CDAD17A22F995C00088FA18 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 7CDAD17822F995C00088FA18 /* Main.storyboard */; };
 		7CDAD17F22F995C30088FA18 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 7CDAD17D22F995C30088FA18 /* LaunchScreen.storyboard */; };
@@ -25,7 +26,8 @@
 		7CB2403422FC4A6900AF63C5 /* MapVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapVC.swift; sourceTree = "<group>"; };
 		7CB99AA923A526AB0057EF56 /* StationAnnotation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StationAnnotation.swift; sourceTree = "<group>"; };
 		7CC92FF723ABDAFF00C89524 /* Station.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Station.swift; sourceTree = "<group>"; };
-		7CCBBC3623B3EECA0049B5A1 /* ClosestStationButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClosestStationButton.swift; sourceTree = "<group>"; };
+		7CCBBC3623B3EECA0049B5A1 /* PositionButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PositionButton.swift; sourceTree = "<group>"; };
+		7CCBBC3823B3F1740049B5A1 /* ClosestStationButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClosestStationButton.swift; sourceTree = "<group>"; };
 		7CDAD17122F995C00088FA18 /* VelibApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = VelibApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		7CDAD17422F995C00088FA18 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		7CDAD17922F995C00088FA18 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
@@ -84,7 +86,8 @@
 		7CCBBC3523B3EEA80049B5A1 /* Buttons */ = {
 			isa = PBXGroup;
 			children = (
-				7CCBBC3623B3EECA0049B5A1 /* ClosestStationButton.swift */,
+				7CCBBC3623B3EECA0049B5A1 /* PositionButton.swift */,
+				7CCBBC3823B3F1740049B5A1 /* ClosestStationButton.swift */,
 			);
 			path = Buttons;
 			sourceTree = "<group>";
@@ -190,13 +193,14 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				7CCBBC3923B3F1740049B5A1 /* ClosestStationButton.swift in Sources */,
 				7CB2403522FC4A6900AF63C5 /* MapVC.swift in Sources */,
 				7CB2403322FAD16000AF63C5 /* StationListVC.swift in Sources */,
 				7CC92FF823ABDAFF00C89524 /* Station.swift in Sources */,
 				7CDAD17522F995C00088FA18 /* AppDelegate.swift in Sources */,
 				7CDAD18922FA1F2B0088FA18 /* StationCell.swift in Sources */,
 				7CB99AAA23A526AB0057EF56 /* StationAnnotation.swift in Sources */,
-				7CCBBC3723B3EECA0049B5A1 /* ClosestStationButton.swift in Sources */,
+				7CCBBC3723B3EECA0049B5A1 /* PositionButton.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

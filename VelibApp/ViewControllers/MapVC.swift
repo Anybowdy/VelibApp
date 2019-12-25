@@ -17,9 +17,7 @@ class MapVC: UIViewController {
         super.viewDidLoad()
         mapView.delegate = self
         
-        setUpClosestStationButton()
         setUpListButton()
-        setUpPositionButton()
         //setUpQuickInfoView()
 
         setRegionToUserLocation(zoomDelta: 0.020)
@@ -64,19 +62,6 @@ class MapVC: UIViewController {
     }
     
     
-    func setUpPositionButton() {
-        myPositionButton.layer.cornerRadius = 0.5 * myPositionButton.bounds.size.width
-        myPositionButton.layer.shadowOffset = CGSize(width: 0.0, height: 6.0)
-        myPositionButton.layer.shadowColor = UIColor.black.cgColor
-        myPositionButton.layer.shadowRadius = 8
-        myPositionButton.layer.shadowOpacity = 0.5
-        myPositionButton.layer.masksToBounds = false
-        myPositionButton.backgroundColor = .white
-        myPositionButton.setImage(UIImage(named: "target"), for: .normal)
-        myPositionButton.addTarget(self, action: #selector(myPositionButtonTapped), for: .touchUpInside)
-    }
-    
-    
     func setUpListButton() {
         listButton.layer.cornerRadius = 0.5 * myPositionButton.bounds.size.width
         listButton.layer.shadowOffset = CGSize(width: 0.0, height: 6.0)
@@ -87,19 +72,6 @@ class MapVC: UIViewController {
         listButton.backgroundColor = .white
     }
     
-    
-    func setUpClosestStationButton() {
-        closestStationButton.setTitle("Station la + proche", for: .normal)
-        closestStationButton.setTitleColor(.white, for: .normal)
-        closestStationButton.layer.cornerRadius = 0.5 * myPositionButton.bounds.size.width
-        closestStationButton.layer.shadowOffset = CGSize(width: 0.0, height: 6.0)
-        closestStationButton.layer.shadowColor = UIColor.black.cgColor
-        closestStationButton.layer.shadowRadius = 8
-        closestStationButton.layer.shadowOpacity = 0.5
-        closestStationButton.layer.masksToBounds = false
-        closestStationButton.backgroundColor = UIColor(red: 0.3804, green: 0.7137, blue: 0.9098, alpha: 1.0)
-        closestStationButton.addTarget(self, action: #selector(closestStationButtonTapped), for: .touchUpInside)
-    }
     
     
     /*func setUpQuickInfoView() {
@@ -193,4 +165,5 @@ extension MapVC: MKMapViewDelegate {
       let launchOptions = [MKLaunchOptionsDirectionsModeKey: MKLaunchOptionsDirectionsModeDriving]
       location.mapItem().openInMaps(launchOptions: launchOptions)
     }
+    
 }

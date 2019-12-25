@@ -1,7 +1,7 @@
 import Foundation
 import UIKit
 
-class ClosestStationButton: UIButton {
+class PositionButton: UIButton {
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -16,12 +16,11 @@ class ClosestStationButton: UIButton {
     
     
     private func setUpButton() {
-        backgroundColor = UIColor(red: 0.3804, green: 0.7137, blue: 0.9098, alpha: 1.0)
-        setTitle("Station la + proche", for: .normal)
-        setTitleColor(.white, for: .normal)
+        backgroundColor = .white
+        setImage(UIImage(named: "target"), for: .normal)
         
         layer.masksToBounds = false
-        layer.cornerRadius = 25
+        layer.cornerRadius = 0.5 * bounds.size.width
         
         layer.shadowOffset = CGSize(width: 0.0, height: 6.0)
         layer.shadowColor = UIColor.black.cgColor

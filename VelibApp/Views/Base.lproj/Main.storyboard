@@ -123,14 +123,14 @@
                                 <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
                             </mapView>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="0Yp-qc-Ws0">
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="0Yp-qc-Ws0" customClass="PositionButton" customModule="VelibApp" customModuleProvider="target">
                                 <rect key="frame" x="42" y="782" width="50" height="50"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="50" id="4NT-CD-q2G"/>
                                     <constraint firstAttribute="width" constant="50" id="jmd-rC-h3g"/>
                                 </constraints>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ouT-XA-414">
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ouT-XA-414" customClass="ClosestStationButton" customModule="VelibApp" customModuleProvider="target">
                                 <rect key="frame" x="132" y="782" width="150" height="50"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="50" id="4u3-rL-YvU"/>
