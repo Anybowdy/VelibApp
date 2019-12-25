@@ -26,10 +26,7 @@ class StationListVC: UIViewController {
     
     @objc private func refreshData() {
         self.refreshControl.beginRefreshing()
-        Station.dispatchGroup.notify(queue: .main) {
-            Station.fetchStationsData()
-            self.refreshControl.endRefreshing()
-        }
+        self.refreshControl.endRefreshing()
     }
     
     private func setUpRefreshControl() {

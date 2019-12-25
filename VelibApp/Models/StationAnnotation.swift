@@ -20,7 +20,7 @@ class StationAnnotation: NSObject, MKAnnotation {
         let addressDict = [CNPostalAddressStreetKey: title]
         let placemark = MKPlacemark(coordinate: coordinate, addressDictionary:addressDict as [String : Any])
         let mapItem = MKMapItem(placemark: placemark)
-        mapItem.name = title
+        mapItem.name = self.title
         return mapItem
     }
 }

@@ -4,7 +4,6 @@ import MapKit
 class MapVC: UIViewController {
     
     let locationManager = CLLocationManager()
-    var informationView = InformationView(stationName: "Hello", nbEBikes: 30, nbBikes: 30, nbFreeDocks: 20, distance: 25.0)
     var indicatorView = UIActivityIndicatorView()
     var selectedAnnotation: StationAnnotation?
     
@@ -13,48 +12,47 @@ class MapVC: UIViewController {
     @IBOutlet weak var closestStationButton: UIButton!
     @IBOutlet weak var listButton: UIButton!
     
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         mapView.delegate = self
         
-        setUpPositionButton()
         setUpClosestStationButton()
         setUpListButton()
+        setUpPositionButton()
+        //setUpQuickInfoView()
 
-        detectLocation(zoomDelta: 0.020)
+        setRegionToUserLocation(zoomDelta: 0.020)
         
-        Station.fetchStationsData()
-        Station.dispatchGroup.notify(queue: .main) {
-            self.setUpAnnotation()
+        Station.fetchStationsData {
+            DispatchQueue.main.async {
+                self.setUpAnnotation()
+            }
         }
     }
+    
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         checkLocationAuthStatus()
-        checkInfoView()
     }
     
-    func checkInfoView() {
-        self.view.addSubview(informationView.view)
-        print("view set")
-    }
     
-    func detectLocation(zoomDelta: CLLocationDegrees) {
-        let location = locationManager.location!
-        let userLocation = location.coordinate
+    func setRegionToUserLocation(zoomDelta: CLLocationDegrees) {
+        let userLocation = locationManager.location!.coordinate
         let zoom = MKCoordinateSpan(latitudeDelta: zoomDelta, longitudeDelta: zoomDelta)
         let region = MKCoordinateRegion(center: userLocation, span: zoom)
         mapView.setRegion(region, animated: true)
     }
    
+    
     func setUpAnnotation() {
         for station in Station.stationsList {
-            let location = station.location
-            let annotation = StationAnnotation(title: station.stationName, locationName: station.stationName, coordinate: CLLocationCoordinate2D(latitude: location.latitude, longitude: location.longitude))
+            let annotation = StationAnnotation(title: station.stationName, locationName: station.stationName, coordinate: station.location)
             mapView.addAnnotation(annotation)
         }
     }
+    
     
     private func checkLocationAuthStatus() {
         if CLLocationManager.authorizationStatus() == .authorizedAlways || CLLocationManager.authorizationStatus() == .authorizedWhenInUse {
@@ -64,6 +62,7 @@ class MapVC: UIViewController {
             locationManager.requestWhenInUseAuthorization()
         }
     }
+    
     
     func setUpPositionButton() {
         myPositionButton.layer.cornerRadius = 0.5 * myPositionButton.bounds.size.width
@@ -77,6 +76,7 @@ class MapVC: UIViewController {
         myPositionButton.addTarget(self, action: #selector(myPositionButtonTapped), for: .touchUpInside)
     }
     
+    
     func setUpListButton() {
         listButton.layer.cornerRadius = 0.5 * myPositionButton.bounds.size.width
         listButton.layer.shadowOffset = CGSize(width: 0.0, height: 6.0)
@@ -86,6 +86,7 @@ class MapVC: UIViewController {
         listButton.layer.masksToBounds = false
         listButton.backgroundColor = .white
     }
+    
     
     func setUpClosestStationButton() {
         closestStationButton.setTitle("Station la + proche", for: .normal)
@@ -100,9 +101,31 @@ class MapVC: UIViewController {
         closestStationButton.addTarget(self, action: #selector(closestStationButtonTapped), for: .touchUpInside)
     }
     
-    @objc func myPositionButtonTapped(_: UIButton) {
-        detectLocation(zoomDelta: 0.020)
+    
+    /*func setUpQuickInfoView() {
+        quickInfoViewCenter.constant = 300
+        quickInfoView.layer.cornerRadius = 20
     }
+    
+    func showQuickInfoView() {
+        quickInfoViewCenter.constant = 180
+        UIView.animate(withDuration: 0.3) {
+            self.view.layoutIfNeeded()
+        }
+    }
+    
+    func hideQuickInfoView() {
+        quickInfoViewCenter.constant = 300
+        UIView.animate(withDuration: 0.3) {
+            self.view.layoutIfNeeded()
+        }
+    } */
+    
+    
+    @objc func myPositionButtonTapped(_: UIButton) {
+        setRegionToUserLocation(zoomDelta: 0.020)
+    }
+    
     
     @objc func closestStationButtonTapped(_: UIButton) {
         print("Closest Station button tapped")
@@ -117,13 +140,13 @@ class MapVC: UIViewController {
     }
 }
 
+
 extension MapVC: MKMapViewDelegate {
     
     func mapView(_ mapView: MKMapView, didSelect view: MKAnnotationView) {
-        informationView.view.removeFromSuperview()
+        //showQuickInfoView()
+        
         guard let annotation = view.annotation as? StationAnnotation else { return }
-        informationView = InformationView(stationName: annotation.locationName!, nbEBikes: 3, nbBikes: 3, nbFreeDocks: 3, distance: 3.0)
-        self.view.addSubview(informationView.view)
         
         self.selectedAnnotation = annotation
         
@@ -139,10 +162,6 @@ extension MapVC: MKMapViewDelegate {
         mapView.setRegion(region, animated: true)
     }
     
-    func mapView(_ mapView: MKMapView, regionDidChangeAnimated animated: Bool) {
-        print("Region changed")
-        //informationView.view.removeFromSuperview()
-    }
         
     func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
         if annotation is MKUserLocation {
@@ -157,6 +176,7 @@ extension MapVC: MKMapViewDelegate {
         let annotationView = { () -> MKAnnotationView in
             let annotationView = MKAnnotationView(annotation: annotation, reuseIdentifier: "AnnotationView")
             annotationView.image = UIImage(named: "bubble")
+            annotationView.canShowCallout = false
             annotationView.rightCalloutAccessoryView = goButton
             annotationView.canShowCallout = true
             return annotationView
@@ -164,6 +184,7 @@ extension MapVC: MKMapViewDelegate {
         
         return annotationView
     }
+    
     
     // Redirect to Plans
     func mapView(_ mapView: MKMapView, annotationView view: MKAnnotationView,

@@ -11,15 +11,10 @@ struct Station {
     let distance: Float
     
     static var stationsList = [Station]()
-    static let dispatchGroup = DispatchGroup()
     
-    static func fetchStationsData() {
-        Station.dispatchGroup.enter()
-        var stationsList = [Station]()
-        
-        let locationManager = CLLocationManager()
-        let location = locationManager.location
-        guard let jsonStringUrl = URL(string: "https://opendata.paris.fr/api/records/1.0/search/?dataset=velib-disponibilite-en-temps-reel&rows=2000") else { return }
+    static func fetchStationsData(completion: @escaping () -> ()) {
+        let location = CLLocationManager().location
+        guard let jsonStringUrl = URL(string: "https://opendata.paris.fr/api/records/1.0/search/?dataset=velib-disponibilite-en-temps-reel&rows=1400") else { return }
         URLSession.shared.dataTask(with: jsonStringUrl) { (data, response, error) in
             guard let data = data else { return }
             do {
@@ -33,20 +28,20 @@ struct Station {
                         let stationName = fields["station_name"] as? String,
                         let geo = fields["geo"] as? [CLLocationDegrees]
                     {
-                        stationsList.append(Station(stationName: stationName,nbBikes: nbBikes, nbEBikes: nbEBikes, nbFreeDocks: nbFreeEDock, location: CLLocationCoordinate2D(latitude: geo[0], longitude: geo[1]), distance: (Float(location!.distance(from: CLLocation(latitude: geo[0], longitude: geo[1]))) / 100).rounded() / 10))
+                        Station.stationsList.append(Station(stationName: stationName,nbBikes: nbBikes, nbEBikes: nbEBikes, nbFreeDocks: nbFreeEDock, location: CLLocationCoordinate2D(latitude: geo[0], longitude: geo[1]), distance: (Float(location!.distance(from: CLLocation(latitude: geo[0], longitude: geo[1]))) / 100).rounded() / 10))
                         
                     }
                 }
-                sortStationsWithDistances(arr: &stationsList)
-                Station.stationsList = stationsList
-                Station.dispatchGroup.leave()
+                //sortStationsWithDistances(arr: &stationsList)
             }
             catch let jsonError{
                 print("Error: \(jsonError)")
             }
+            completion()
             print("All stations are loaded")
         }.resume()
     }
+    
     
     static func sortStationsWithDistances(arr: inout [Station]) {
         for _ in 0...arr.count - 1 {
