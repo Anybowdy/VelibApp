@@ -13,7 +13,7 @@
             <objects>
                 <viewController id="ThN-Ue-sfM" customClass="StationListVC" customModule="VelibApp" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="InV-T0-DHU">
-                        <rect key="frame" x="0.0" y="0.0" width="414" height="842"/>
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" restorationIdentifier="stationTableView" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="105" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="CQp-X0-obn">
@@ -144,25 +144,34 @@
                                     <constraint firstAttribute="height" constant="50" id="Nzx-Eb-Vl9"/>
                                 </constraints>
                                 <state key="normal" image="list.dash" catalog="system"/>
-                                <connections>
-                                    <segue destination="ThN-Ue-sfM" kind="show" id="xwA-Qi-pnM"/>
-                                </connections>
                             </button>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="gyp-JK-TcW">
+                                <rect key="frame" x="297.5" y="73" width="115" height="170"/>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="170" id="Rat-TR-nVf"/>
+                                    <constraint firstAttribute="width" constant="115" id="SMm-eJ-42h"/>
+                                </constraints>
+                            </view>
                         </subviews>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                         <constraints>
+                            <constraint firstItem="gyp-JK-TcW" firstAttribute="centerX" secondItem="oMa-pB-kMK" secondAttribute="centerX" constant="148" id="A07-kI-0EN"/>
                             <constraint firstItem="ouT-XA-414" firstAttribute="centerX" secondItem="oMa-pB-kMK" secondAttribute="centerX" id="Dxh-2m-y70"/>
                             <constraint firstItem="uSK-zS-Bkp" firstAttribute="bottom" secondItem="0Yp-qc-Ws0" secondAttribute="bottom" constant="30" id="Pa8-hO-0bk"/>
                             <constraint firstItem="0Yp-qc-Ws0" firstAttribute="top" secondItem="ZqU-S1-5VM" secondAttribute="bottom" constant="25" id="QP7-HL-KaB"/>
                             <constraint firstItem="uSK-zS-Bkp" firstAttribute="bottom" secondItem="ouT-XA-414" secondAttribute="bottom" constant="30" id="WJH-U9-Vs4"/>
                             <constraint firstItem="0Yp-qc-Ws0" firstAttribute="centerX" secondItem="oMa-pB-kMK" secondAttribute="centerX" constant="-140" id="aHh-8H-JM2"/>
                             <constraint firstItem="ZqU-S1-5VM" firstAttribute="centerX" secondItem="oMa-pB-kMK" secondAttribute="centerX" constant="-140" id="bSR-1F-AIK"/>
+                            <constraint firstItem="gyp-JK-TcW" firstAttribute="top" secondItem="uSK-zS-Bkp" secondAttribute="top" constant="29" id="qVd-M9-2yu"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="uSK-zS-Bkp"/>
                     </view>
                     <navigationItem key="navigationItem" title="Map" id="AyV-tp-fBy"/>
                     <connections>
                         <outlet property="closestStationButton" destination="ouT-XA-414" id="uhT-xG-Vs0"/>
+                        <outlet property="infoView" destination="gyp-JK-TcW" id="fnH-9L-oAp"/>
+                        <outlet property="infoViewCenter" destination="A07-kI-0EN" id="Mhw-z9-3yl"/>
                         <outlet property="listButton" destination="ZqU-S1-5VM" id="uhH-bP-8Tx"/>
                         <outlet property="mapView" destination="OXg-qf-InE" id="UAR-nx-DAy"/>
                         <outlet property="myPositionButton" destination="0Yp-qc-Ws0" id="uJa-lA-ueM"/>

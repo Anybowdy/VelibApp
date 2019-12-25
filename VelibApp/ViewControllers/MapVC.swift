@@ -12,13 +12,15 @@ class MapVC: UIViewController {
     @IBOutlet weak var closestStationButton: UIButton!
     @IBOutlet weak var listButton: UIButton!
     
+    @IBOutlet weak var infoView: UIView!
+    @IBOutlet weak var infoViewCenter: NSLayoutConstraint!
     
     override func viewDidLoad() {
         super.viewDidLoad()
         mapView.delegate = self
         
         setUpListButton()
-        //setUpQuickInfoView()
+        setUpInfoView()
 
         setRegionToUserLocation(zoomDelta: 0.020)
         
@@ -73,25 +75,25 @@ class MapVC: UIViewController {
     }
     
     
-    
-    /*func setUpQuickInfoView() {
-        quickInfoViewCenter.constant = 300
-        quickInfoView.layer.cornerRadius = 20
+    func setUpInfoView() {
+        infoViewCenter.constant = 300
+        infoView.layer.cornerRadius = 20
+        infoView.backgroundColor = UIColor.white.withAlphaComponent(0.8)
     }
     
-    func showQuickInfoView() {
-        quickInfoViewCenter.constant = 180
+    func showInfoView() {
+        infoViewCenter.constant = 148
         UIView.animate(withDuration: 0.3) {
             self.view.layoutIfNeeded()
         }
     }
     
-    func hideQuickInfoView() {
-        quickInfoViewCenter.constant = 300
+    func hideInfoView() {
+        infoViewCenter.constant = 300
         UIView.animate(withDuration: 0.3) {
             self.view.layoutIfNeeded()
         }
-    } */
+    }
     
     
     @objc func myPositionButtonTapped(_: UIButton) {
@@ -116,7 +118,7 @@ class MapVC: UIViewController {
 extension MapVC: MKMapViewDelegate {
     
     func mapView(_ mapView: MKMapView, didSelect view: MKAnnotationView) {
-        //showQuickInfoView()
+        showInfoView()
         
         guard let annotation = view.annotation as? StationAnnotation else { return }
         
