@@ -8,6 +8,7 @@ class StationCell: UITableViewCell {
     @IBOutlet weak var stationName: UILabel!
     @IBOutlet weak var distance: UILabel!
     
+    
     func setUpStation(station: Station) {
         self.stationName.text = station.stationName
         
@@ -20,4 +21,5 @@ class StationCell: UITableViewCell {
         self.nbFreeDocks.text = String(station.nbFreeDocks) + " places disponibles"
         self.distance.text = String(station.distance) + " km"
     }
+    
 }

@@ -23,6 +23,7 @@ class MapVC: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         mapView.delegate = self
+        //self.navigationController?.navigationBar.isHidden = true
         
         setUpListButton()
         setUpInfoView()
@@ -42,6 +43,16 @@ class MapVC: UIViewController {
         checkLocationAuthStatus()
     }
     
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        navigationController?.setNavigationBarHidden(true, animated: animated)
+    }
+
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        navigationController?.setNavigationBarHidden(false, animated: animated)
+    }
     
     func setRegionToUserLocation(zoomDelta: CLLocationDegrees) {
         let userLocation = locationManager.location!.coordinate

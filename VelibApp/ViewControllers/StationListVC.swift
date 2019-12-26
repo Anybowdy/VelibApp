@@ -13,8 +13,7 @@ class StationListVC: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         self.tableView.reloadData()
-        stationsListView.backgroundColor = UIColor.white.withAlphaComponent(0)
-        setUpNavBar()
+        
         setUpRefreshControl()
 
         tableView.delegate = self
@@ -39,10 +38,6 @@ class StationListVC: UIViewController {
         refreshControl.addTarget(self, action: #selector(refreshData), for: UIControl.Event.valueChanged)
     }
     
-    
-    private func setUpNavBar() {
-        self.navigationController?.navigationBar.prefersLargeTitles = true
-    }
     
 }
 

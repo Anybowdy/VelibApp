@@ -3,6 +3,7 @@ import UIKit
 import MapKit
 
 struct Station {
+    
     let stationName: String
     let nbBikes: Int
     let nbEBikes: Int
@@ -32,30 +33,15 @@ struct Station {
                         
                     }
                 }
-                //sortStationsWithDistances(arr: &stationsList)
             }
             catch let jsonError{
                 print("Error: \(jsonError)")
             }
-            Station.stationsList = Station.stationsList.sorted(by: { (a, b) -> Bool in
-                a.distance < b.distance
-            })
+            Station.stationsList = Station.stationsList.sorted(by: {(a, b) -> Bool in a.distance < b.distance })
             completion()
             print("All stations are loaded")
         }.resume()
     }
     
-    
-    static func sortStationsWithDistances(arr: inout [Station]) {
-        for _ in 0...arr.count - 1 {
-            for j in 1...arr.count - 1{
-                if (arr[j].distance < arr[j - 1].distance) {
-                    let tmp = arr[j]
-                    arr[j] = arr[j - 1]
-                    arr[j - 1] = tmp
-                }
-            }
-        }
-    }
     
 }
