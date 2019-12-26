@@ -15,6 +15,11 @@ class MapVC: UIViewController {
     @IBOutlet weak var infoView: UIView!
     @IBOutlet weak var infoViewCenter: NSLayoutConstraint!
     
+    @IBOutlet weak var nbEBikesLabel: UILabel!
+    @IBOutlet weak var nbBikesLabel: UILabel!
+    @IBOutlet weak var nbDocksLabel: UILabel!
+    
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         mapView.delegate = self
@@ -48,7 +53,7 @@ class MapVC: UIViewController {
     
     func setUpAnnotation() {
         for station in Station.stationsList {
-            let annotation = StationAnnotation(title: station.stationName, locationName: station.stationName, coordinate: station.location)
+            let annotation = StationAnnotation(title: station.stationName, locationName: station.stationName, coordinate: station.location, nbEBikes: station.nbEBikes, nbBikes: station.nbBikes, nbDocks: station.nbFreeDocks)
             mapView.addAnnotation(annotation)
         }
     }
@@ -75,20 +80,28 @@ class MapVC: UIViewController {
     }
     
     
-    func setUpInfoView() {
+    // MARK: INFORMATION VIEW
+    
+    private func setUpInfoView() {
         infoViewCenter.constant = 300
         infoView.layer.cornerRadius = 20
         infoView.backgroundColor = UIColor.white.withAlphaComponent(0.8)
     }
     
-    func showInfoView() {
+    
+    private func showInfoView(station: StationAnnotation) {
+        nbEBikesLabel.text = String(station.nbEBikes)
+        nbBikesLabel.text = String(station.nbBikes)
+        nbDocksLabel.text = String(station.nbDocks)
+        
         infoViewCenter.constant = 148
         UIView.animate(withDuration: 0.3) {
             self.view.layoutIfNeeded()
         }
     }
     
-    func hideInfoView() {
+    
+    private func hideInfoView() {
         infoViewCenter.constant = 300
         UIView.animate(withDuration: 0.3) {
             self.view.layoutIfNeeded()
@@ -96,33 +109,30 @@ class MapVC: UIViewController {
     }
     
     
-    @objc func myPositionButtonTapped(_: UIButton) {
+    // MARK: IBACTIONS
+    
+    @IBAction func myPositionButtonTapped(_ sender: Any) {
+        mapView.deselectAnnotation(self.selectedAnnotation, animated: true)
+        hideInfoView()
         setRegionToUserLocation(zoomDelta: 0.020)
     }
     
     
-    @objc func closestStationButtonTapped(_: UIButton) {
-        print("Closest Station button tapped")
-        let closestStationInList: Station = Station.stationsList[0]
-        for annotation in mapView.annotations {
-            if annotation.title! == closestStationInList.stationName {
-                mapView.selectAnnotation(annotation, animated: true)
-                print("In loop")
-                break
-            }
-        }
+    @IBAction func closestStationButtonTapped(_ sender: Any) {
+        let closestStationName = Station.stationsList[0].stationName
+        let toSelectAnnotation = mapView.annotations.filter({ return $0.title == closestStationName})
+        mapView.selectedAnnotations = toSelectAnnotation
     }
+   
 }
 
 
 extension MapVC: MKMapViewDelegate {
     
     func mapView(_ mapView: MKMapView, didSelect view: MKAnnotationView) {
-        showInfoView()
-        
         guard let annotation = view.annotation as? StationAnnotation else { return }
-        
         self.selectedAnnotation = annotation
+        showInfoView(station: annotation)
         
         let lat = annotation.coordinate.latitude
         let long = annotation.coordinate.longitude

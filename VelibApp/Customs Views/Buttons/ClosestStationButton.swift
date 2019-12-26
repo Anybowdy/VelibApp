@@ -17,7 +17,6 @@ class ClosestStationButton: UIButton {
     
     private func setUpButton() {
         backgroundColor = UIColor(red: 0.3804, green: 0.7137, blue: 0.9098, alpha: 1.0)
-        setTitle("Station la + proche", for: .normal)
         setTitleColor(.white, for: .normal)
         
         layer.masksToBounds = false

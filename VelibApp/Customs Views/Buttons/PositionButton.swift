@@ -17,7 +17,6 @@ class PositionButton: UIButton {
     
     private func setUpButton() {
         backgroundColor = .white
-        setImage(UIImage(named: "target"), for: .normal)
         
         layer.masksToBounds = false
         layer.cornerRadius = 0.5 * bounds.size.width

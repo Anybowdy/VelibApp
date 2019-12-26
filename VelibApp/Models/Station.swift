@@ -37,6 +37,9 @@ struct Station {
             catch let jsonError{
                 print("Error: \(jsonError)")
             }
+            Station.stationsList = Station.stationsList.sorted(by: { (a, b) -> Bool in
+                a.distance < b.distance
+            })
             completion()
             print("All stations are loaded")
         }.resume()

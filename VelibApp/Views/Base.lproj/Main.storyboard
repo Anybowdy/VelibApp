@@ -123,12 +123,16 @@
                                 <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
                             </mapView>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="0Yp-qc-Ws0" customClass="PositionButton" customModule="VelibApp" customModuleProvider="target">
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="0Yp-qc-Ws0" customClass="PositionButton" customModule="VelibApp" customModuleProvider="target">
                                 <rect key="frame" x="42" y="782" width="50" height="50"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="50" id="4NT-CD-q2G"/>
                                     <constraint firstAttribute="width" constant="50" id="jmd-rC-h3g"/>
                                 </constraints>
+                                <state key="normal" image="target"/>
+                                <connections>
+                                    <action selector="myPositionButtonTapped:" destination="urn-SP-Vox" eventType="touchUpInside" id="2Si-Nh-dGV"/>
+                                </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ouT-XA-414" customClass="ClosestStationButton" customModule="VelibApp" customModuleProvider="target">
                                 <rect key="frame" x="132" y="782" width="150" height="50"/>
@@ -136,6 +140,10 @@
                                     <constraint firstAttribute="height" constant="50" id="4u3-rL-YvU"/>
                                     <constraint firstAttribute="width" constant="150" id="zP8-si-twR"/>
                                 </constraints>
+                                <state key="normal" title="Station proche"/>
+                                <connections>
+                                    <action selector="closestStationButtonTapped:" destination="urn-SP-Vox" eventType="touchUpInside" id="E34-Xh-ZXv"/>
+                                </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ZqU-S1-5VM">
                                 <rect key="frame" x="42" y="707" width="50" height="50"/>
@@ -154,7 +162,7 @@
                                             <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="YrM-iO-A6j">
                                                 <rect key="frame" x="0.0" y="0.0" width="75" height="56.5"/>
                                                 <subviews>
-                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="24" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="crA-yG-aaE">
+                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="0" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="crA-yG-aaE">
                                                         <rect key="frame" x="0.0" y="0.0" width="32.5" height="56.5"/>
                                                         <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="24"/>
                                                         <nil key="textColor"/>
@@ -168,7 +176,7 @@
                                             <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="iwe-vQ-7bN">
                                                 <rect key="frame" x="0.0" y="56.5" width="75" height="57"/>
                                                 <subviews>
-                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="10" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="b3D-Pa-nD0">
+                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="0" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="b3D-Pa-nD0">
                                                         <rect key="frame" x="0.0" y="0.0" width="32.5" height="57"/>
                                                         <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="24"/>
                                                         <nil key="textColor"/>
@@ -182,7 +190,7 @@
                                             <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="vth-mD-ID7">
                                                 <rect key="frame" x="0.0" y="113.5" width="75" height="56.5"/>
                                                 <subviews>
-                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="5" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Uh4-cp-R5b">
+                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="0" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Uh4-cp-R5b">
                                                         <rect key="frame" x="0.0" y="0.0" width="32.5" height="56.5"/>
                                                         <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="24"/>
                                                         <nil key="textColor"/>
@@ -228,6 +236,9 @@
                         <outlet property="listButton" destination="ZqU-S1-5VM" id="uhH-bP-8Tx"/>
                         <outlet property="mapView" destination="OXg-qf-InE" id="UAR-nx-DAy"/>
                         <outlet property="myPositionButton" destination="0Yp-qc-Ws0" id="uJa-lA-ueM"/>
+                        <outlet property="nbBikesLabel" destination="b3D-Pa-nD0" id="KXv-qA-Fgb"/>
+                        <outlet property="nbDocksLabel" destination="Uh4-cp-R5b" id="rHT-UV-V29"/>
+                        <outlet property="nbEBikesLabel" destination="crA-yG-aaE" id="2PC-Z0-e2O"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Vmu-x3-Ax5" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
@@ -262,5 +273,6 @@
         <image name="blue bicyle" width="32" height="32"/>
         <image name="green bicycle" width="256" height="256"/>
         <image name="list.dash" catalog="system" width="64" height="42"/>
+        <image name="target" width="24" height="24"/>
     </resources>
 </document>
