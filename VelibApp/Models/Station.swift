@@ -2,7 +2,7 @@ import Foundation
 import UIKit
 import MapKit
 
-struct Station {
+class Station {
     
     let stationName: String
     let nbBikes: Int
@@ -11,7 +11,16 @@ struct Station {
     let location: CLLocationCoordinate2D
     let distance: Float
     
-    static var stationsList = [Station]()
+    init(stationName: String, nbBikes: Int, nbEBikes: Int, nbFreeDocks: Int, location: CLLocationCoordinate2D, distance: Float) {
+        self.stationName = stationName
+        self.nbBikes = nbBikes
+        self.nbEBikes = nbEBikes
+        self.nbFreeDocks = nbFreeDocks
+        self.location = location
+        self.distance = distance
+    }
+    
+    static var stationsList: [Station] = []
     
     static func fetchStationsData(completion: @escaping () -> ()) {
         let location = CLLocationManager().location
