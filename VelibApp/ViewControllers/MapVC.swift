@@ -5,7 +5,7 @@ class MapVC: UIViewController {
     
     let locationManager = CLLocationManager()
     var indicatorView = UIActivityIndicatorView()
-    var selectedAnnotation: StationAnnotation?
+    var selectedAnnotation: Station?
     
     @IBOutlet weak var mapView: MKMapView!
     @IBOutlet weak var myPositionButton: UIButton!
@@ -31,8 +31,8 @@ class MapVC: UIViewController {
         
         Station.fetchStationsData {
             DispatchQueue.main.async {
-                self.setRegionToUserLocation(zoomDelta: 0.02)
                 self.setUpAnnotation()
+                self.setRegionToUserLocation(zoomDelta: 0.02)
                 self.indicatorView.stopAnimating()
                 self.myPositionButton.isEnabled = true
                 self.closestStationButton.isEnabled = true
@@ -80,8 +80,7 @@ class MapVC: UIViewController {
     
     func setUpAnnotation() {
         for station in Station.stationsList {
-            let annotation = StationAnnotation(title: station.stationName, locationName: station.stationName, coordinate: station.location, nbEBikes: station.nbEBikes, nbBikes: station.nbBikes, nbDocks: station.nbFreeDocks)
-            mapView.addAnnotation(annotation)
+            mapView.addAnnotation(station)
         }
     }
     
@@ -116,10 +115,10 @@ class MapVC: UIViewController {
     }
     
     
-    private func showInfoView(station: StationAnnotation) {
+    private func showInfoView(station: Station) {
         nbEBikesLabel.text = String(station.nbEBikes)
         nbBikesLabel.text = String(station.nbBikes)
-        nbDocksLabel.text = String(station.nbDocks)
+        nbDocksLabel.text = String(station.nbFreeDocks)
         
         infoViewCenter.constant = 148
         UIView.animate(withDuration: 0.3) {
@@ -157,7 +156,7 @@ class MapVC: UIViewController {
 extension MapVC: MKMapViewDelegate {
     
     func mapView(_ mapView: MKMapView, didSelect view: MKAnnotationView) {
-        guard let annotation = view.annotation as? StationAnnotation else { return }
+        guard let annotation = view.annotation as? Station else { return }
         self.selectedAnnotation = annotation
         showInfoView(station: annotation)
         
@@ -198,11 +197,11 @@ extension MapVC: MKMapViewDelegate {
     
     
     // Redirect to Plans
-    func mapView(_ mapView: MKMapView, annotationView view: MKAnnotationView,
+    /*func mapView(_ mapView: MKMapView, annotationView view: MKAnnotationView,
         calloutAccessoryControlTapped control: UIControl) {
-      let location = view.annotation as! StationAnnotation
+      let location = view.annotation as! Station
       let launchOptions = [MKLaunchOptionsDirectionsModeKey: MKLaunchOptionsDirectionsModeDriving]
       location.mapItem().openInMaps(launchOptions: launchOptions)
-    }
+    }*/
     
 }

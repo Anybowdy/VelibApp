@@ -1,24 +1,30 @@
 import Foundation
 import UIKit
 import MapKit
+import Contacts
 
-class Station {
+class Station: NSObject, MKAnnotation {
     
+    let title: String?
     let stationName: String
     let nbBikes: Int
     let nbEBikes: Int
     let nbFreeDocks: Int
+    var coordinate: CLLocationCoordinate2D
     let location: CLLocationCoordinate2D
     let distance: Float
     
-    init(stationName: String, nbBikes: Int, nbEBikes: Int, nbFreeDocks: Int, location: CLLocationCoordinate2D, distance: Float) {
+    init(stationName: String, nbBikes: Int, nbEBikes: Int, nbFreeDocks: Int, location: CLLocationCoordinate2D, distance: Float, coordinate: CLLocationCoordinate2D) {
+        self.title = stationName
         self.stationName = stationName
         self.nbBikes = nbBikes
         self.nbEBikes = nbEBikes
         self.nbFreeDocks = nbFreeDocks
         self.location = location
         self.distance = distance
+        self.coordinate = coordinate
     }
+
     
     static var stationsList: [Station] = []
     
@@ -38,7 +44,7 @@ class Station {
                         let stationName = fields["station_name"] as? String,
                         let geo = fields["geo"] as? [CLLocationDegrees]
                     {
-                        Station.stationsList.append(Station(stationName: stationName,nbBikes: nbBikes, nbEBikes: nbEBikes, nbFreeDocks: nbFreeEDock, location: CLLocationCoordinate2D(latitude: geo[0], longitude: geo[1]), distance: (Float(location!.distance(from: CLLocation(latitude: geo[0], longitude: geo[1]))) / 100).rounded() / 10))
+                        Station.stationsList.append(Station(stationName: stationName,nbBikes: nbBikes, nbEBikes: nbEBikes, nbFreeDocks: nbFreeEDock, location: CLLocationCoordinate2D(latitude: geo[0], longitude: geo[1]), distance: (Float(location!.distance(from: CLLocation(latitude: geo[0], longitude: geo[1]))) / 100).rounded() / 10, coordinate: CLLocationCoordinate2D(latitude: geo[0], longitude: geo[1])))
                         
                     }
                 }
@@ -53,4 +59,11 @@ class Station {
     }
     
     
+    func mapItem() -> MKMapItem {
+        let addressDict = [CNPostalAddressStreetKey: title]
+        let placemark = MKPlacemark(coordinate: coordinate, addressDictionary:addressDict as [String : Any])
+        let mapItem = MKMapItem(placemark: placemark)
+        mapItem.name = self.title
+        return mapItem
+    }
 }
