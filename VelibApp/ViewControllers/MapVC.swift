@@ -23,16 +23,20 @@ class MapVC: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         mapView.delegate = self
-        //self.navigationController?.navigationBar.isHidden = true
-        
+        setUpIndicatorView()
         setUpListButton()
         setUpInfoView()
 
-        setRegionToUserLocation(zoomDelta: 0.020)
+        setRegionToUserLocation(zoomDelta: 0.15)
         
         Station.fetchStationsData {
             DispatchQueue.main.async {
+                self.setRegionToUserLocation(zoomDelta: 0.02)
                 self.setUpAnnotation()
+                self.indicatorView.stopAnimating()
+                self.myPositionButton.isEnabled = true
+                self.closestStationButton.isEnabled = true
+                self.listButton.isEnabled = true
             }
         }
     }
@@ -49,10 +53,22 @@ class MapVC: UIViewController {
         navigationController?.setNavigationBarHidden(true, animated: animated)
     }
 
+    
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         navigationController?.setNavigationBarHidden(false, animated: animated)
     }
+    
+    
+    func setUpIndicatorView() {
+        indicatorView.frame = CGRect(x: 0, y: 0, width: 50, height: 50)
+        indicatorView.center = self.view.center
+        indicatorView.hidesWhenStopped = true
+        indicatorView.style = UIActivityIndicatorView.Style.gray
+        self.view.addSubview(indicatorView)
+        indicatorView.startAnimating()
+    }
+    
     
     func setRegionToUserLocation(zoomDelta: CLLocationDegrees) {
         let userLocation = locationManager.location!.coordinate

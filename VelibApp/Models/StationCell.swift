@@ -9,7 +9,7 @@ class StationCell: UITableViewCell {
     @IBOutlet weak var distance: UILabel!
     
     
-    func setUpStation(station: Station) {
+    func setUpStationCell(station: Station) {
         self.stationName.text = station.stationName
         
         self.nbEBikes.text = String(station.nbEBikes) + " vélos électrique(s) "

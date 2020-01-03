@@ -7,12 +7,9 @@ class StationListVC: UIViewController {
     private let refreshControl = UIRefreshControl()
     
     @IBOutlet weak var tableView: UITableView!
-    @IBOutlet var stationsListView: UIView!
-    
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.tableView.reloadData()
         
         setUpRefreshControl()
 
@@ -38,7 +35,6 @@ class StationListVC: UIViewController {
         refreshControl.addTarget(self, action: #selector(refreshData), for: UIControl.Event.valueChanged)
     }
     
-    
 }
 
 // MARK: TableView
@@ -51,7 +47,7 @@ extension StationListVC: UITableViewDataSource, UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "StationCell", for: indexPath) as! StationCell
-            cell.setUpStation(station: Station.stationsList[indexPath.row])
+        cell.setUpStationCell(station: Station.stationsList[indexPath.row])
         return cell
     }
     

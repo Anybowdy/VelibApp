@@ -101,7 +101,6 @@
                     </view>
                     <navigationItem key="navigationItem" title="Stations" id="ehZ-Vu-GfV"/>
                     <connections>
-                        <outlet property="stationsListView" destination="InV-T0-DHU" id="R4k-X9-rUj"/>
                         <outlet property="tableView" destination="CQp-X0-obn" id="Cmx-hr-Cm4"/>
                     </connections>
                 </viewController>
@@ -137,7 +136,7 @@
                                 <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
                             </mapView>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="0Yp-qc-Ws0" customClass="PositionButton" customModule="VelibApp" customModuleProvider="target">
+                            <button opaque="NO" contentMode="scaleToFill" enabled="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="0Yp-qc-Ws0" customClass="PositionButton" customModule="VelibApp" customModuleProvider="target">
                                 <rect key="frame" x="42" y="782" width="50" height="50"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="50" id="4NT-CD-q2G"/>
@@ -148,7 +147,7 @@
                                     <action selector="myPositionButtonTapped:" destination="urn-SP-Vox" eventType="touchUpInside" id="2Si-Nh-dGV"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ouT-XA-414" customClass="ClosestStationButton" customModule="VelibApp" customModuleProvider="target">
+                            <button opaque="NO" contentMode="scaleToFill" enabled="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ouT-XA-414" customClass="ClosestStationButton" customModule="VelibApp" customModuleProvider="target">
                                 <rect key="frame" x="132" y="782" width="150" height="50"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="50" id="4u3-rL-YvU"/>
@@ -159,7 +158,7 @@
                                     <action selector="closestStationButtonTapped:" destination="urn-SP-Vox" eventType="touchUpInside" id="E34-Xh-ZXv"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ZqU-S1-5VM">
+                            <button opaque="NO" contentMode="scaleToFill" enabled="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ZqU-S1-5VM">
                                 <rect key="frame" x="42" y="707" width="50" height="50"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="50" id="3UX-wk-7YW"/>
