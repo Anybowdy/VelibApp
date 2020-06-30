@@ -24,11 +24,9 @@ class Station: NSObject, MKAnnotation {
         self.distance = distance
         self.coordinate = coordinate
     }
-
-    static var stationsList: [Station] = []
     
     static func fetchStationsData(completed: @escaping ([Station]) -> Void) {
-        let stations: [Station] = []
+        var stations: [Station] = []
         let location = CLLocationManager().location
         guard let jsonStringUrl = URL(string: "https://opendata.paris.fr/api/records/1.0/search/?dataset=velib-disponibilite-en-temps-reel&rows=1400") else { return }
         URLSession.shared.dataTask(with: jsonStringUrl) { (data, response, error) in
@@ -44,15 +42,14 @@ class Station: NSObject, MKAnnotation {
                         let stationName = fields["station_name"] as? String,
                         let geo = fields["geo"] as? [CLLocationDegrees]
                     {
-                        Station.stationsList.append(Station(stationName: stationName,nbBikes: nbBikes, nbEBikes: nbEBikes, nbFreeDocks: nbFreeEDock, location: CLLocationCoordinate2D(latitude: geo[0], longitude: geo[1]), distance: (Float(location!.distance(from: CLLocation(latitude: geo[0], longitude: geo[1]))) / 100).rounded() / 10, coordinate: CLLocationCoordinate2D(latitude: geo[0], longitude: geo[1])))
-                        
+                        stations.append(Station(stationName: stationName,nbBikes: nbBikes, nbEBikes: nbEBikes, nbFreeDocks: nbFreeEDock, location: CLLocationCoordinate2D(latitude: geo[0], longitude: geo[1]), distance: (Float(location!.distance(from: CLLocation(latitude: geo[0], longitude: geo[1]))) / 100).rounded() / 10, coordinate: CLLocationCoordinate2D(latitude: geo[0], longitude: geo[1])))
                     }
                 }
             }
             catch let error {
                 print("Error: \(error)")
             }
-            Station.stationsList = Station.stationsList.sorted(by: {(a, b) -> Bool in a.distance < b.distance })
+            stations = stations.sorted(by: {(a, b) -> Bool in a.distance < b.distance })
             completed(stations)
         }.resume()
     }

@@ -1,14 +1,22 @@
 import UIKit
 import MapKit
+import CoreLocation
 
 class MapVC: UIViewController {
     
-    var stations: [Station] = []
+    var stations: [Station] = [] {
+        didSet {
+            self.stationsDidLoad()
+            self.centerOnUserLocation(zoomDelta: 0.02)
+        }
+    }
     let locationManager = CLLocationManager()
     var selectedAnnotation: Station?
-    
+ 
     var indicatorView = UIActivityIndicatorView()
 
+    // MARK: -Outlets
+    
     @IBOutlet weak var mapView: MKMapView!
     @IBOutlet weak var myPositionButton: UIButton!
     @IBOutlet weak var closestStationButton: UIButton!
@@ -20,17 +28,18 @@ class MapVC: UIViewController {
     @IBOutlet weak var nbBikesLabel: UILabel!
     @IBOutlet weak var nbDocksLabel: UILabel!
     
+    // MARK: -Life cycle
     
     override func viewDidLoad() {
         super.viewDidLoad()
         checkLocationAuthStatus()
-        
         mapView.delegate = self
 
         getStations()
-        
         setUpView()
     }
+    
+    // MARK: -UI
     
     func setUpView() {
         indicatorView.frame = CGRect(x: 0, y: 0, width: 50, height: 50)
@@ -50,8 +59,6 @@ class MapVC: UIViewController {
             DispatchQueue.main.async {
                 self.stations = stations
                 print(stations.count)
-                self.centerOnUserLocation(zoomDelta: 0.02)
-                self.stationsDidLoad()
             }
         }
     }
@@ -61,11 +68,6 @@ class MapVC: UIViewController {
         myPositionButton.isEnabled = true
         closestStationButton.isEnabled = true
     }
-    
-    func setUpLocationManager() {
-        locationManager.desiredAccuracy = kCLLocationAccuracyBest
-    }
-    
     
     func centerOnUserLocation(zoomDelta: CLLocationDegrees) {
         if let userLocation = locationManager.location?.coordinate {
@@ -86,15 +88,27 @@ class MapVC: UIViewController {
     
     
     private func checkLocationAuthStatus() {
-        if CLLocationManager.authorizationStatus() == .authorizedAlways || CLLocationManager.authorizationStatus() == .authorizedWhenInUse {
-            mapView.showsUserLocation = true
-            centerOnUserLocation(zoomDelta: 0.15)
+        if CLLocationManager.locationServicesEnabled() {
+            locationManager.delegate = self
         }
         else {
-            locationManager.requestWhenInUseAuthorization()
+            // Alert
         }
     }
     
+    private func checkLocationAuthorization() {
+        switch CLLocationManager.authorizationStatus() {
+        case .authorizedWhenInUse, .authorizedAlways:
+            mapView.showsUserLocation = true
+            centerOnUserLocation(zoomDelta: 0.15)
+            break
+        case .denied, .notDetermined, .restricted:
+            locationManager.requestWhenInUseAuthorization()
+            break
+        default:
+            break
+        }
+    }
     
     // MARK: INFORMATION VIEW
 
@@ -118,7 +132,7 @@ class MapVC: UIViewController {
     }
     
     
-    // MARK: IBACTIONS
+    // MARK: -Actions
     
     @IBAction func myPositionButtonTapped(_ sender: Any) {
         mapView.deselectAnnotation(self.selectedAnnotation, animated: true)
@@ -188,4 +202,11 @@ extension MapVC: MKMapViewDelegate {
       location.mapItem().openInMaps(launchOptions: launchOptions)
     }
     
+}
+
+extension MapVC: CLLocationManagerDelegate {
+    
+    func locationManager(_ manager: CLLocationManager, didChangeAuthorization status: CLAuthorizationStatus) {
+        checkLocationAuthorization()
+    }
 }
