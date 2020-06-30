@@ -25,10 +25,10 @@ class Station: NSObject, MKAnnotation {
         self.coordinate = coordinate
     }
 
-    
     static var stationsList: [Station] = []
     
-    static func fetchStationsData(completion: @escaping () -> ()) {
+    static func fetchStationsData(completed: @escaping ([Station]) -> Void) {
+        let stations: [Station] = []
         let location = CLLocationManager().location
         guard let jsonStringUrl = URL(string: "https://opendata.paris.fr/api/records/1.0/search/?dataset=velib-disponibilite-en-temps-reel&rows=1400") else { return }
         URLSession.shared.dataTask(with: jsonStringUrl) { (data, response, error) in
@@ -49,12 +49,11 @@ class Station: NSObject, MKAnnotation {
                     }
                 }
             }
-            catch let jsonError{
-                print("Error: \(jsonError)")
+            catch let error {
+                print("Error: \(error)")
             }
             Station.stationsList = Station.stationsList.sorted(by: {(a, b) -> Bool in a.distance < b.distance })
-            completion()
-            print("All stations are loaded")
+            completed(stations)
         }.resume()
     }
     

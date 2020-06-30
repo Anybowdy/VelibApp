@@ -3,14 +3,15 @@ import MapKit
 
 class MapVC: UIViewController {
     
+    var stations: [Station] = []
     let locationManager = CLLocationManager()
-    var indicatorView = UIActivityIndicatorView()
     var selectedAnnotation: Station?
     
+    var indicatorView = UIActivityIndicatorView()
+
     @IBOutlet weak var mapView: MKMapView!
     @IBOutlet weak var myPositionButton: UIButton!
     @IBOutlet weak var closestStationButton: UIButton!
-    @IBOutlet weak var listButton: UIButton!
     
     @IBOutlet weak var infoView: UIView!
     @IBOutlet weak var infoViewCenter: NSLayoutConstraint!
@@ -22,64 +23,63 @@ class MapVC: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        mapView.delegate = self
-        setUpIndicatorView()
-        setUpListButton()
-        setUpInfoView()
-
-        setRegionToUserLocation(zoomDelta: 0.15)
+        checkLocationAuthStatus()
         
-        Station.fetchStationsData {
+        mapView.delegate = self
+
+        getStations()
+        
+        setUpView()
+    }
+    
+    func setUpView() {
+        indicatorView.frame = CGRect(x: 0, y: 0, width: 50, height: 50)
+        indicatorView.hidesWhenStopped = true
+        indicatorView.center = view.center
+        indicatorView.style = UIActivityIndicatorView.Style.gray
+        indicatorView.startAnimating()
+        view.addSubview(indicatorView)
+        
+        infoViewCenter.constant = 300
+        infoView.layer.cornerRadius = 20
+        infoView.backgroundColor = UIColor.white.withAlphaComponent(0.8)
+    }
+    
+    func getStations() {
+        Station.fetchStationsData { stations in
             DispatchQueue.main.async {
-                self.setUpAnnotation()
-                self.setRegionToUserLocation(zoomDelta: 0.02)
-                self.indicatorView.stopAnimating()
-                self.myPositionButton.isEnabled = true
-                self.closestStationButton.isEnabled = true
-                self.listButton.isEnabled = true
+                self.stations = stations
+                print(stations.count)
+                self.centerOnUserLocation(zoomDelta: 0.02)
+                self.stationsDidLoad()
             }
         }
     }
     
+    func stationsDidLoad() {
+        setUpAnnotation()
+        myPositionButton.isEnabled = true
+        closestStationButton.isEnabled = true
+    }
     
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
-        checkLocationAuthStatus()
+    func setUpLocationManager() {
+        locationManager.desiredAccuracy = kCLLocationAccuracyBest
     }
     
     
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        navigationController?.setNavigationBarHidden(true, animated: animated)
-    }
-
-    
-    override func viewWillDisappear(_ animated: Bool) {
-        super.viewWillDisappear(animated)
-        navigationController?.setNavigationBarHidden(false, animated: animated)
-    }
-    
-    
-    func setUpIndicatorView() {
-        indicatorView.frame = CGRect(x: 0, y: 0, width: 50, height: 50)
-        indicatorView.center = self.view.center
-        indicatorView.hidesWhenStopped = true
-        indicatorView.style = UIActivityIndicatorView.Style.gray
-        self.view.addSubview(indicatorView)
-        indicatorView.startAnimating()
-    }
-    
-    
-    func setRegionToUserLocation(zoomDelta: CLLocationDegrees) {
-        let userLocation = locationManager.location!.coordinate
-        let zoom = MKCoordinateSpan(latitudeDelta: zoomDelta, longitudeDelta: zoomDelta)
-        let region = MKCoordinateRegion(center: userLocation, span: zoom)
-        mapView.setRegion(region, animated: true)
+    func centerOnUserLocation(zoomDelta: CLLocationDegrees) {
+        if let userLocation = locationManager.location?.coordinate {
+            let zoom = MKCoordinateSpan(latitudeDelta: zoomDelta, longitudeDelta: zoomDelta)
+            let region = MKCoordinateRegion(center: userLocation, span: zoom)
+            //let region = MKCoordinateRegion.init(center: userLocation, latitudinalMeters: 10000, longitudinalMeters: 10000)
+            mapView.setRegion(region, animated: true)
+        }
     }
    
     
     func setUpAnnotation() {
-        for station in Station.stationsList {
+        indicatorView.stopAnimating()
+        for station in stations {
             mapView.addAnnotation(station)
         }
     }
@@ -88,6 +88,7 @@ class MapVC: UIViewController {
     private func checkLocationAuthStatus() {
         if CLLocationManager.authorizationStatus() == .authorizedAlways || CLLocationManager.authorizationStatus() == .authorizedWhenInUse {
             mapView.showsUserLocation = true
+            centerOnUserLocation(zoomDelta: 0.15)
         }
         else {
             locationManager.requestWhenInUseAuthorization()
@@ -95,26 +96,8 @@ class MapVC: UIViewController {
     }
     
     
-    func setUpListButton() {
-        listButton.layer.cornerRadius = 0.5 * myPositionButton.bounds.size.width
-        listButton.layer.shadowOffset = CGSize(width: 0.0, height: 6.0)
-        listButton.layer.shadowColor = UIColor.black.cgColor
-        listButton.layer.shadowRadius = 8
-        listButton.layer.shadowOpacity = 0.5
-        listButton.layer.masksToBounds = false
-        listButton.backgroundColor = .white
-    }
-    
-    
     // MARK: INFORMATION VIEW
-    
-    private func setUpInfoView() {
-        infoViewCenter.constant = 300
-        infoView.layer.cornerRadius = 20
-        infoView.backgroundColor = UIColor.white.withAlphaComponent(0.8)
-    }
-    
-    
+
     private func showInfoView(station: Station) {
         nbEBikesLabel.text = String(station.nbEBikes)
         nbBikesLabel.text = String(station.nbBikes)
@@ -140,16 +123,18 @@ class MapVC: UIViewController {
     @IBAction func myPositionButtonTapped(_ sender: Any) {
         mapView.deselectAnnotation(self.selectedAnnotation, animated: true)
         hideInfoView()
-        setRegionToUserLocation(zoomDelta: 0.020)
+        centerOnUserLocation(zoomDelta: 0.020)
     }
     
     
     @IBAction func closestStationButtonTapped(_ sender: Any) {
-        let closestStationName = Station.stationsList[0].stationName
-        let toSelectAnnotation = mapView.annotations.filter({ return $0.title == closestStationName})
+        if (stations.isEmpty) {
+            return
+        }
+        let closestStation = stations.first
+        let toSelectAnnotation = mapView.annotations.filter({ return $0.title == closestStation?.stationName})
         mapView.selectedAnnotations = toSelectAnnotation
     }
-   
 }
 
 
@@ -157,18 +142,17 @@ extension MapVC: MKMapViewDelegate {
     
     func mapView(_ mapView: MKMapView, didSelect view: MKAnnotationView) {
         guard let annotation = view.annotation as? Station else { return }
+        
         self.selectedAnnotation = annotation
         showInfoView(station: annotation)
         
-        let lat = annotation.coordinate.latitude
-        let long = annotation.coordinate.longitude
         let currentSpanLat = self.mapView.region.span.latitudeDelta
         let currentSpanLong = self.mapView.region.span.longitudeDelta
         var zoom = MKCoordinateSpan(latitudeDelta: currentSpanLat, longitudeDelta: currentSpanLong)
         if (currentSpanLat > 0.04 || currentSpanLong > 0.04) {
             zoom = MKCoordinateSpan(latitudeDelta: 0.04, longitudeDelta: 0.04)
         }
-        let region = MKCoordinateRegion(center: CLLocationCoordinate2D(latitude: lat, longitude: long), span: zoom)
+        let region = MKCoordinateRegion(center: annotation.coordinate, span: zoom)
         mapView.setRegion(region, animated: true)
     }
     
@@ -177,6 +161,7 @@ extension MapVC: MKMapViewDelegate {
         if annotation is MKUserLocation {
             return nil
         }
+        
         let goButton = { () -> UIButton in
             let button = UIButton(frame: CGRect(origin: CGPoint.zero, size: CGSize(width: 35, height: 35)))
             button.setBackgroundImage(UIImage(named: "google"), for: UIControl.State.normal)
@@ -188,7 +173,6 @@ extension MapVC: MKMapViewDelegate {
             annotationView.image = UIImage(named: "bubble")
             annotationView.canShowCallout = false
             annotationView.rightCalloutAccessoryView = goButton
-            annotationView.canShowCallout = true
             return annotationView
         }()
         
@@ -197,11 +181,11 @@ extension MapVC: MKMapViewDelegate {
     
     
     // Redirect to Plans
-    /*func mapView(_ mapView: MKMapView, annotationView view: MKAnnotationView,
+    func mapView(_ mapView: MKMapView, annotationView view: MKAnnotationView,
         calloutAccessoryControlTapped control: UIControl) {
       let location = view.annotation as! Station
       let launchOptions = [MKLaunchOptionsDirectionsModeKey: MKLaunchOptionsDirectionsModeDriving]
       location.mapItem().openInMaps(launchOptions: launchOptions)
-    }*/
+    }
     
 }
