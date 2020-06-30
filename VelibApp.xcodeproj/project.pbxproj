@@ -66,12 +66,12 @@
 			path = Models;
 			sourceTree = "<group>";
 		};
-		7CCBBC3423B3EE9C0049B5A1 /* Customs Views */ = {
+		7CCBBC3423B3EE9C0049B5A1 /* Views */ = {
 			isa = PBXGroup;
 			children = (
 				7CCBBC3523B3EEA80049B5A1 /* Buttons */,
 			);
-			path = "Customs Views";
+			path = Views;
 			sourceTree = "<group>";
 		};
 		7CCBBC3523B3EEA80049B5A1 /* Buttons */ = {
@@ -102,7 +102,7 @@
 		7CDAD17322F995C00088FA18 /* VelibApp */ = {
 			isa = PBXGroup;
 			children = (
-				7CCBBC3423B3EE9C0049B5A1 /* Customs Views */,
+				7CCBBC3423B3EE9C0049B5A1 /* Views */,
 				7CC92FF123ABCFF300C89524 /* Models */,
 				7CC92FF023ABCF3400C89524 /* ViewControllers */,
 				7CB99AA823A51BA20057EF56 /* Storyboards */,

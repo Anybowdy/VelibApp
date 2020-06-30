@@ -6,15 +6,18 @@ class MapVC: UIViewController {
     
     var stations: [Station] = [] {
         didSet {
-            self.stationsDidLoad()
-            self.centerOnUserLocation(zoomDelta: 0.02)
+            setUpAnnotation()
+            myPositionButton.isEnabled = true
+            closestStationButton.isEnabled = true
+            self.centerOnUserLocation(zoomDelta: userLocationZoom)
         }
     }
     let locationManager = CLLocationManager()
     var selectedAnnotation: Station?
- 
     var indicatorView = UIActivityIndicatorView()
 
+    let userLocationZoom = 0.02
+    
     // MARK: -Outlets
     
     @IBOutlet weak var mapView: MKMapView!
@@ -34,7 +37,7 @@ class MapVC: UIViewController {
         super.viewDidLoad()
         checkLocationAuthStatus()
         mapView.delegate = self
-
+        
         getStations()
         setUpView()
     }
@@ -47,11 +50,12 @@ class MapVC: UIViewController {
         indicatorView.center = view.center
         indicatorView.style = UIActivityIndicatorView.Style.gray
         indicatorView.startAnimating()
-        view.addSubview(indicatorView)
         
         infoViewCenter.constant = 300
         infoView.layer.cornerRadius = 20
         infoView.backgroundColor = UIColor.white.withAlphaComponent(0.8)
+        
+        view.addSubview(indicatorView)
     }
     
     func getStations() {
@@ -63,11 +67,6 @@ class MapVC: UIViewController {
         }
     }
     
-    func stationsDidLoad() {
-        setUpAnnotation()
-        myPositionButton.isEnabled = true
-        closestStationButton.isEnabled = true
-    }
     
     func centerOnUserLocation(zoomDelta: CLLocationDegrees) {
         if let userLocation = locationManager.location?.coordinate {
@@ -100,7 +99,7 @@ class MapVC: UIViewController {
         switch CLLocationManager.authorizationStatus() {
         case .authorizedWhenInUse, .authorizedAlways:
             mapView.showsUserLocation = true
-            centerOnUserLocation(zoomDelta: 0.15)
+            centerOnUserLocation(zoomDelta: userLocationZoom)
             break
         case .denied, .notDetermined, .restricted:
             locationManager.requestWhenInUseAuthorization()
@@ -137,7 +136,7 @@ class MapVC: UIViewController {
     @IBAction func myPositionButtonTapped(_ sender: Any) {
         mapView.deselectAnnotation(self.selectedAnnotation, animated: true)
         hideInfoView()
-        centerOnUserLocation(zoomDelta: 0.020)
+        centerOnUserLocation(zoomDelta: userLocationZoom)
     }
     
     
