@@ -3,63 +3,58 @@ import UIKit
 import MapKit
 import Contacts
 
-class Station: NSObject, MKAnnotation {
-    
-    let title: String?
-    let stationName: String
-    let nbBikes: Int
-    let nbEBikes: Int
-    let nbFreeDocks: Int
-    var coordinate: CLLocationCoordinate2D
-    let location: CLLocationCoordinate2D
-    let distance: Float
-    
-    init(stationName: String, nbBikes: Int, nbEBikes: Int, nbFreeDocks: Int, location: CLLocationCoordinate2D, distance: Float, coordinate: CLLocationCoordinate2D) {
-        self.title = stationName
-        self.stationName = stationName
-        self.nbBikes = nbBikes
-        self.nbEBikes = nbEBikes
-        self.nbFreeDocks = nbFreeDocks
-        self.location = location
-        self.distance = distance
-        self.coordinate = coordinate
+struct Station: Decodable {
+    let name: String
+    let mechanical: Int
+    let eBike: Int
+    let numdocksavailable: Int
+    var coordinate: [Float]
+    //let distance: Float
+
+    enum CodingKeys: CodingKey {
+        case fields
+        
+        case ebike
+        case name
+        case mechanical
+        case coordonnees_geo
+        case numdocksavailable
     }
     
+    init (from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        let fieldsContainer = try container.nestedContainer(keyedBy: CodingKeys.self, forKey: .fields)
+                
+        self.eBike = try fieldsContainer.decode(Int.self, forKey: .ebike)
+        self.name = try fieldsContainer.decode(String.self, forKey: .name)
+        self.mechanical = try fieldsContainer.decode(Int.self, forKey: .mechanical)
+        self.coordinate = try fieldsContainer.decode([Float].self, forKey: .coordonnees_geo)
+        self.numdocksavailable = try fieldsContainer.decode(Int.self, forKey: .numdocksavailable)
+    }
+    
+    
     static func fetchStationsData(completed: @escaping ([Station]) -> Void) {
-        var stations: [Station] = []
-        let location = CLLocationManager().location
-        guard let jsonStringUrl = URL(string: "https://opendata.paris.fr/api/records/1.0/search/?dataset=velib-disponibilite-en-temps-reel&rows=1400") else { return }
-        URLSession.shared.dataTask(with: jsonStringUrl) { (data, response, error) in
+        //let location = CLLocationManager().location
+        guard let url = URL(string: "https://opendata.paris.fr/api/records/1.0/search/?dataset=velib-disponibilite-en-temps-reel&q=&rows=1400") else { return }
+        let task = URLSession.shared.dataTask(with: url) { (data, response, error) in
             guard let data = data else { return }
             do {
-                guard let jsonObject = try JSONSerialization.jsonObject(with: data, options: .allowFragments) as? [String: Any] else { return }
-                guard let recordsObjects = jsonObject["records"] as? [[String: Any]] else { return }
-                for recordObject in recordsObjects {
-                    if let fields = recordObject["fields"] as? [String: Any],
-                        let nbFreeEDock = fields["nbfreeedock"] as? Int,
-                        let nbBikes = fields["nbbike"] as? Int,
-                        let nbEBikes = fields["nbebike"] as? Int,
-                        let stationName = fields["station_name"] as? String,
-                        let geo = fields["geo"] as? [CLLocationDegrees]
-                    {
-                        stations.append(Station(stationName: stationName,nbBikes: nbBikes, nbEBikes: nbEBikes, nbFreeDocks: nbFreeEDock, location: CLLocationCoordinate2D(latitude: geo[0], longitude: geo[1]), distance: (Float(location!.distance(from: CLLocation(latitude: geo[0], longitude: geo[1]))) / 100).rounded() / 10, coordinate: CLLocationCoordinate2D(latitude: geo[0], longitude: geo[1])))
-                    }
-                }
+                let stations = try JSONDecoder().decode(Response.self, from: data)
+                completed(stations.records)
             }
             catch let error {
                 print("Error: \(error)")
             }
-            stations = stations.sorted(by: {(a, b) -> Bool in a.distance < b.distance })
-            completed(stations)
-        }.resume()
+        }
+        task.resume()
     }
     
-    
+    /*
     func mapItem() -> MKMapItem {
         let addressDict = [CNPostalAddressStreetKey: title]
         let placemark = MKPlacemark(coordinate: coordinate, addressDictionary:addressDict as [String : Any])
         let mapItem = MKMapItem(placemark: placemark)
         mapItem.name = self.title
         return mapItem
-    }
+    }*/
 }
