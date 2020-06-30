@@ -3,13 +3,16 @@ import UIKit
 import MapKit
 import Contacts
 
-struct Station: Decodable {
+class Station: NSObject, MKAnnotation, Decodable {
+    var coordinate: CLLocationCoordinate2D
+    
+    let title: String?
     let name: String
     let mechanical: Int
     let eBike: Int
     let numdocksavailable: Int
-    var coordinate: [Float]
-    //let distance: Float
+    var location: [CLLocationDegrees]
+    //let distance: Float?
 
     enum CodingKeys: CodingKey {
         case fields
@@ -20,18 +23,22 @@ struct Station: Decodable {
         case coordonnees_geo
         case numdocksavailable
     }
-    
-    init (from decoder: Decoder) throws {
+        
+    required init (from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         let fieldsContainer = try container.nestedContainer(keyedBy: CodingKeys.self, forKey: .fields)
                 
         self.eBike = try fieldsContainer.decode(Int.self, forKey: .ebike)
+        self.title = try fieldsContainer.decode(String.self, forKey: .name)
         self.name = try fieldsContainer.decode(String.self, forKey: .name)
         self.mechanical = try fieldsContainer.decode(Int.self, forKey: .mechanical)
-        self.coordinate = try fieldsContainer.decode([Float].self, forKey: .coordonnees_geo)
+        self.location = try fieldsContainer.decode([CLLocationDegrees].self, forKey: .coordonnees_geo)
         self.numdocksavailable = try fieldsContainer.decode(Int.self, forKey: .numdocksavailable)
+        
+        self.coordinate = CLLocationCoordinate2D(latitude: location[0], longitude: location[1])
+        
+        super.init()
     }
-    
     
     static func fetchStationsData(completed: @escaping ([Station]) -> Void) {
         //let location = CLLocationManager().location
@@ -49,12 +56,11 @@ struct Station: Decodable {
         task.resume()
     }
     
-    /*
     func mapItem() -> MKMapItem {
         let addressDict = [CNPostalAddressStreetKey: title]
         let placemark = MKPlacemark(coordinate: coordinate, addressDictionary:addressDict as [String : Any])
         let mapItem = MKMapItem(placemark: placemark)
         mapItem.name = self.title
         return mapItem
-    }*/
+    }
 }

@@ -12,9 +12,25 @@ class MapVC: UIViewController {
             self.centerOnUserLocation(zoomDelta: userLocationZoom)
         }
     }
+    
     let locationManager = CLLocationManager()
     var selectedAnnotation: Station?
+    
     var indicatorView = UIActivityIndicatorView()
+    
+    let annotationView: MKAnnotationView = {
+        let goButton = { () -> UIButton in
+            let button = UIButton(frame: CGRect(origin: CGPoint.zero, size: CGSize(width: 35, height: 35)))
+            button.setBackgroundImage(UIImage(named: "google"), for: UIControl.State.normal)
+            return button
+        }()
+        
+        let annotationView = MKAnnotationView()
+        annotationView.image = UIImage(named: "bubble")
+        annotationView.canShowCallout = true
+        annotationView.rightCalloutAccessoryView = goButton
+        return annotationView
+    }()
 
     let userLocationZoom = 0.02
     
@@ -35,8 +51,9 @@ class MapVC: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        checkLocationAuthStatus()
+        locationManager.delegate = self
         mapView.delegate = self
+        mapView.register(MKMarkerAnnotationView.self, forAnnotationViewWithReuseIdentifier: "AnnotationView")
         
         getStations()
         setUpView()
@@ -58,6 +75,14 @@ class MapVC: UIViewController {
         view.addSubview(indicatorView)
     }
     
+    func centerOnUserLocation(zoomDelta: CLLocationDegrees) {
+        if let userLocation = locationManager.location?.coordinate {
+            let zoom = MKCoordinateSpan(latitudeDelta: zoomDelta, longitudeDelta: zoomDelta)
+            let region = MKCoordinateRegion(center: userLocation, span: zoom)
+            mapView.setRegion(region, animated: true)
+        }
+    }
+    
     func getStations() {
         Station.fetchStationsData { stations in
             DispatchQueue.main.async {
@@ -66,33 +91,11 @@ class MapVC: UIViewController {
             }
         }
     }
-    
-    
-    func centerOnUserLocation(zoomDelta: CLLocationDegrees) {
-        if let userLocation = locationManager.location?.coordinate {
-            let zoom = MKCoordinateSpan(latitudeDelta: zoomDelta, longitudeDelta: zoomDelta)
-            let region = MKCoordinateRegion(center: userLocation, span: zoom)
-            //let region = MKCoordinateRegion.init(center: userLocation, latitudinalMeters: 10000, longitudinalMeters: 10000)
-            mapView.setRegion(region, animated: true)
-        }
-    }
-   
+
     
     func setUpAnnotation() {
         indicatorView.stopAnimating()
-        for station in stations {
-            //mapView.addAnnotation(station)
-        }
-    }
-    
-    
-    private func checkLocationAuthStatus() {
-        if CLLocationManager.locationServicesEnabled() {
-            locationManager.delegate = self
-        }
-        else {
-            // Alert
-        }
+        mapView.addAnnotations(stations)
     }
     
     private func checkLocationAuthorization() {
@@ -122,7 +125,6 @@ class MapVC: UIViewController {
         }
     }
     
-    
     private func hideInfoView() {
         infoViewCenter.constant = 300
         UIView.animate(withDuration: 0.3) {
@@ -134,7 +136,7 @@ class MapVC: UIViewController {
     // MARK: -Actions
     
     @IBAction func myPositionButtonTapped(_ sender: Any) {
-        //mapView.deselectAnnotation(self.selectedAnnotation, animated: true)
+        mapView.deselectAnnotation(self.selectedAnnotation, animated: true)
         hideInfoView()
         centerOnUserLocation(zoomDelta: userLocationZoom)
     }
@@ -145,6 +147,7 @@ class MapVC: UIViewController {
             return
         }
         let closestStation = stations.first
+        //let test = stations.min(by: { $0.distance < $1.distance})
         let toSelectAnnotation = mapView.annotations.filter({ return $0.title == closestStation?.name})
         mapView.selectedAnnotations = toSelectAnnotation
     }
@@ -153,7 +156,6 @@ class MapVC: UIViewController {
 
 extension MapVC: MKMapViewDelegate {
     
-    /*
     func mapView(_ mapView: MKMapView, didSelect view: MKAnnotationView) {
         guard let annotation = view.annotation as? Station else { return }
         
@@ -169,31 +171,18 @@ extension MapVC: MKMapViewDelegate {
         let region = MKCoordinateRegion(center: annotation.coordinate, span: zoom)
         mapView.setRegion(region, animated: true)
     }
-    */
         
     func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
         if annotation is MKUserLocation {
             return nil
         }
         
-        let goButton = { () -> UIButton in
-            let button = UIButton(frame: CGRect(origin: CGPoint.zero, size: CGSize(width: 35, height: 35)))
-            button.setBackgroundImage(UIImage(named: "google"), for: UIControl.State.normal)
-            return button
-        }()
-        
-        let annotationView = { () -> MKAnnotationView in
-            let annotationView = MKAnnotationView(annotation: annotation, reuseIdentifier: "AnnotationView")
-            annotationView.image = UIImage(named: "bubble")
-            annotationView.canShowCallout = false
-            annotationView.rightCalloutAccessoryView = goButton
+        if let annotationView = mapView.dequeueReusableAnnotationView(withIdentifier: "AnnotationView") {
             return annotationView
-        }()
-        
-        return annotationView
+        }
+        return nil
     }
     
-    /*
     // Redirect to Plans
     func mapView(_ mapView: MKMapView, annotationView view: MKAnnotationView,
         calloutAccessoryControlTapped control: UIControl) {
@@ -201,8 +190,8 @@ extension MapVC: MKMapViewDelegate {
       let launchOptions = [MKLaunchOptionsDirectionsModeKey: MKLaunchOptionsDirectionsModeDriving]
       location.mapItem().openInMaps(launchOptions: launchOptions)
     }
-    */
 }
+
 
 extension MapVC: CLLocationManagerDelegate {
     
