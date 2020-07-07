@@ -55,6 +55,7 @@ class MapVC: UIViewController {
         mapView.delegate = self
         mapView.register(MKMarkerAnnotationView.self, forAnnotationViewWithReuseIdentifier: "AnnotationView")
         
+        addTapGesture()
         getStations()
         setUpView()
     }
@@ -91,7 +92,6 @@ class MapVC: UIViewController {
             }
         }
     }
-
     
     func setUpAnnotation() {
         indicatorView.stopAnimating()
@@ -132,8 +132,19 @@ class MapVC: UIViewController {
         }
     }
     
+    // MARK: -Gesture Recognizer
+    
+    func addTapGesture() {
+        let gesture = UITapGestureRecognizer(target: self, action: #selector(didTapOnMap))
+        mapView.addGestureRecognizer(gesture)
+    }
+    
     
     // MARK: -Actions
+    
+    @objc func didTapOnMap() {
+        hideInfoView()
+    }
     
     @IBAction func myPositionButtonTapped(_ sender: Any) {
         mapView.deselectAnnotation(self.selectedAnnotation, animated: true)
@@ -146,11 +157,18 @@ class MapVC: UIViewController {
         if (stations.isEmpty) {
             return
         }
-        let closestStation = stations.first
-        //let test = stations.min(by: { $0.distance < $1.distance})
+        guard let lat = locationManager.location?.coordinate.latitude else { return }
+        guard let long = locationManager.location?.coordinate.longitude else { return }
+        let location = CLLocation(latitude: lat, longitude: long)
+        let closestStation = stations.min { (a, b) -> Bool in
+            let first = location.distance(from: CLLocation(latitude: a.coordinate.latitude, longitude: a.coordinate.longitude))
+            let second = location.distance(from: CLLocation(latitude: b.coordinate.latitude, longitude: b.coordinate.longitude))
+            return first < second
+        }
         let toSelectAnnotation = mapView.annotations.filter({ return $0.title == closestStation?.name})
         mapView.selectedAnnotations = toSelectAnnotation
     }
+    
 }
 
 
@@ -160,7 +178,6 @@ extension MapVC: MKMapViewDelegate {
         guard let annotation = view.annotation as? Station else { return }
         
         self.selectedAnnotation = annotation
-        showInfoView(station: annotation)
         
         let currentSpanLat = self.mapView.region.span.latitudeDelta
         let currentSpanLong = self.mapView.region.span.longitudeDelta
@@ -170,6 +187,7 @@ extension MapVC: MKMapViewDelegate {
         }
         let region = MKCoordinateRegion(center: annotation.coordinate, span: zoom)
         mapView.setRegion(region, animated: true)
+        showInfoView(station: annotation)
     }
         
     func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
@@ -190,6 +208,7 @@ extension MapVC: MKMapViewDelegate {
       let launchOptions = [MKLaunchOptionsDirectionsModeKey: MKLaunchOptionsDirectionsModeDriving]
       location.mapItem().openInMaps(launchOptions: launchOptions)
     }
+    
 }
 
 
@@ -198,4 +217,5 @@ extension MapVC: CLLocationManagerDelegate {
     func locationManager(_ manager: CLLocationManager, didChangeAuthorization status: CLAuthorizationStatus) {
         checkLocationAuthorization()
     }
+
 }

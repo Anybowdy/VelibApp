@@ -4,6 +4,7 @@ import MapKit
 import Contacts
 
 class Station: NSObject, MKAnnotation, Decodable {
+    
     var coordinate: CLLocationCoordinate2D
     
     let title: String?
@@ -12,7 +13,6 @@ class Station: NSObject, MKAnnotation, Decodable {
     let eBike: Int
     let numdocksavailable: Int
     var location: [CLLocationDegrees]
-    //let distance: Float?
 
     enum CodingKeys: CodingKey {
         case fields
@@ -41,7 +41,6 @@ class Station: NSObject, MKAnnotation, Decodable {
     }
     
     static func fetchStationsData(completed: @escaping ([Station]) -> Void) {
-        //let location = CLLocationManager().location
         guard let url = URL(string: "https://opendata.paris.fr/api/records/1.0/search/?dataset=velib-disponibilite-en-temps-reel&q=&rows=1400") else { return }
         let task = URLSession.shared.dataTask(with: url) { (data, response, error) in
             guard let data = data else { return }
