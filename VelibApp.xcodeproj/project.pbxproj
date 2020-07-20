@@ -18,6 +18,7 @@
 		7CE0124324C5CD6400915F0D /* API.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CE0124224C5CD6400915F0D /* API.swift */; };
 		7CE0124624C5D29200915F0D /* MapVC+MapView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CE0124524C5D29200915F0D /* MapVC+MapView.swift */; };
 		7CE0124824C5D69B00915F0D /* MapVC+Location.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CE0124724C5D69B00915F0D /* MapVC+Location.swift */; };
+		7CE0124A24C5E85300915F0D /* MapVC+SearchBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CE0124924C5E85300915F0D /* MapVC+SearchBar.swift */; };
 		7CE3BAD424ABCAEC0045176A /* Response.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CE3BAD324ABCAEB0045176A /* Response.swift */; };
 		7CE3BAD624ABD9B30045176A /* StationMarkerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CE3BAD524ABD9B30045176A /* StationMarkerView.swift */; };
 /* End PBXBuildFile section */
@@ -36,6 +37,7 @@
 		7CE0124224C5CD6400915F0D /* API.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = API.swift; sourceTree = "<group>"; };
 		7CE0124524C5D29200915F0D /* MapVC+MapView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MapVC+MapView.swift"; sourceTree = "<group>"; };
 		7CE0124724C5D69B00915F0D /* MapVC+Location.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MapVC+Location.swift"; sourceTree = "<group>"; };
+		7CE0124924C5E85300915F0D /* MapVC+SearchBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MapVC+SearchBar.swift"; sourceTree = "<group>"; };
 		7CE3BAD324ABCAEB0045176A /* Response.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Response.swift; sourceTree = "<group>"; };
 		7CE3BAD524ABD9B30045176A /* StationMarkerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StationMarkerView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -66,6 +68,7 @@
 				7CB2403422FC4A6900AF63C5 /* MapVC.swift */,
 				7CE0124524C5D29200915F0D /* MapVC+MapView.swift */,
 				7CE0124724C5D69B00915F0D /* MapVC+Location.swift */,
+				7CE0124924C5E85300915F0D /* MapVC+SearchBar.swift */,
 			);
 			path = ViewControllers;
 			sourceTree = "<group>";
@@ -217,6 +220,7 @@
 				7CE0124324C5CD6400915F0D /* API.swift in Sources */,
 				7CCBBC3723B3EECA0049B5A1 /* PositionButton.swift in Sources */,
 				7CE0124624C5D29200915F0D /* MapVC+MapView.swift in Sources */,
+				7CE0124A24C5E85300915F0D /* MapVC+SearchBar.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -14,11 +14,12 @@ class MapVC: UIViewController {
         }
     }
     
-    let locationManager = CLLocationManager()
     var selectedAnnotation: Station?
     
+    let locationManager = CLLocationManager()
     var indicatorView = UIActivityIndicatorView()
-    
+    var searchBar = UISearchBar()
+
     let annotationView: MKAnnotationView = {
         let goButton = { () -> UIButton in
             let button = UIButton(frame: CGRect(origin: CGPoint.zero, size: CGSize(width: 35, height: 35)))
@@ -34,9 +35,7 @@ class MapVC: UIViewController {
     }()
 
     let userLocationZoom = 0.02
-    
-    var searchBar = UISearchBar()
-    
+        
     // MARK: -Outlets
     
     @IBOutlet weak var mapView: MKMapView!
@@ -132,12 +131,12 @@ class MapVC: UIViewController {
     
     // MARK: -Actions
     
-    @IBAction func searchButtonTapped(_ sender: Any) {
-        search(shouldShow: true)
-    }
-    
     @objc func didTapOnMap() {
         hideInfoView()
+    }
+    
+    @IBAction func searchButtonTapped(_ sender: Any) {
+        searchMode(isActivated: true)
     }
     
     @IBAction func myPositionButtonTapped(_ sender: Any) {
@@ -163,17 +162,6 @@ class MapVC: UIViewController {
         mapView.selectedAnnotations = toSelectAnnotation
     }
     
-    func search(shouldShow: Bool) {
-        if (shouldShow) {
-            navigationController?.isNavigationBarHidden = false
-            navigationItem.titleView = searchBar
-            searchBar.becomeFirstResponder()
-        } else {
-            navigationItem.titleView = nil
-            navigationController?.isNavigationBarHidden = true
-        }
-    }
-    
 }
 
 
@@ -196,12 +184,5 @@ extension MapVC {
         UIView.animate(withDuration: 0.3) {
             self.view.layoutIfNeeded()
         }
-    }
-}
-
-extension MapVC: UISearchBarDelegate {
-    
-    func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
-        search(shouldShow: false)
     }
 }
