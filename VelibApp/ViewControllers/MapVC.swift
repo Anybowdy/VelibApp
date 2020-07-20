@@ -6,10 +6,11 @@ class MapVC: UIViewController {
     
     var stations: [Station] = [] {
         didSet {
+            centerOnUserLocation(zoomDelta: userLocationZoom)
             setUpAnnotation()
             myPositionButton.isEnabled = true
             closestStationButton.isEnabled = true
-            self.centerOnUserLocation(zoomDelta: userLocationZoom)
+            mapView.isHidden = false
         }
     }
     
@@ -56,14 +57,17 @@ class MapVC: UIViewController {
         mapView.register(MKMarkerAnnotationView.self, forAnnotationViewWithReuseIdentifier: "AnnotationView")
         
         addTapGesture()
-        getStations()
+        
         setUpView()
     }
     
     // MARK: -UI
     
     func setUpView() {
-        indicatorView.frame = CGRect(x: 0, y: 0, width: 50, height: 50)
+        mapView.isHidden = true
+        
+        indicatorView.frame = CGRect(x: 0, y: 0, width: 150, height: 150)
+        indicatorView.backgroundColor = .gray
         indicatorView.hidesWhenStopped = true
         indicatorView.center = view.center
         indicatorView.style = UIActivityIndicatorView.Style.gray
@@ -80,7 +84,13 @@ class MapVC: UIViewController {
         if let userLocation = locationManager.location?.coordinate {
             let zoom = MKCoordinateSpan(latitudeDelta: zoomDelta, longitudeDelta: zoomDelta)
             let region = MKCoordinateRegion(center: userLocation, span: zoom)
-            mapView.setRegion(region, animated: true)
+            UIView.animate(withDuration: 0.2,
+                           delay: 0,
+                           usingSpringWithDamping: 0.6,
+                           initialSpringVelocity: 10,
+                           options: UIView.AnimationOptions.curveEaseIn, animations: {
+                self.mapView.setRegion(region, animated: true)
+            }, completion: nil)
         }
     }
     
@@ -88,7 +98,6 @@ class MapVC: UIViewController {
         Station.fetchStationsData { stations in
             DispatchQueue.main.async {
                 self.stations = stations
-                print(stations.count)
             }
         }
     }
@@ -98,23 +107,9 @@ class MapVC: UIViewController {
         mapView.addAnnotations(stations)
     }
     
-    private func checkLocationAuthorization() {
-        switch CLLocationManager.authorizationStatus() {
-        case .authorizedWhenInUse, .authorizedAlways:
-            mapView.showsUserLocation = true
-            centerOnUserLocation(zoomDelta: userLocationZoom)
-            break
-        case .denied, .notDetermined, .restricted:
-            locationManager.requestWhenInUseAuthorization()
-            break
-        default:
-            break
-        }
-    }
-    
     // MARK: INFORMATION VIEW
 
-    private func showInfoView(station: Station) {
+    func showInfoView(station: Station) {
         nbEBikesLabel.text = String(station.eBike)
         nbBikesLabel.text = String(station.mechanical)
         nbDocksLabel.text = String(station.numdocksavailable)
@@ -152,7 +147,6 @@ class MapVC: UIViewController {
         centerOnUserLocation(zoomDelta: userLocationZoom)
     }
     
-    
     @IBAction func closestStationButtonTapped(_ sender: Any) {
         if (stations.isEmpty) {
             return
@@ -171,51 +165,3 @@ class MapVC: UIViewController {
     
 }
 
-
-extension MapVC: MKMapViewDelegate {
-    
-    func mapView(_ mapView: MKMapView, didSelect view: MKAnnotationView) {
-        guard let annotation = view.annotation as? Station else { return }
-        
-        self.selectedAnnotation = annotation
-        
-        let currentSpanLat = self.mapView.region.span.latitudeDelta
-        let currentSpanLong = self.mapView.region.span.longitudeDelta
-        var zoom = MKCoordinateSpan(latitudeDelta: currentSpanLat, longitudeDelta: currentSpanLong)
-        if (currentSpanLat > 0.04 || currentSpanLong > 0.04) {
-            zoom = MKCoordinateSpan(latitudeDelta: 0.04, longitudeDelta: 0.04)
-        }
-        let region = MKCoordinateRegion(center: annotation.coordinate, span: zoom)
-        mapView.setRegion(region, animated: true)
-        showInfoView(station: annotation)
-    }
-        
-    func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
-        if annotation is MKUserLocation {
-            return nil
-        }
-        
-        if let annotationView = mapView.dequeueReusableAnnotationView(withIdentifier: "AnnotationView") {
-            return annotationView
-        }
-        return nil
-    }
-    
-    // Redirect to Plans
-    func mapView(_ mapView: MKMapView, annotationView view: MKAnnotationView,
-        calloutAccessoryControlTapped control: UIControl) {
-      let location = view.annotation as! Station
-      let launchOptions = [MKLaunchOptionsDirectionsModeKey: MKLaunchOptionsDirectionsModeDriving]
-      location.mapItem().openInMaps(launchOptions: launchOptions)
-    }
-    
-}
-
-
-extension MapVC: CLLocationManagerDelegate {
-    
-    func locationManager(_ manager: CLLocationManager, didChangeAuthorization status: CLAuthorizationStatus) {
-        checkLocationAuthorization()
-    }
-
-}

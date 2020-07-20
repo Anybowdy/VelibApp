@@ -41,7 +41,7 @@ class Station: NSObject, MKAnnotation, Decodable {
     }
     
     static func fetchStationsData(completed: @escaping ([Station]) -> Void) {
-        guard let url = URL(string: "https://opendata.paris.fr/api/records/1.0/search/?dataset=velib-disponibilite-en-temps-reel&q=&rows=1400") else { return }
+        guard let url = URL(string: API.API_LINK) else { return }
         let task = URLSession.shared.dataTask(with: url) { (data, response, error) in
             guard let data = data else { return }
             do {
