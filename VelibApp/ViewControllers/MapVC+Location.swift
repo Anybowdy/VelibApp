@@ -13,7 +13,7 @@ extension MapVC {
         switch CLLocationManager.authorizationStatus() {
         case .authorizedWhenInUse, .authorizedAlways:
             mapView.showsUserLocation = true
-            //centerOnUserLocation(zoomDelta: userLocationZoom)
+            centerOnUserLocation(zoomDelta: userLocationZoom)
             break
         case .denied, .notDetermined, .restricted:
             locationManager.requestWhenInUseAuthorization()

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="15400" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="urn-SP-Vox">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="15400" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="F9e-HY-dQw">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
@@ -48,7 +48,7 @@
                                 </constraints>
                             </stackView>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="gyp-JK-TcW">
-                                <rect key="frame" x="297.5" y="73" width="115" height="170"/>
+                                <rect key="frame" x="297.5" y="117" width="115" height="170"/>
                                 <subviews>
                                     <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillEqually" translatesAutoresizingMaskIntoConstraints="NO" id="Lhi-f7-ppm">
                                         <rect key="frame" x="20" y="0.0" width="75" height="170"/>
@@ -108,6 +108,14 @@
                                     <constraint firstItem="Lhi-f7-ppm" firstAttribute="top" secondItem="gyp-JK-TcW" secondAttribute="top" id="wNP-89-7AO"/>
                                 </constraints>
                             </view>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="0fk-Of-h5B" customClass="PositionButton" customModule="VelibApp" customModuleProvider="target">
+                                <rect key="frame" x="35" y="709" width="54" height="53"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <state key="normal" image="target"/>
+                                <connections>
+                                    <action selector="searchButtonTapped:" destination="urn-SP-Vox" eventType="touchUpInside" id="tsl-Oy-KNm"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                         <constraints>
@@ -132,9 +140,28 @@
                         <outlet property="nbBikesLabel" destination="b3D-Pa-nD0" id="KXv-qA-Fgb"/>
                         <outlet property="nbDocksLabel" destination="Uh4-cp-R5b" id="rHT-UV-V29"/>
                         <outlet property="nbEBikesLabel" destination="crA-yG-aaE" id="2PC-Z0-e2O"/>
+                        <outlet property="searchButton" destination="0fk-Of-h5B" id="SCV-te-ybt"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Vmu-x3-Ax5" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="6418.840579710145" y="752.67857142857144"/>
+        </scene>
+        <!--Navigation Controller-->
+        <scene sceneID="Wu3-Fn-5wP">
+            <objects>
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="F9e-HY-dQw" sceneMemberID="viewController">
+                    <toolbarItems/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="lBm-dB-WgN">
+                        <rect key="frame" x="0.0" y="44" width="414" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="urn-SP-Vox" kind="relationship" relationship="rootViewController" id="nfs-Sw-b4H"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="uYF-r6-PMG" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="5508.6956521739139" y="752.67857142857144"/>
         </scene>

@@ -35,11 +35,14 @@ class MapVC: UIViewController {
 
     let userLocationZoom = 0.02
     
+    var searchBar = UISearchBar()
+    
     // MARK: -Outlets
     
     @IBOutlet weak var mapView: MKMapView!
     @IBOutlet weak var myPositionButton: UIButton!
     @IBOutlet weak var closestStationButton: UIButton!
+    @IBOutlet weak var searchButton: PositionButton!
     
     @IBOutlet weak var infoView: UIView!
     @IBOutlet weak var infoViewCenter: NSLayoutConstraint!
@@ -52,19 +55,30 @@ class MapVC: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        setupDelegates()
+        mapView.register(MKMarkerAnnotationView.self, forAnnotationViewWithReuseIdentifier: "AnnotationView")
+        setUpView()
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        navigationController?.isNavigationBarHidden = true
+    }
+    
+    // MARK: -Delegates
+    
+    func setupDelegates() {
+        searchBar.delegate = self
         locationManager.delegate = self
         mapView.delegate = self
-        mapView.register(MKMarkerAnnotationView.self, forAnnotationViewWithReuseIdentifier: "AnnotationView")
-        
-        addTapGesture()
-        
-        setUpView()
     }
     
     // MARK: -UI
     
     func setUpView() {
         mapView.isHidden = true
+        
+        searchBar.showsCancelButton = true
+        searchBar.placeholder = "Enter an address"
         
         indicatorView.frame = CGRect(x: 0, y: 0, width: 150, height: 150)
         indicatorView.backgroundColor = .gray
@@ -78,6 +92,7 @@ class MapVC: UIViewController {
         infoView.backgroundColor = UIColor.white.withAlphaComponent(0.8)
         
         view.addSubview(indicatorView)
+        addTapGesture()
     }
     
     func centerOnUserLocation(zoomDelta: CLLocationDegrees) {
@@ -107,26 +122,6 @@ class MapVC: UIViewController {
         mapView.addAnnotations(stations)
     }
     
-    // MARK: INFORMATION VIEW
-
-    func showInfoView(station: Station) {
-        nbEBikesLabel.text = String(station.eBike)
-        nbBikesLabel.text = String(station.mechanical)
-        nbDocksLabel.text = String(station.numdocksavailable)
-        
-        infoViewCenter.constant = 148
-        UIView.animate(withDuration: 0.3) {
-            self.view.layoutIfNeeded()
-        }
-    }
-    
-    private func hideInfoView() {
-        infoViewCenter.constant = 300
-        UIView.animate(withDuration: 0.3) {
-            self.view.layoutIfNeeded()
-        }
-    }
-    
     // MARK: -Gesture Recognizer
     
     func addTapGesture() {
@@ -136,6 +131,10 @@ class MapVC: UIViewController {
     
     
     // MARK: -Actions
+    
+    @IBAction func searchButtonTapped(_ sender: Any) {
+        search(shouldShow: true)
+    }
     
     @objc func didTapOnMap() {
         hideInfoView()
@@ -151,6 +150,7 @@ class MapVC: UIViewController {
         if (stations.isEmpty) {
             return
         }
+        mapView.deselectAnnotation(selectedAnnotation, animated: true)
         guard let lat = locationManager.location?.coordinate.latitude else { return }
         guard let long = locationManager.location?.coordinate.longitude else { return }
         let location = CLLocation(latitude: lat, longitude: long)
@@ -163,5 +163,45 @@ class MapVC: UIViewController {
         mapView.selectedAnnotations = toSelectAnnotation
     }
     
+    func search(shouldShow: Bool) {
+        if (shouldShow) {
+            navigationController?.isNavigationBarHidden = false
+            navigationItem.titleView = searchBar
+            searchBar.becomeFirstResponder()
+        } else {
+            navigationItem.titleView = nil
+            navigationController?.isNavigationBarHidden = true
+        }
+    }
+    
 }
 
+
+// MARK: INFORMATION VIEW
+
+extension MapVC {
+    func showInfoView(station: Station) {
+        nbEBikesLabel.text = String(station.eBike)
+        nbBikesLabel.text = String(station.mechanical)
+        nbDocksLabel.text = String(station.numdocksavailable)
+        
+        infoViewCenter.constant = 151
+        UIView.animate(withDuration: 0.3) {
+            self.view.layoutIfNeeded()
+        }
+    }
+    
+    private func hideInfoView() {
+        infoViewCenter.constant = 300
+        UIView.animate(withDuration: 0.3) {
+            self.view.layoutIfNeeded()
+        }
+    }
+}
+
+extension MapVC: UISearchBarDelegate {
+    
+    func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
+        search(shouldShow: false)
+    }
+}
