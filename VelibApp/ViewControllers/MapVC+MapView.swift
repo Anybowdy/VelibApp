@@ -5,6 +5,7 @@
 //  Created by Joseph Huang on 20/07/2020.
 //  Copyright © 2020 Joseph Huang. All rights reserved.
 //
+
 import MapKit
 import CoreLocation
 
@@ -23,7 +24,7 @@ extension MapVC: MKMapViewDelegate {
         }
         let region = MKCoordinateRegion(center: annotation.coordinate, span: zoom)
         mapView.setRegion(region, animated: true)
-        showInfoView(station: annotation)
+        stationInfoView(shouldShow: true)
     }
         
     func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
@@ -44,5 +45,4 @@ extension MapVC: MKMapViewDelegate {
       let launchOptions = [MKLaunchOptionsDirectionsModeKey: MKLaunchOptionsDirectionsModeDriving]
       location.mapItem().openInMaps(launchOptions: launchOptions)
     }
-    
 }

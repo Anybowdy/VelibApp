@@ -9,14 +9,24 @@
 import UIKit
 
 extension MapVC {
+    
     func searchMode(isActivated: Bool) {
         if (isActivated) {
-            navigationController?.isNavigationBarHidden = false
+            tableView.reloadData()
             navigationItem.titleView = searchBar
             searchBar.becomeFirstResponder()
+            UIView.animate(withDuration: 0.4) {
+                self.navigationController?.isNavigationBarHidden = false
+                self.tableViewTop.constant = 0
+                self.view.layoutIfNeeded()
+            }
         } else {
             navigationItem.titleView = nil
-            navigationController?.isNavigationBarHidden = true
+            UIView.animate(withDuration: 0.4) {
+                self.navigationController?.isNavigationBarHidden = true
+                self.tableViewTop.constant = 1200
+                self.view.layoutIfNeeded()
+            }
         }
     }
 }

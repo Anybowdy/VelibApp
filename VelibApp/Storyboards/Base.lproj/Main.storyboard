@@ -119,12 +119,21 @@
                                     </button>
                                 </subviews>
                             </stackView>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="hy8-v1-s2K">
+                                <rect key="frame" x="0.0" y="1288" width="414" height="808"/>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" secondItem="hy8-v1-s2K" secondAttribute="height" multiplier="207:404" id="Ndg-Py-gFV"/>
+                                </constraints>
+                            </tableView>
                         </subviews>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                         <constraints>
+                            <constraint firstItem="hy8-v1-s2K" firstAttribute="trailing" secondItem="uSK-zS-Bkp" secondAttribute="trailing" id="3sv-b0-KGy"/>
                             <constraint firstItem="uSK-zS-Bkp" firstAttribute="bottom" secondItem="ouT-XA-414" secondAttribute="bottom" constant="25" id="6be-2v-9Bd"/>
                             <constraint firstItem="uSK-zS-Bkp" firstAttribute="bottom" secondItem="HYH-Ar-doU" secondAttribute="bottom" constant="25" id="9e8-gN-S8N"/>
                             <constraint firstItem="gyp-JK-TcW" firstAttribute="centerX" secondItem="oMa-pB-kMK" secondAttribute="centerX" constant="148" id="A07-kI-0EN"/>
+                            <constraint firstItem="hy8-v1-s2K" firstAttribute="leading" secondItem="uSK-zS-Bkp" secondAttribute="leading" id="Eqa-hM-POh"/>
                             <constraint firstAttribute="bottom" secondItem="OXg-qf-InE" secondAttribute="bottom" id="KQa-9e-OfW"/>
                             <constraint firstItem="HYH-Ar-doU" firstAttribute="leading" secondItem="uSK-zS-Bkp" secondAttribute="leading" constant="29" id="LBZ-aG-DJK"/>
                             <constraint firstItem="OXg-qf-InE" firstAttribute="leading" secondItem="uSK-zS-Bkp" secondAttribute="leading" id="TBP-zt-aQd"/>
@@ -132,6 +141,7 @@
                             <constraint firstItem="OXg-qf-InE" firstAttribute="trailing" secondItem="uSK-zS-Bkp" secondAttribute="trailing" id="UIy-3h-qlE"/>
                             <constraint firstItem="gyp-JK-TcW" firstAttribute="top" secondItem="uSK-zS-Bkp" secondAttribute="top" constant="29" id="qVd-M9-2yu"/>
                             <constraint firstItem="ouT-XA-414" firstAttribute="centerX" secondItem="oMa-pB-kMK" secondAttribute="centerX" id="wav-on-pcn"/>
+                            <constraint firstItem="hy8-v1-s2K" firstAttribute="top" secondItem="uSK-zS-Bkp" secondAttribute="top" constant="1200" id="z0z-c3-UiJ"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="uSK-zS-Bkp"/>
                     </view>
@@ -146,6 +156,8 @@
                         <outlet property="nbDocksLabel" destination="Uh4-cp-R5b" id="rHT-UV-V29"/>
                         <outlet property="nbEBikesLabel" destination="crA-yG-aaE" id="2PC-Z0-e2O"/>
                         <outlet property="searchButton" destination="0fk-Of-h5B" id="SCV-te-ybt"/>
+                        <outlet property="tableView" destination="hy8-v1-s2K" id="QQE-th-852"/>
+                        <outlet property="tableViewTop" destination="z0z-c3-UiJ" id="NrL-Yg-UhO"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Vmu-x3-Ax5" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>

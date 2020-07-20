@@ -10,6 +10,7 @@ class MapVC: UIViewController {
             setUpAnnotation()
             myPositionButton.isEnabled = true
             closestStationButton.isEnabled = true
+            searchButton.isEnabled = true
             mapView.isHidden = false
         }
     }
@@ -35,7 +36,9 @@ class MapVC: UIViewController {
     }()
 
     let userLocationZoom = 0.02
-        
+    
+    let dummyData = ["Paris", "New York", "Shanghai", "Los Angeles"]
+    
     // MARK: -Outlets
     
     @IBOutlet weak var mapView: MKMapView!
@@ -45,15 +48,19 @@ class MapVC: UIViewController {
     
     @IBOutlet weak var infoView: UIView!
     @IBOutlet weak var infoViewCenter: NSLayoutConstraint!
+    @IBOutlet weak var tableViewTop: NSLayoutConstraint!
     
     @IBOutlet weak var nbEBikesLabel: UILabel!
     @IBOutlet weak var nbBikesLabel: UILabel!
     @IBOutlet weak var nbDocksLabel: UILabel!
     
+    @IBOutlet weak var tableView: UITableView!
+    
     // MARK: -Life cycle
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        getStations()
         setupDelegates()
         mapView.register(MKMarkerAnnotationView.self, forAnnotationViewWithReuseIdentifier: "AnnotationView")
         setUpView()
@@ -69,6 +76,9 @@ class MapVC: UIViewController {
         searchBar.delegate = self
         locationManager.delegate = self
         mapView.delegate = self
+        
+        tableView.delegate = self
+        tableView.dataSource = self
     }
     
     // MARK: -UI
@@ -80,7 +90,6 @@ class MapVC: UIViewController {
         searchBar.placeholder = "Enter an address"
         
         indicatorView.frame = CGRect(x: 0, y: 0, width: 150, height: 150)
-        indicatorView.backgroundColor = .gray
         indicatorView.hidesWhenStopped = true
         indicatorView.center = view.center
         indicatorView.style = UIActivityIndicatorView.Style.gray
@@ -91,7 +100,6 @@ class MapVC: UIViewController {
         infoView.backgroundColor = UIColor.white.withAlphaComponent(0.8)
         
         view.addSubview(indicatorView)
-        addTapGesture()
     }
     
     func centerOnUserLocation(zoomDelta: CLLocationDegrees) {
@@ -121,19 +129,7 @@ class MapVC: UIViewController {
         mapView.addAnnotations(stations)
     }
     
-    // MARK: -Gesture Recognizer
-    
-    func addTapGesture() {
-        let gesture = UITapGestureRecognizer(target: self, action: #selector(didTapOnMap))
-        mapView.addGestureRecognizer(gesture)
-    }
-    
-    
     // MARK: -Actions
-    
-    @objc func didTapOnMap() {
-        hideInfoView()
-    }
     
     @IBAction func searchButtonTapped(_ sender: Any) {
         searchMode(isActivated: true)
@@ -141,7 +137,7 @@ class MapVC: UIViewController {
     
     @IBAction func myPositionButtonTapped(_ sender: Any) {
         mapView.deselectAnnotation(self.selectedAnnotation, animated: true)
-        hideInfoView()
+        stationInfoView(shouldShow: false)
         centerOnUserLocation(zoomDelta: userLocationZoom)
     }
     
@@ -164,25 +160,25 @@ class MapVC: UIViewController {
     
 }
 
-
 // MARK: INFORMATION VIEW
 
 extension MapVC {
-    func showInfoView(station: Station) {
-        nbEBikesLabel.text = String(station.eBike)
-        nbBikesLabel.text = String(station.mechanical)
-        nbDocksLabel.text = String(station.numdocksavailable)
-        
-        infoViewCenter.constant = 151
-        UIView.animate(withDuration: 0.3) {
-            self.view.layoutIfNeeded()
-        }
-    }
     
-    private func hideInfoView() {
-        infoViewCenter.constant = 300
-        UIView.animate(withDuration: 0.3) {
-            self.view.layoutIfNeeded()
+    func stationInfoView(shouldShow: Bool) {
+        if (shouldShow), let station = self.selectedAnnotation {
+            nbEBikesLabel.text = String(station.eBike)
+            nbBikesLabel.text = String(station.mechanical)
+            nbDocksLabel.text = String(station.numdocksavailable)
+            
+            infoViewCenter.constant = 151
+            UIView.animate(withDuration: 0.3) {
+                self.view.layoutIfNeeded()
+            }
+        } else {
+            infoViewCenter.constant = 300
+            UIView.animate(withDuration: 0.3) {
+                self.view.layoutIfNeeded()
+            }
         }
     }
 }
