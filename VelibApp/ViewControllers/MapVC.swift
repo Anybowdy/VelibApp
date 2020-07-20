@@ -9,6 +9,7 @@ class MapVC: UIViewController {
     
     var stations: [Station] = [] {
         didSet {
+            setupCellConfiguration()
             filteredStations.accept(self.stations)
             centerOnUserLocation(zoomDelta: userLocationZoom)
             setUpAnnotation()
@@ -20,6 +21,7 @@ class MapVC: UIViewController {
     }
     
     var filteredStations: BehaviorRelay<[Station]> = BehaviorRelay(value: [])
+    
     var test = Observable.from(["oui", "non"])
     let disposeBag = DisposeBag()
     
@@ -28,6 +30,7 @@ class MapVC: UIViewController {
     let locationManager = CLLocationManager()
     var indicatorView = UIActivityIndicatorView()
     var searchBar = UISearchBar()
+    
 
     let annotationView: MKAnnotationView = {
         let goButton = { () -> UIButton in
@@ -44,8 +47,6 @@ class MapVC: UIViewController {
     }()
 
     let userLocationZoom = 0.02
-    
-    let dummyData = ["Paris", "New York", "Shanghai", "Los Angeles"]
     
     // MARK: -Outlets
     
@@ -73,7 +74,6 @@ class MapVC: UIViewController {
         mapView.register(MKMarkerAnnotationView.self, forAnnotationViewWithReuseIdentifier: "AnnotationView")
         setUpView()
         
-        setupCellConfiguration()
         setupCellTapHandling()
     }
     
@@ -95,7 +95,7 @@ class MapVC: UIViewController {
         mapView.isHidden = true
         
         searchBar.showsCancelButton = true
-        searchBar.placeholder = "Enter an address"
+        searchBar.placeholder = "Entrez une adresse"
         
         indicatorView.frame = CGRect(x: 0, y: 0, width: 150, height: 150)
         indicatorView.hidesWhenStopped = true
@@ -173,12 +173,22 @@ class MapVC: UIViewController {
 extension MapVC {
     
     func setupCellConfiguration() {
-        filteredStations
-            .bind(to: tableView
-                        .rx
-                        .items(cellIdentifier: "stationCell", cellType: UITableViewCell.self)) { row, station, cell in
-                            cell.textLabel?.text = station.name
-                        }
+        let searchResults = searchBar.rx.text.orEmpty
+            .flatMapLatest { (query) -> Observable<[Station]> in
+                if query.isEmpty {
+                    return .just(self.stations)
+                }
+                let filteredStations = self.stations.filter { (station) -> Bool in
+                    return station.name.contains(query)
+                }
+                return .just(filteredStations)
+        }
+        .observeOn(MainScheduler.instance)
+        
+        searchResults
+            .bind(to: tableView.rx.items(cellIdentifier: "stationCell")) { row, station, cell in
+                cell.textLabel?.text = station.name
+            }
         .disposed(by: disposeBag)
     }
     
