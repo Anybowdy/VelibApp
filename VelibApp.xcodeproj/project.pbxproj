@@ -3,10 +3,11 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 50;
+	objectVersion = 51;
 	objects = {
 
 /* Begin PBXBuildFile section */
+		00FC75C6880576E14D895606 /* Pods_VelibApp.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 97E6ACF6940DDF575763B8FC /* Pods_VelibApp.framework */; };
 		7C33671323552B5B004205E7 /* Media.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 7C33671223552B5B004205E7 /* Media.xcassets */; };
 		7CB2403522FC4A6900AF63C5 /* MapVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CB2403422FC4A6900AF63C5 /* MapVC.swift */; };
 		7CC92FF823ABDAFF00C89524 /* Station.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CC92FF723ABDAFF00C89524 /* Station.swift */; };
@@ -19,12 +20,12 @@
 		7CE0124624C5D29200915F0D /* MapVC+MapView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CE0124524C5D29200915F0D /* MapVC+MapView.swift */; };
 		7CE0124824C5D69B00915F0D /* MapVC+Location.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CE0124724C5D69B00915F0D /* MapVC+Location.swift */; };
 		7CE0124A24C5E85300915F0D /* MapVC+SearchBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CE0124924C5E85300915F0D /* MapVC+SearchBar.swift */; };
-		7CE0124C24C5F20A00915F0D /* MapVC+TableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CE0124B24C5F20A00915F0D /* MapVC+TableView.swift */; };
 		7CE3BAD424ABCAEC0045176A /* Response.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CE3BAD324ABCAEB0045176A /* Response.swift */; };
 		7CE3BAD624ABD9B30045176A /* StationMarkerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CE3BAD524ABD9B30045176A /* StationMarkerView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		02F4FB11D5B2ECA41A065E53 /* Pods-VelibApp.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-VelibApp.debug.xcconfig"; path = "Target Support Files/Pods-VelibApp/Pods-VelibApp.debug.xcconfig"; sourceTree = "<group>"; };
 		7C33671223552B5B004205E7 /* Media.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Media.xcassets; sourceTree = "<group>"; };
 		7CB2403422FC4A6900AF63C5 /* MapVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapVC.swift; sourceTree = "<group>"; };
 		7CC92FF723ABDAFF00C89524 /* Station.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Station.swift; sourceTree = "<group>"; };
@@ -39,9 +40,10 @@
 		7CE0124524C5D29200915F0D /* MapVC+MapView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MapVC+MapView.swift"; sourceTree = "<group>"; };
 		7CE0124724C5D69B00915F0D /* MapVC+Location.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MapVC+Location.swift"; sourceTree = "<group>"; };
 		7CE0124924C5E85300915F0D /* MapVC+SearchBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MapVC+SearchBar.swift"; sourceTree = "<group>"; };
-		7CE0124B24C5F20A00915F0D /* MapVC+TableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MapVC+TableView.swift"; sourceTree = "<group>"; };
 		7CE3BAD324ABCAEB0045176A /* Response.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Response.swift; sourceTree = "<group>"; };
 		7CE3BAD524ABD9B30045176A /* StationMarkerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StationMarkerView.swift; sourceTree = "<group>"; };
+		97E6ACF6940DDF575763B8FC /* Pods_VelibApp.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_VelibApp.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		DDF9AB1E147CF4AAEB75D3EB /* Pods-VelibApp.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-VelibApp.release.xcconfig"; path = "Target Support Files/Pods-VelibApp/Pods-VelibApp.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -49,12 +51,30 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				00FC75C6880576E14D895606 /* Pods_VelibApp.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		31EB1DFA3CA71FEE9911B460 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				02F4FB11D5B2ECA41A065E53 /* Pods-VelibApp.debug.xcconfig */,
+				DDF9AB1E147CF4AAEB75D3EB /* Pods-VelibApp.release.xcconfig */,
+			);
+			path = Pods;
+			sourceTree = "<group>";
+		};
+		69AAD6DCB67F3F38E14F7E14 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				97E6ACF6940DDF575763B8FC /* Pods_VelibApp.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 		7CB99AA823A51BA20057EF56 /* Storyboards */ = {
 			isa = PBXGroup;
 			children = (
@@ -71,7 +91,6 @@
 				7CE0124524C5D29200915F0D /* MapVC+MapView.swift */,
 				7CE0124724C5D69B00915F0D /* MapVC+Location.swift */,
 				7CE0124924C5E85300915F0D /* MapVC+SearchBar.swift */,
-				7CE0124B24C5F20A00915F0D /* MapVC+TableView.swift */,
 			);
 			path = ViewControllers;
 			sourceTree = "<group>";
@@ -108,6 +127,8 @@
 			children = (
 				7CDAD17322F995C00088FA18 /* VelibApp */,
 				7CDAD17222F995C00088FA18 /* Products */,
+				31EB1DFA3CA71FEE9911B460 /* Pods */,
+				69AAD6DCB67F3F38E14F7E14 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -149,9 +170,11 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 7CDAD18322F995C30088FA18 /* Build configuration list for PBXNativeTarget "VelibApp" */;
 			buildPhases = (
+				B5B08090A2BC40E712DDC9F5 /* [CP] Check Pods Manifest.lock */,
 				7CDAD16D22F995C00088FA18 /* Sources */,
 				7CDAD16E22F995C00088FA18 /* Frameworks */,
 				7CDAD16F22F995C00088FA18 /* Resources */,
+				4B441F178AC7FD0EEDD3674D /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -208,13 +231,54 @@
 		};
 /* End PBXResourcesBuildPhase section */
 
+/* Begin PBXShellScriptBuildPhase section */
+		4B441F178AC7FD0EEDD3674D /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-VelibApp/Pods-VelibApp-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-VelibApp/Pods-VelibApp-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-VelibApp/Pods-VelibApp-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		B5B08090A2BC40E712DDC9F5 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-VelibApp-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
+
 /* Begin PBXSourcesBuildPhase section */
 		7CDAD16D22F995C00088FA18 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 				7CCBBC3923B3F1740049B5A1 /* ClosestStationButton.swift in Sources */,
-				7CE0124C24C5F20A00915F0D /* MapVC+TableView.swift in Sources */,
 				7CB2403522FC4A6900AF63C5 /* MapVC.swift in Sources */,
 				7CC92FF823ABDAFF00C89524 /* Station.swift in Sources */,
 				7CDAD17522F995C00088FA18 /* AppDelegate.swift in Sources */,
@@ -368,6 +432,7 @@
 		};
 		7CDAD18422F995C30088FA18 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 02F4FB11D5B2ECA41A065E53 /* Pods-VelibApp.debug.xcconfig */;
 			buildSettings = {
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = FQ9SXB3J2T;
@@ -386,6 +451,7 @@
 		};
 		7CDAD18522F995C30088FA18 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = DDF9AB1E147CF4AAEB75D3EB /* Pods-VelibApp.release.xcconfig */;
 			buildSettings = {
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = FQ9SXB3J2T;

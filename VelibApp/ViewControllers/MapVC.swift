@@ -2,10 +2,14 @@ import UIKit
 import MapKit
 import CoreLocation
 
+import RxSwift
+import RxCocoa
+
 class MapVC: UIViewController {
     
     var stations: [Station] = [] {
         didSet {
+            filteredStations.accept(self.stations)
             centerOnUserLocation(zoomDelta: userLocationZoom)
             setUpAnnotation()
             myPositionButton.isEnabled = true
@@ -14,6 +18,10 @@ class MapVC: UIViewController {
             mapView.isHidden = false
         }
     }
+    
+    var filteredStations: BehaviorRelay<[Station]> = BehaviorRelay(value: [])
+    var test = Observable.from(["oui", "non"])
+    let disposeBag = DisposeBag()
     
     var selectedAnnotation: Station?
     
@@ -64,6 +72,9 @@ class MapVC: UIViewController {
         setupDelegates()
         mapView.register(MKMarkerAnnotationView.self, forAnnotationViewWithReuseIdentifier: "AnnotationView")
         setUpView()
+        
+        setupCellConfiguration()
+        setupCellTapHandling()
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -76,9 +87,6 @@ class MapVC: UIViewController {
         searchBar.delegate = self
         locationManager.delegate = self
         mapView.delegate = self
-        
-        tableView.delegate = self
-        tableView.dataSource = self
     }
     
     // MARK: -UI
@@ -160,7 +168,37 @@ class MapVC: UIViewController {
     
 }
 
-// MARK: INFORMATION VIEW
+// MARK: - Rx Tableview
+
+extension MapVC {
+    
+    func setupCellConfiguration() {
+        filteredStations
+            .bind(to: tableView
+                        .rx
+                        .items(cellIdentifier: "stationCell", cellType: UITableViewCell.self)) { row, station, cell in
+                            cell.textLabel?.text = station.name
+                        }
+        .disposed(by: disposeBag)
+    }
+    
+    func setupCellTapHandling() {
+        tableView
+            .rx
+            .modelSelected(Station.self)
+            .subscribe(onNext: { [unowned self] station in
+                print(station.name)
+                self.searchMode(isActivated: false)
+                
+                if let selectedRowIndexPath = self.tableView.indexPathForSelectedRow {
+                  self.tableView.deselectRow(at: selectedRowIndexPath, animated: true)
+                }
+            })
+        .disposed(by: disposeBag)
+    }
+}
+
+// MARK: - INFORMATION VIEW
 
 extension MapVC {
     
