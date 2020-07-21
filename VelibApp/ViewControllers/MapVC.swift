@@ -157,15 +157,8 @@ class MapVC: UIViewController {
             return
         }
         mapView.deselectAnnotation(selectedAnnotation, animated: true)
-        guard let lat = locationManager.location?.coordinate.latitude else { return }
-        guard let long = locationManager.location?.coordinate.longitude else { return }
-        let location = CLLocation(latitude: lat, longitude: long)
-        let closestStation = stations.min { (a, b) -> Bool in
-            let first = location.distance(from: CLLocation(latitude: a.coordinate.latitude, longitude: a.coordinate.longitude))
-            let second = location.distance(from: CLLocation(latitude: b.coordinate.latitude, longitude: b.coordinate.longitude))
-            return first < second
-        }
-        let toSelectAnnotation = mapView.annotations.filter({ return $0.title == closestStation?.name})
+        let test = stations.first
+        let toSelectAnnotation = mapView.annotations.filter({ return $0.title == test?.name})
         mapView.selectedAnnotations = toSelectAnnotation
     }
     
