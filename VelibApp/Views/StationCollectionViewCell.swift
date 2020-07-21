@@ -10,6 +10,10 @@ import UIKit
 
 class StationCollectionViewCell: UICollectionViewCell {
     
+    
+    @IBOutlet weak var stationNameLabel: UILabel!
+    @IBOutlet weak var distanceToLabel: UILabel!
+    
     override func awakeFromNib() {
         super.awakeFromNib()
         
@@ -20,6 +24,7 @@ class StationCollectionViewCell: UICollectionViewCell {
     }
     
     func configureWithStation(station: Station) {
-        print("configured")
+        stationNameLabel.text = station.name
+        distanceToLabel.text = "\(station.distance!) km"
     }
 }

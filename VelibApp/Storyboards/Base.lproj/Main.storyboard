@@ -127,7 +127,7 @@
                                     <constraint firstAttribute="width" secondItem="TSC-Pg-ytb" secondAttribute="height" multiplier="207:404" id="t0o-zh-Khv"/>
                                 </constraints>
                                 <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="Ld5-gl-IdI">
-                                    <size key="itemSize" width="300" height="150"/>
+                                    <size key="itemSize" width="365" height="130"/>
                                     <size key="estimatedItemSize" width="300" height="130"/>
                                     <size key="headerReferenceSize" width="0.0" height="0.0"/>
                                     <size key="footerReferenceSize" width="0.0" height="0.0"/>
@@ -135,41 +135,45 @@
                                 </collectionViewFlowLayout>
                                 <cells>
                                     <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="cell" id="tLh-1m-gya" customClass="StationCollectionViewCell" customModule="VelibApp" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="0.0" width="90" height="130"/>
+                                        <rect key="frame" x="24.5" y="0.0" width="365" height="130"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <collectionViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="S6m-iK-AR8">
-                                            <rect key="frame" x="0.0" y="0.0" width="90" height="130"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="365" height="130"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="0Mt-Nk-lYi">
-                                                    <rect key="frame" x="20" y="8" width="50" height="21"/>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Stade Pershing" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="som-o5-kVO">
+                                                    <rect key="frame" x="32.5" y="12" width="300" height="25"/>
                                                     <constraints>
-                                                        <constraint firstAttribute="width" constant="50" id="DRy-3l-w24"/>
+                                                        <constraint firstAttribute="width" constant="300" id="X5l-Xd-jcO"/>
+                                                        <constraint firstAttribute="height" constant="25" id="mZ1-iB-ahp"/>
                                                     </constraints>
-                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                    <fontDescription key="fontDescription" name="TrebuchetMS-Bold" family="Trebuchet MS" pointSize="17"/>
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Ptv-gN-zYI">
-                                                    <rect key="frame" x="42" y="72" width="42" height="21"/>
-                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                                    <nil key="textColor"/>
-                                                    <nil key="highlightedColor"/>
-                                                </label>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Vélos éléctriques" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="6aO-Sd-tkd">
-                                                    <rect key="frame" x="28" y="93" width="70" height="17"/>
-                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                                    <fontDescription key="fontDescription" type="system" pointSize="8"/>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="21,5 km" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="geF-cy-ayu">
+                                                    <rect key="frame" x="275" y="95" width="75" height="25"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="height" constant="25" id="8cy-8A-26J"/>
+                                                        <constraint firstAttribute="width" constant="75" id="I1O-Ua-9za"/>
+                                                    </constraints>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="15"/>
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                             </subviews>
                                             <constraints>
-                                                <constraint firstAttribute="trailing" secondItem="0Mt-Nk-lYi" secondAttribute="trailing" constant="20" id="QB7-SC-gri"/>
-                                                <constraint firstItem="0Mt-Nk-lYi" firstAttribute="leading" secondItem="S6m-iK-AR8" secondAttribute="leading" constant="20" id="d8Z-Rk-2u5"/>
+                                                <constraint firstAttribute="bottom" secondItem="geF-cy-ayu" secondAttribute="bottom" constant="10" id="0gJ-m4-kcM"/>
+                                                <constraint firstItem="som-o5-kVO" firstAttribute="top" secondItem="S6m-iK-AR8" secondAttribute="top" constant="12" id="2Nt-f4-yG5"/>
+                                                <constraint firstItem="som-o5-kVO" firstAttribute="centerX" secondItem="S6m-iK-AR8" secondAttribute="centerX" id="pe8-h1-jaB"/>
+                                                <constraint firstAttribute="trailing" secondItem="geF-cy-ayu" secondAttribute="trailing" constant="15" id="xbU-fu-Ngr"/>
                                             </constraints>
                                         </collectionViewCellContentView>
+                                        <size key="customSize" width="365" height="130"/>
+                                        <connections>
+                                            <outlet property="distanceToLabel" destination="geF-cy-ayu" id="8Ce-BZ-G5v"/>
+                                            <outlet property="stationNameLabel" destination="som-o5-kVO" id="l9y-YK-Mxc"/>
+                                        </connections>
                                     </collectionViewCell>
                                 </cells>
                             </collectionView>
