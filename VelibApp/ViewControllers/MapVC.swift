@@ -54,14 +54,14 @@ class MapVC: UIViewController {
     @IBOutlet weak var searchButton: PositionButton!
     
     @IBOutlet weak var infoView: UIView!
-    @IBOutlet weak var tableViewTop: NSLayoutConstraint!
     @IBOutlet weak var infoViewTrailing: NSLayoutConstraint!
+    @IBOutlet weak var collectionViewTop: NSLayoutConstraint!
     
     @IBOutlet weak var nbEBikesLabel: UILabel!
     @IBOutlet weak var nbBikesLabel: UILabel!
     @IBOutlet weak var nbDocksLabel: UILabel!
     
-    @IBOutlet weak var tableView: UITableView!
+    @IBOutlet weak var collectionView: UICollectionView!
     
     // MARK: -Life cycle
     
@@ -73,7 +73,7 @@ class MapVC: UIViewController {
         setupCellTapHandling()
         setupDelegates()
         mapView.register(MKMarkerAnnotationView.self, forAnnotationViewWithReuseIdentifier: "AnnotationView")
-        
+        collectionView.delegate = self
         setUpView()
     }
     
@@ -164,7 +164,7 @@ class MapVC: UIViewController {
     
 }
 
-// MARK: - Rx Tableview
+// MARK: - Rx CollectionView
 
 extension MapVC {
     
@@ -182,24 +182,22 @@ extension MapVC {
         .observeOn(MainScheduler.instance)
         
         searchResults
-            .bind(to: tableView.rx.items(cellIdentifier: "stationCell")) { row, station, cell in
-                cell.textLabel?.text = station.name
+            .bind(to: collectionView.rx.items(cellIdentifier: "cell", cellType: StationCollectionViewCell.self)) { row, station, cell in
+                cell.configureWithStation(station: station)
             }
         .disposed(by: disposeBag)
+        
+        
     }
     
     func setupCellTapHandling() {
-        tableView
+        collectionView
             .rx
             .modelSelected(Station.self)
             .subscribe(onNext: { [unowned self] station in
                 self.selectedAnnotation = station
                 self.mapView.selectedAnnotations = self.mapView.annotations.filter({ return $0.title == station.name})
                 self.searchMode(isActivated: false)
-                
-                if let selectedRowIndexPath = self.tableView.indexPathForSelectedRow {
-                  self.tableView.deselectRow(at: selectedRowIndexPath, animated: true)
-                }
             })
         .disposed(by: disposeBag)
     }
@@ -226,5 +224,16 @@ extension MapVC {
                 self.view.layoutIfNeeded()
             }
         }
+    }
+}
+
+extension MapVC: UICollectionViewDelegateFlowLayout {
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
+        return UIEdgeInsets(top: 10, left: 5, bottom: 5, right: 5)
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        return CGSize(width: collectionView.frame.width - 30, height: 100)
     }
 }

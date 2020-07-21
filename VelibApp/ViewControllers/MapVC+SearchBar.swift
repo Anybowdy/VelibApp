@@ -12,19 +12,18 @@ extension MapVC {
     
     func searchMode(isActivated: Bool) {
         if (isActivated) {
-            tableView.reloadData()
             navigationItem.titleView = searchBar
             searchBar.becomeFirstResponder()
             UIView.animate(withDuration: 0.4) {
                 self.navigationController?.isNavigationBarHidden = false
-                self.tableViewTop.constant = 0
+                self.collectionViewTop.constant = 0
                 self.view.layoutIfNeeded()
             }
         } else {
             navigationItem.titleView = nil
             UIView.animate(withDuration: 0.4) {
                 self.navigationController?.isNavigationBarHidden = true
-                self.tableViewTop.constant = 1200
+                self.collectionViewTop.constant = 1200
                 self.view.layoutIfNeeded()
             }
         }
