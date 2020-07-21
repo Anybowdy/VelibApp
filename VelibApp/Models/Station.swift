@@ -50,6 +50,7 @@ class Station: NSObject, MKAnnotation, Decodable {
             }
             catch let error {
                 print("Error: \(error)")
+                //throw error
             }
         }
         task.resume()

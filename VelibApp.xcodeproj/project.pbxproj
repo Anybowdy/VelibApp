@@ -8,11 +8,11 @@
 
 /* Begin PBXBuildFile section */
 		00FC75C6880576E14D895606 /* Pods_VelibApp.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 97E6ACF6940DDF575763B8FC /* Pods_VelibApp.framework */; };
-		7C33671323552B5B004205E7 /* Media.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 7C33671223552B5B004205E7 /* Media.xcassets */; };
 		7CB2403522FC4A6900AF63C5 /* MapVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CB2403422FC4A6900AF63C5 /* MapVC.swift */; };
 		7CC92FF823ABDAFF00C89524 /* Station.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CC92FF723ABDAFF00C89524 /* Station.swift */; };
 		7CCBBC3723B3EECA0049B5A1 /* PositionButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CCBBC3623B3EECA0049B5A1 /* PositionButton.swift */; };
 		7CCBBC3923B3F1740049B5A1 /* ClosestStationButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CCBBC3823B3F1740049B5A1 /* ClosestStationButton.swift */; };
+		7CD95A7424C6FBE40069DCFD /* Media.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 7C33671223552B5B004205E7 /* Media.xcassets */; };
 		7CDAD17522F995C00088FA18 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CDAD17422F995C00088FA18 /* AppDelegate.swift */; };
 		7CDAD17A22F995C00088FA18 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 7CDAD17822F995C00088FA18 /* Main.storyboard */; };
 		7CDAD17F22F995C30088FA18 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 7CDAD17D22F995C30088FA18 /* LaunchScreen.storyboard */; };
@@ -26,7 +26,7 @@
 
 /* Begin PBXFileReference section */
 		02F4FB11D5B2ECA41A065E53 /* Pods-VelibApp.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-VelibApp.debug.xcconfig"; path = "Target Support Files/Pods-VelibApp/Pods-VelibApp.debug.xcconfig"; sourceTree = "<group>"; };
-		7C33671223552B5B004205E7 /* Media.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Media.xcassets; sourceTree = "<group>"; };
+		7C33671223552B5B004205E7 /* Media.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Media.xcassets; path = VelibApp/Media.xcassets; sourceTree = SOURCE_ROOT; };
 		7CB2403422FC4A6900AF63C5 /* MapVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapVC.swift; sourceTree = "<group>"; };
 		7CC92FF723ABDAFF00C89524 /* Station.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Station.swift; sourceTree = "<group>"; };
 		7CCBBC3623B3EECA0049B5A1 /* PositionButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PositionButton.swift; sourceTree = "<group>"; };
@@ -224,7 +224,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				7CDAD17F22F995C30088FA18 /* LaunchScreen.storyboard in Resources */,
-				7C33671323552B5B004205E7 /* Media.xcassets in Resources */,
+				7CD95A7424C6FBE40069DCFD /* Media.xcassets in Resources */,
 				7CDAD17A22F995C00088FA18 /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -434,6 +434,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 02F4FB11D5B2ECA41A065E53 /* Pods-VelibApp.debug.xcconfig */;
 			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = FQ9SXB3J2T;
 				INFOPLIST_FILE = VelibApp/Info.plist;
@@ -453,6 +454,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = DDF9AB1E147CF4AAEB75D3EB /* Pods-VelibApp.release.xcconfig */;
 			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = FQ9SXB3J2T;
 				INFOPLIST_FILE = VelibApp/Info.plist;

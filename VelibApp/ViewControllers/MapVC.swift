@@ -10,20 +10,17 @@ class MapVC: UIViewController {
     var stations: [Station] = [] {
         didSet {
             setupCellConfiguration()
-            filteredStations.accept(self.stations)
-            centerOnUserLocation(zoomDelta: userLocationZoom)
             setUpAnnotation()
             myPositionButton.isEnabled = true
             closestStationButton.isEnabled = true
             searchButton.isEnabled = true
-            mapView.isHidden = false
+            UIView.transition(with: self.mapView,
+                                    duration: 0.6,
+                                    options: .transitionCrossDissolve, animations: {
+                self.mapView.isHidden = false
+            })
         }
     }
-    
-    var filteredStations: BehaviorRelay<[Station]> = BehaviorRelay(value: [])
-    
-    var test = Observable.from(["oui", "non"])
-    let disposeBag = DisposeBag()
     
     var selectedAnnotation: Station?
     
@@ -31,6 +28,7 @@ class MapVC: UIViewController {
     var indicatorView = UIActivityIndicatorView()
     var searchBar = UISearchBar()
     
+    let disposeBag = DisposeBag()
 
     let annotationView: MKAnnotationView = {
         let goButton = { () -> UIButton in
@@ -46,7 +44,7 @@ class MapVC: UIViewController {
         return annotationView
     }()
 
-    let userLocationZoom = 0.02
+    let userLocationZoom = 0.01
     
     // MARK: -Outlets
     
@@ -69,12 +67,14 @@ class MapVC: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        checkLocationAuthorization()
         getStations()
+        centerOnUserLocation(zoomDelta: userLocationZoom)
+        setupCellTapHandling()
         setupDelegates()
         mapView.register(MKMarkerAnnotationView.self, forAnnotationViewWithReuseIdentifier: "AnnotationView")
-        setUpView()
         
-        setupCellTapHandling()
+        setUpView()
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -134,7 +134,10 @@ class MapVC: UIViewController {
     
     func setUpAnnotation() {
         indicatorView.stopAnimating()
-        mapView.addAnnotations(stations)
+        UIView.transition(with: self.mapView, duration: 0.6,
+                            options: .transitionCrossDissolve, animations: {
+                                self.mapView.addAnnotations(self.stations)
+        })
     }
     
     // MARK: -Actions
@@ -197,7 +200,8 @@ extension MapVC {
             .rx
             .modelSelected(Station.self)
             .subscribe(onNext: { [unowned self] station in
-                print(station.name)
+                self.selectedAnnotation = station
+                self.mapView.selectedAnnotations = self.mapView.annotations.filter({ return $0.title == station.name})
                 self.searchMode(isActivated: false)
                 
                 if let selectedRowIndexPath = self.tableView.indexPathForSelectedRow {
@@ -206,6 +210,7 @@ extension MapVC {
             })
         .disposed(by: disposeBag)
     }
+    
 }
 
 // MARK: - INFORMATION VIEW

@@ -2,11 +2,11 @@
   "images" : [
     {
       "idiom" : "universal",
+      "filename" : "rope-biking.png",
       "scale" : "1x"
     },
     {
       "idiom" : "universal",
-      "filename" : "parking.png",
       "scale" : "2x"
     },
     {

@@ -13,7 +13,6 @@ extension MapVC: MKMapViewDelegate {
     
     func mapView(_ mapView: MKMapView, didSelect view: MKAnnotationView) {
         guard let annotation = view.annotation as? Station else { return }
-
         self.selectedAnnotation = annotation
         
         let currentSpanLat = self.mapView.region.span.latitudeDelta
