@@ -31,7 +31,7 @@
                                 </connections>
                             </button>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="gyp-JK-TcW">
-                                <rect key="frame" x="297.5" y="117" width="115" height="170"/>
+                                <rect key="frame" x="299" y="117" width="115" height="170"/>
                                 <subviews>
                                     <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillEqually" translatesAutoresizingMaskIntoConstraints="NO" id="Lhi-f7-ppm">
                                         <rect key="frame" x="20" y="0.0" width="75" height="170"/>
@@ -139,10 +139,10 @@
                         </subviews>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                         <constraints>
+                            <constraint firstItem="uSK-zS-Bkp" firstAttribute="trailing" secondItem="gyp-JK-TcW" secondAttribute="trailing" id="18u-Xj-whM"/>
                             <constraint firstItem="hy8-v1-s2K" firstAttribute="trailing" secondItem="uSK-zS-Bkp" secondAttribute="trailing" id="3sv-b0-KGy"/>
                             <constraint firstItem="uSK-zS-Bkp" firstAttribute="bottom" secondItem="ouT-XA-414" secondAttribute="bottom" constant="25" id="6be-2v-9Bd"/>
                             <constraint firstItem="uSK-zS-Bkp" firstAttribute="bottom" secondItem="HYH-Ar-doU" secondAttribute="bottom" constant="25" id="9e8-gN-S8N"/>
-                            <constraint firstItem="gyp-JK-TcW" firstAttribute="centerX" secondItem="oMa-pB-kMK" secondAttribute="centerX" constant="148" id="A07-kI-0EN"/>
                             <constraint firstItem="hy8-v1-s2K" firstAttribute="leading" secondItem="uSK-zS-Bkp" secondAttribute="leading" id="Eqa-hM-POh"/>
                             <constraint firstAttribute="bottom" secondItem="OXg-qf-InE" secondAttribute="bottom" id="KQa-9e-OfW"/>
                             <constraint firstItem="HYH-Ar-doU" firstAttribute="leading" secondItem="uSK-zS-Bkp" secondAttribute="leading" constant="29" id="LBZ-aG-DJK"/>
@@ -159,7 +159,7 @@
                     <connections>
                         <outlet property="closestStationButton" destination="ouT-XA-414" id="uhT-xG-Vs0"/>
                         <outlet property="infoView" destination="gyp-JK-TcW" id="fnH-9L-oAp"/>
-                        <outlet property="infoViewCenter" destination="A07-kI-0EN" id="Mhw-z9-3yl"/>
+                        <outlet property="infoViewTrailing" destination="18u-Xj-whM" id="wTG-tD-UYj"/>
                         <outlet property="mapView" destination="OXg-qf-InE" id="UAR-nx-DAy"/>
                         <outlet property="myPositionButton" destination="0Yp-qc-Ws0" id="uJa-lA-ueM"/>
                         <outlet property="nbBikesLabel" destination="b3D-Pa-nD0" id="KXv-qA-Fgb"/>

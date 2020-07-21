@@ -54,8 +54,8 @@ class MapVC: UIViewController {
     @IBOutlet weak var searchButton: PositionButton!
     
     @IBOutlet weak var infoView: UIView!
-    @IBOutlet weak var infoViewCenter: NSLayoutConstraint!
     @IBOutlet weak var tableViewTop: NSLayoutConstraint!
+    @IBOutlet weak var infoViewTrailing: NSLayoutConstraint!
     
     @IBOutlet weak var nbEBikesLabel: UILabel!
     @IBOutlet weak var nbBikesLabel: UILabel!
@@ -103,7 +103,7 @@ class MapVC: UIViewController {
         indicatorView.style = UIActivityIndicatorView.Style.gray
         indicatorView.startAnimating()
         
-        infoViewCenter.constant = 300
+        infoViewTrailing.constant = -150
         infoView.layer.cornerRadius = 20
         infoView.backgroundColor = UIColor.white.withAlphaComponent(0.8)
         
@@ -223,13 +223,13 @@ extension MapVC {
             nbBikesLabel.text = String(station.mechanical)
             nbDocksLabel.text = String(station.numdocksavailable)
             
-            infoViewCenter.constant = 151
             UIView.animate(withDuration: 0.3) {
+                self.infoViewTrailing.constant = 0
                 self.view.layoutIfNeeded()
             }
         } else {
-            infoViewCenter.constant = 300
             UIView.animate(withDuration: 0.3) {
+                self.infoViewTrailing.constant = -150
                 self.view.layoutIfNeeded()
             }
         }
