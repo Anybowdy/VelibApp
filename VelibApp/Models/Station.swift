@@ -43,27 +43,6 @@ class Station: NSObject, MKAnnotation, Decodable {
         super.init()
     }
     
-    static func fetchStationsData(completed: @escaping ([Station]) -> Void) {
-        let location = CLLocationManager().location
-        guard let url = URL(string: API.API_LINK) else { return }
-        let task = URLSession.shared.dataTask(with: url) { (data, response, error) in
-            guard let data = data else { return }
-            do {
-                let response = try JSONDecoder().decode(Response.self, from: data)
-                let stations = response.records.map { (station) -> Station in
-                    station.distance = (Float(location!.distance(from: CLLocation(latitude: station.coordinate.latitude, longitude: station.coordinate.longitude))) / 100).rounded() / 10
-                    return station
-                }
-                let orderedStations = stations.sorted(by: {(a, b) -> Bool in a.distance! < b.distance! })
-                completed(orderedStations)
-            }
-            catch let error {
-                print("Error: \(error)")
-            }
-        }
-        task.resume()
-    }
-    
     func mapItem() -> MKMapItem {
         let addressDict = [CNPostalAddressStreetKey: title]
         let placemark = MKPlacemark(coordinate: coordinate, addressDictionary:addressDict as [String : Any])

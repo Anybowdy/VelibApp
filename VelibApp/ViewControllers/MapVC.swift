@@ -125,7 +125,7 @@ class MapVC: UIViewController {
     }
     
     func getStations() {
-        Station.fetchStationsData { stations in
+        API.fetchStationsData { stations in
             DispatchQueue.main.async {
                 self.stations = stations
             }
