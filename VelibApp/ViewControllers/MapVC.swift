@@ -127,7 +127,8 @@ class MapVC: UIViewController {
     func getStations() {
         API.fetchStationsData { stations in
             DispatchQueue.main.async {
-                self.stations = stations
+                let orderedStations = stations.sorted(by: {(a, b) -> Bool in a.distance! < b.distance! })
+                self.stations = orderedStations
             }
         }
     }
@@ -162,6 +163,7 @@ class MapVC: UIViewController {
         mapView.selectedAnnotations = toSelectAnnotation
     }
     
+    var i = 0
 }
 
 // MARK: - Rx CollectionView
@@ -186,8 +188,6 @@ extension MapVC {
                 cell.configureWithStation(station: station)
             }
         .disposed(by: disposeBag)
-        
-        
     }
     
     func setupCellTapHandling() {
@@ -229,11 +229,22 @@ extension MapVC {
 
 extension MapVC: UICollectionViewDelegateFlowLayout {
     
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
+    func collectionView(_ collectionView: UICollectionView,
+                        layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
         return UIEdgeInsets(top: 10, left: 5, bottom: 5, right: 5)
     }
     
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+    func collectionView(_ collectionView: UICollectionView,
+                        layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         return CGSize(width: collectionView.frame.width - 30, height: 100)
+    }
+    
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        let scrollYAxis = scrollView.contentOffset.y
+        if (scrollYAxis <= 0) {
+            searchBar.becomeFirstResponder()
+        } else {
+            searchBar.endEditing(true)
+        }
     }
 }

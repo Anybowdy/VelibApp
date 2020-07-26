@@ -22,8 +22,7 @@ struct API {
                     station.distance = (Float(location!.distance(from: CLLocation(latitude: station.coordinate.latitude, longitude: station.coordinate.longitude))) / 100).rounded() / 10
                     return station
                 }
-                let orderedStations = stations.sorted(by: {(a, b) -> Bool in a.distance! < b.distance! })
-                completed(orderedStations)
+                completed(stations)
             }
             catch let error {
                 print("Error: \(error)")
