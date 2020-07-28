@@ -77,6 +77,22 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
+		7C85B82024D08F3E004859F8 /* Cell */ = {
+			isa = PBXGroup;
+			children = (
+				7CD95A7524C732570069DCFD /* StationCollectionViewCell.swift */,
+			);
+			path = Cell;
+			sourceTree = "<group>";
+		};
+		7C85B82124D08F50004859F8 /* MarkerView */ = {
+			isa = PBXGroup;
+			children = (
+				7CE3BAD524ABD9B30045176A /* StationMarkerView.swift */,
+			);
+			path = MarkerView;
+			sourceTree = "<group>";
+		};
 		7CB99AA823A51BA20057EF56 /* Storyboards */ = {
 			isa = PBXGroup;
 			children = (
@@ -109,20 +125,20 @@
 		7CCBBC3423B3EE9C0049B5A1 /* Views */ = {
 			isa = PBXGroup;
 			children = (
-				7CCBBC3523B3EEA80049B5A1 /* Buttons */,
-				7CE3BAD524ABD9B30045176A /* StationMarkerView.swift */,
-				7CD95A7524C732570069DCFD /* StationCollectionViewCell.swift */,
+				7C85B82124D08F50004859F8 /* MarkerView */,
+				7C85B82024D08F3E004859F8 /* Cell */,
+				7CCBBC3523B3EEA80049B5A1 /* Button */,
 			);
 			path = Views;
 			sourceTree = "<group>";
 		};
-		7CCBBC3523B3EEA80049B5A1 /* Buttons */ = {
+		7CCBBC3523B3EEA80049B5A1 /* Button */ = {
 			isa = PBXGroup;
 			children = (
 				7CCBBC3623B3EECA0049B5A1 /* PositionButton.swift */,
 				7CCBBC3823B3F1740049B5A1 /* ClosestStationButton.swift */,
 			);
-			path = Buttons;
+			path = Button;
 			sourceTree = "<group>";
 		};
 		7CDAD16822F995C00088FA18 = {

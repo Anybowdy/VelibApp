@@ -4,49 +4,23 @@ import CoreLocation
 
 import RxSwift
 import RxCocoa
-import RxKeyboard
 
 class MapVC: UIViewController {
     
     var stations: [Station] = [] {
         didSet {
-            setupCellConfiguration()
-            setUpAnnotation()
-            myPositionButton.isEnabled = true
-            closestStationButton.isEnabled = true
-            searchButton.isEnabled = true
-            UIView.transition(with: self.mapView,
-                                    duration: 0.6,
-                                    options: .transitionCrossDissolve, animations: {
-                self.mapView.isHidden = false
-            })
+            stationsDidLoad()
         }
     }
     
     var selectedAnnotation: Station?
     
+    let disposeBag = DisposeBag()
+    
     let locationManager = CLLocationManager()
     var indicatorView = UIActivityIndicatorView()
     var searchBar = UISearchBar()
-    
-    let disposeBag = DisposeBag()
-
-    /*
-    let annotationView: MKAnnotationView = {
-        let goButton = { () -> UIButton in
-            let button = UIButton(frame: CGRect(origin: CGPoint.zero, size: CGSize(width: 35, height: 35)))
-            button.setBackgroundImage(UIImage(named: "google"), for: UIControl.State.normal)
-            return button
-        }()
         
-        let annotationView = MKAnnotationView()
-        annotationView.image = UIImage(named: "bubble")
-        annotationView.canShowCallout = true
-        annotationView.rightCalloutAccessoryView = goButton
-        return annotationView
-    }()
-    */
-    
     let userLocationZoom = 0.01
     
     // MARK: -Outlets
@@ -64,22 +38,21 @@ class MapVC: UIViewController {
     @IBOutlet weak var nbBikesLabel: UILabel!
     @IBOutlet weak var nbDocksLabel: UILabel!
     
-    @IBOutlet weak var collectionView: UICollectionView!
+    @IBOutlet weak var collectionView: UICollectionView! {
+        didSet {
+            setupCellTapHandling()
+        }
+    }
 
     // MARK: -Life cycle
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        checkLocationAuthorization()
         getStations()
         centerOnUserLocation(zoomDelta: userLocationZoom)
-        
-        mapView.register(StationMarkerView.self, forAnnotationViewWithReuseIdentifier: "AnnotationView")
-        
-        // RX
-        setupCellTapHandling()
-        setupDelegates()
-        
+        checkLocationAuthorization()
+
+        register()
         setUpView()
     }
     
@@ -87,9 +60,11 @@ class MapVC: UIViewController {
         navigationController?.isNavigationBarHidden = true
     }
     
-    // MARK: -Delegates
+    // MARK: - Register cell and delegate
     
-    func setupDelegates() {
+    func register() {
+        mapView.register(StationMarkerView.self, forAnnotationViewWithReuseIdentifier: "AnnotationView")
+        
         collectionView.delegate = self
         searchBar.delegate = self
         locationManager.delegate = self
@@ -131,6 +106,28 @@ class MapVC: UIViewController {
         }
     }
     
+    func stationsDidLoad() {
+        // Stop indicator animation
+        indicatorView.stopAnimating()
+        // Add annotations
+        UIView.transition(with: self.mapView, duration: 0.6,
+                            options: .transitionCrossDissolve, animations: {
+                                self.mapView.addAnnotations(self.stations)
+        })
+        // Enable buttons
+        myPositionButton.isEnabled = true
+        closestStationButton.isEnabled = true
+        searchButton.isEnabled = true
+        // Make map visible
+        UIView.transition(with: self.mapView,
+                                duration: 0.6,
+                                options: .transitionCrossDissolve, animations: {
+            self.mapView.isHidden = false
+        })
+        // Add cells
+        setupCellConfiguration()
+    }
+    
     func getStations() {
         API.fetchStationsData { stations in
             DispatchQueue.main.async {
@@ -138,14 +135,6 @@ class MapVC: UIViewController {
                 self.stations = orderedStations
             }
         }
-    }
-    
-    func setUpAnnotation() {
-        indicatorView.stopAnimating()
-        UIView.transition(with: self.mapView, duration: 0.6,
-                            options: .transitionCrossDissolve, animations: {
-                                self.mapView.addAnnotations(self.stations)
-        })
     }
     
     // MARK: -Actions
@@ -177,7 +166,7 @@ class MapVC: UIViewController {
 extension MapVC {
     
     func setupCellConfiguration() {
-        let searchResults = searchBar.rx.text.orEmpty
+        searchBar.rx.text.orEmpty
             .flatMapLatest { (query) -> Observable<[Station]> in
                 if query.isEmpty {
                     return .just(self.stations)
@@ -187,12 +176,16 @@ extension MapVC {
                 }
                 return .just(filteredStations)
         }
-        .observeOn(MainScheduler.instance)
-        
-        searchResults
+            .observeOn(MainScheduler.instance)
             .bind(to: collectionView.rx.items(cellIdentifier: "cell", cellType: StationCollectionViewCell.self)) { row, station, cell in
                 cell.configureWithStation(station: station)
             }
+        .disposed(by: disposeBag)
+        
+        searchBar.rx.textDidBeginEditing
+            .bind(onNext: {
+                self.collectionView.setContentOffset(.zero, animated: true)
+            })
         .disposed(by: disposeBag)
     }
     
@@ -207,16 +200,6 @@ extension MapVC {
             })
         .disposed(by: disposeBag)
     }
-    
-    // Useless at the moment
-    func handleKeyboardFrame() {
-        RxKeyboard.instance.visibleHeight
-        .drive(onNext: { [collectionView] keyboardVisibleHeight in
-          collectionView!.contentInset.bottom = keyboardVisibleHeight
-        })
-        .disposed(by: disposeBag)
-    }
-    
 }
 
 // MARK: - INFORMATION VIEW

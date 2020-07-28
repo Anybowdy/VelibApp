@@ -24,7 +24,6 @@ class Station: NSObject, MKAnnotation, Decodable {
         case coordonnees_geo
         case numdocksavailable
     }
-    
 
     required init (from decoder: Decoder) throws {
 
@@ -44,8 +43,8 @@ class Station: NSObject, MKAnnotation, Decodable {
     }
     
     func mapItem() -> MKMapItem {
-        let addressDict = [CNPostalAddressStreetKey: title]
-        let placemark = MKPlacemark(coordinate: coordinate, addressDictionary:addressDict as [String : Any])
+        let addressDictionary = [CNPostalAddressStreetKey: title]
+        let placemark = MKPlacemark(coordinate: coordinate, addressDictionary:addressDictionary as [String : Any])
         let mapItem = MKMapItem(placemark: placemark)
         mapItem.name = self.title
         return mapItem
@@ -58,11 +57,11 @@ class Station: NSObject, MKAnnotation, Decodable {
     var markerTintColor: UIColor {
         switch totalBikesCount {
         case 0...5:
-            return .red
+            return UIColor(red: 1, green: 0.3098, blue: 0.3098, alpha: 1.0)
         case 5...10:
             return .yellow
         default:
-            return .green
+            return UIColor(red: 0, green: 0.6667, blue: 0.2549, alpha: 1.0)
         }
     }
 }
