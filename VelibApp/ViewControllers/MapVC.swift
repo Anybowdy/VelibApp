@@ -4,6 +4,7 @@ import CoreLocation
 
 import RxSwift
 import RxCocoa
+import RxKeyboard
 
 class MapVC: UIViewController {
     
@@ -30,6 +31,7 @@ class MapVC: UIViewController {
     
     let disposeBag = DisposeBag()
 
+    /*
     let annotationView: MKAnnotationView = {
         let goButton = { () -> UIButton in
             let button = UIButton(frame: CGRect(origin: CGPoint.zero, size: CGSize(width: 35, height: 35)))
@@ -43,7 +45,8 @@ class MapVC: UIViewController {
         annotationView.rightCalloutAccessoryView = goButton
         return annotationView
     }()
-
+    */
+    
     let userLocationZoom = 0.01
     
     // MARK: -Outlets
@@ -62,7 +65,7 @@ class MapVC: UIViewController {
     @IBOutlet weak var nbDocksLabel: UILabel!
     
     @IBOutlet weak var collectionView: UICollectionView!
-    
+
     // MARK: -Life cycle
     
     override func viewDidLoad() {
@@ -70,10 +73,13 @@ class MapVC: UIViewController {
         checkLocationAuthorization()
         getStations()
         centerOnUserLocation(zoomDelta: userLocationZoom)
+        
+        mapView.register(StationMarkerView.self, forAnnotationViewWithReuseIdentifier: "AnnotationView")
+        
+        // RX
         setupCellTapHandling()
         setupDelegates()
-        mapView.register(MKMarkerAnnotationView.self, forAnnotationViewWithReuseIdentifier: "AnnotationView")
-        collectionView.delegate = self
+        
         setUpView()
     }
     
@@ -84,6 +90,7 @@ class MapVC: UIViewController {
     // MARK: -Delegates
     
     func setupDelegates() {
+        collectionView.delegate = self
         searchBar.delegate = self
         locationManager.delegate = self
         mapView.delegate = self
@@ -162,8 +169,7 @@ class MapVC: UIViewController {
         let toSelectAnnotation = mapView.annotations.filter({ return $0.title == test?.name})
         mapView.selectedAnnotations = toSelectAnnotation
     }
-    
-    var i = 0
+
 }
 
 // MARK: - Rx CollectionView
@@ -177,7 +183,7 @@ extension MapVC {
                     return .just(self.stations)
                 }
                 let filteredStations = self.stations.filter { (station) -> Bool in
-                    return station.name.contains(query)
+                    return station.name.lowercased().contains(query.lowercased())
                 }
                 return .just(filteredStations)
         }
@@ -199,6 +205,15 @@ extension MapVC {
                 self.mapView.selectedAnnotations = self.mapView.annotations.filter({ return $0.title == station.name})
                 self.searchMode(isActivated: false)
             })
+        .disposed(by: disposeBag)
+    }
+    
+    // Useless at the moment
+    func handleKeyboardFrame() {
+        RxKeyboard.instance.visibleHeight
+        .drive(onNext: { [collectionView] keyboardVisibleHeight in
+          collectionView!.contentInset.bottom = keyboardVisibleHeight
+        })
         .disposed(by: disposeBag)
     }
     

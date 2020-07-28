@@ -9,11 +9,25 @@
 import UIKit
 import MapKit
 
-class StationMarkerView: MKAnnotationView {
 
+class StationMarkerView: MKMarkerAnnotationView {
     
-    override func setSelected(_ selected: Bool, animated: Bool) {
-        super.setSelected(false, animated: animated)
-    }
+    override var annotation: MKAnnotation? {
+      willSet {
+        guard let station = newValue as? Station else {
+          return
+        }
+        
+        canShowCallout = true
+        calloutOffset = CGPoint(x: -5, y: 5)
+        rightCalloutAccessoryView = { () -> UIButton in
+            let button = UIButton(frame: CGRect(origin: CGPoint.zero, size: CGSize(width: 35, height: 35)))
+            button.setBackgroundImage(UIImage(named: "google"), for: UIControl.State.normal)
+            return button
+        }()
 
+        glyphText = "\(station.totalBikesCount)"
+        markerTintColor = station.markerTintColor
+      }
+    }
 }

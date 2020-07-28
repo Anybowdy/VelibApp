@@ -31,9 +31,10 @@ extension MapVC: MKMapViewDelegate {
             return nil
         }
         
-        if let annotationView = mapView.dequeueReusableAnnotationView(withIdentifier: "AnnotationView") {
+        if let annotationView = mapView.dequeueReusableAnnotationView(withIdentifier: "AnnotationView") as? StationMarkerView {
             return annotationView
         }
+        
         return nil
     }
     

@@ -25,7 +25,7 @@ class Station: NSObject, MKAnnotation, Decodable {
         case numdocksavailable
     }
     
-        
+
     required init (from decoder: Decoder) throws {
 
         let container = try decoder.container(keyedBy: CodingKeys.self)
@@ -49,5 +49,20 @@ class Station: NSObject, MKAnnotation, Decodable {
         let mapItem = MKMapItem(placemark: placemark)
         mapItem.name = self.title
         return mapItem
+    }
+    
+    var totalBikesCount: Int {
+        return eBike + mechanical
+    }
+    
+    var markerTintColor: UIColor {
+        switch totalBikesCount {
+        case 0...5:
+            return .red
+        case 5...10:
+            return .yellow
+        default:
+            return .green
+        }
     }
 }
