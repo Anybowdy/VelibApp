@@ -4,7 +4,6 @@ target 'VelibApp' do
 
   pod 'RxSwift', '~> 5'
   pod 'RxCocoa', '~> 5'
-  pod 'RxKeyboard'
   # Pods for VelibApp
 
 end
