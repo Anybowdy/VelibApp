@@ -48,8 +48,6 @@ class MapVC: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        getStations()
-        centerOnUserLocation(zoomDelta: userLocationZoom)
         checkLocationAuthorization()
 
         register()
@@ -68,6 +66,7 @@ class MapVC: UIViewController {
         collectionView.delegate = self
         searchBar.delegate = self
         locationManager.delegate = self
+        locationManager.desiredAccuracy = kCLLocationAccuracyBest
         mapView.delegate = self
     }
     
@@ -131,6 +130,11 @@ class MapVC: UIViewController {
     func getStations() {
         API.fetchStationsData { stations in
             DispatchQueue.main.async {
+                let stations = stations.map { (station) -> Station in
+                    station.distance = (Float(self.locationManager.location?.distance(from: CLLocation(latitude: station.coordinate.latitude, longitude: station.coordinate.longitude)) ?? 0) / 100).rounded() / 10
+                    return station
+                }
+                
                 let orderedStations = stations.sorted(by: {(a, b) -> Bool in a.distance! < b.distance! })
                 self.stations = orderedStations
             }
